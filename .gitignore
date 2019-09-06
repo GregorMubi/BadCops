@@ -1,8 +1,16 @@
 # =============== #
 # Unity generated #
 # =============== #
-Temp/
-Library/
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Mm]emoryCaptures/
+
+# Never ignore Asset meta data
+!/[Aa]ssets/**/*.meta
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
@@ -30,3 +38,7 @@ obj/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Builds
+*.apk
+*.unitypackage
