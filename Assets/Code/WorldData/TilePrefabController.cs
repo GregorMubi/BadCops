@@ -30,4 +30,8 @@ public class TilePrefabController : MonoBehaviour {
 
         return SpriteNorth;
     }
+
+    public void SetRotation(int rotation) {
+        SpriteRenderer.sprite = GetSpriteForRotation(rotation);
+    }
 }
