@@ -69,11 +69,13 @@ public class LevelEditor : EditorWindow {
             SaveWorld();
             EnterNameWindow.Open("Enter world name:", CreateNewWorld);
         }
+        EditorGUI.BeginDisabledGroup(WorldData == null);
         if (GUI.Button(new Rect(Offset * 2 + button_width, y, button_width, LineHeight), "DELETE")) {
             AssetDatabase.DeleteAsset(WorldDataPath + WorldData.name + ".asset");
             WorldData = null;
             SaveWorld();
         }
+        EditorGUI.EndDisabledGroup();
         y += LineHeight + Offset;
 
 
@@ -130,14 +132,16 @@ public class LevelEditor : EditorWindow {
         List<List<TileData>> tileData = WorldData.GetTileData();
         for (int i = 0; i < tileData.Count; i++) {
             List<Vector2> tileCenterRow = new List<Vector2>();
-            Vector2 draw_pos = StartDrawWorldPosition + new Vector2(-DrawTileOffset.x, DrawTileOffset.y) * i;
+            Vector2 drawPos = StartDrawWorldPosition + new Vector2(-DrawTileOffset.x, DrawTileOffset.y) * i;
             for (int j = 0; j < tileData[i].Count; j++) {
-                draw_pos += DrawTileOffset;
+                drawPos += DrawTileOffset;
+
                 Sprite sprite = tileData[i][j].TilePrefab.GetSpriteForRotation(tileData[i][j].Rotation);
                 Texture tex = sprite.texture;
-                GUI.DrawTexture(new Rect(draw_pos.x, draw_pos.y, tex.width, tex.height), tex);
+                Vector2 tileDrawPos = drawPos - new Vector2(0, tex.height);
+                GUI.DrawTexture(new Rect(tileDrawPos.x, tileDrawPos.y, tex.width, tex.height), tex);
 
-                Vector2 centerPos = draw_pos + DrawTileOffset + Vector2.right * LeftWidth;
+                Vector2 centerPos = tileDrawPos + DrawTileOffset + Vector2.right * LeftWidth;
                 tileCenterRow.Add(centerPos);
                 //Debug.Log("tile " + i + "/" + j + " pos: " + centerPos.x + "/" + centerPos.y);
             }
@@ -169,7 +173,11 @@ public class LevelEditor : EditorWindow {
         }
 
         if (e.type == EventType.KeyDown && e.keyCode == KeyCode.R) {
-            Rotation = (Rotation + 1) % 4;
+            if (e.shift) {
+                WorldData.Rotate();
+            } else {
+                Rotation = (Rotation + 1) % 4;
+            }
             Repaint();
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using UnityEngine;
 using UnityScript.Lang;
 
@@ -119,5 +120,19 @@ public class WorldData : ScriptableObject {
             list.Add(row);
         }
         return list;
+    }
+
+    public void Rotate() {
+        List<List<TileData>> oldData = GetTileData();
+        List<List<TileData>> newData = new List<List<TileData>>();
+        for (int i = 0; i < Columns; i++) {
+            List<TileData> row = new List<TileData>();
+            for (int j = Rows - 1; j >= 0; j--) {
+                oldData[j][i].Rotation = (oldData[j][i].Rotation + 1) % 4;
+                row.Add(oldData[j][i]);
+            }
+            newData.Add(row);
+        }
+        SetTileData(newData);
     }
 }
