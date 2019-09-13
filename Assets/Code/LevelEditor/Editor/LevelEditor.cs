@@ -2,6 +2,7 @@
 using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using NUnit.Framework.Constraints;
 using UnityEditor;
 using UnityEngine;
@@ -20,7 +21,7 @@ public class LevelEditor : EditorWindow {
     // local parameters
     private bool IsRightClick = false;
     private int Rotation = 0;
-    private Vector2 SscrollPos = Vector2.zero;
+    private Vector2 ScrollPos = Vector2.zero;
     private Vector2 PrevMousePosition = Vector2.zero;
     private Vector2 DrawTileOffset = new Vector2(67, 33.5f);
     private Vector2 StartDrawWorldPosition = Vector2.zero;
@@ -28,6 +29,13 @@ public class LevelEditor : EditorWindow {
     private TileSetsData TileSetsData = null;
     private TilePrefabController SelectedTile = null;
     private List<List<Vector2>> TileCenterPositions = new List<List<Vector2>>();
+    private EditType SelectedEdit = EditType.Tiles;
+
+    private enum EditType {
+        Tiles = 0,
+        Building = 1,
+        Track = 2,
+    }
 
     [MenuItem("Level Editor/Open Editor")]
     static void Init() {
@@ -126,8 +134,9 @@ public class LevelEditor : EditorWindow {
 
         TileCenterPositions.Clear();
         float minBorder = 200;
-        float posx = Mathf.Clamp(StartDrawWorldPosition.x, -(WorldData.Columns * 0.5f * DrawTileOffset.x + WorldData.Rows * 0.5f * DrawTileOffset.x), position.width - RightWidth - LeftWidth - minBorder);
-        float posy = Mathf.Clamp(StartDrawWorldPosition.y, -(WorldData.Columns * 0.5f * DrawTileOffset.y + WorldData.Rows * 0.5f * DrawTileOffset.y), position.height - DrawTileOffset.y * 4);
+        Vector2 worldSize = new Vector2(WorldData.Columns * 0.5f * DrawTileOffset.x + WorldData.Rows * 0.5f * DrawTileOffset.x, WorldData.Columns * 0.5f * DrawTileOffset.y + WorldData.Rows * 0.5f * DrawTileOffset.y);
+        float posx = Mathf.Clamp(StartDrawWorldPosition.x, -worldSize.x, position.width - RightWidth - LeftWidth - minBorder + worldSize.x);
+        float posy = Mathf.Clamp(StartDrawWorldPosition.y, -worldSize.y, position.height - DrawTileOffset.y * 4 + worldSize.y);
         StartDrawWorldPosition = new Vector2(posx, posy);
         List<List<TileData>> tileData = WorldData.GetTileData();
         for (int i = 0; i < tileData.Count; i++) {
@@ -253,11 +262,48 @@ public class LevelEditor : EditorWindow {
     }
 
     private void DrawRightSide() {
-        float posY = Offset;
         float posX = position.width - RightWidth + Offset;
-        float buttonSize = 100;
+        float posY = Offset;
 
-        SscrollPos = GUI.BeginScrollView(new Rect(position.width - RightWidth, 0, RightWidth, position.height), SscrollPos, new Rect(position.width - RightWidth, 0, RightWidth - 20, Mathf.CeilToInt((float)TileSetsData.Tiles.Length / 3) * (buttonSize + Offset)));
+        int editLenght = Enum.GetNames(typeof(EditType)).Length;
+        for (int i = 0; i < editLenght; i++) {
+            float tabWidth = ((float)(RightWidth - (editLenght + 1) * Offset) / editLenght);
+            EditType editType = (EditType)i;
+            Color startColor = GUI.color;
+            if (SelectedEdit == editType) {
+                GUI.color = Color.green;
+            }
+            if (GUI.Button(new Rect(posX, posY, tabWidth, LineHeight), editType.ToString())) {
+                if (SelectedEdit != editType) {
+                    SelectedTile = null;
+                    SelectedEdit = editType;
+                }
+            }
+            GUI.color = startColor;
+            posX += tabWidth + Offset;
+        }
+
+
+        posX = position.width - RightWidth + Offset;
+        posY += LineHeight + Offset;
+
+        switch (SelectedEdit) {
+            case EditType.Building:
+                DrawBuildingEdit(posX, posY);
+                break;
+            case EditType.Tiles:
+                DrawTileEdit(posX, posY);
+                break;
+            case EditType.Track:
+                DrawTrackEdit(posX, posY);
+                break;
+        }
+
+    }
+
+    private void DrawTileEdit(float posX, float posY) {
+        float buttonSize = 100;
+        ScrollPos = GUI.BeginScrollView(new Rect(position.width - RightWidth, posY, RightWidth, position.height - posY), ScrollPos, new Rect(position.width - RightWidth, posY, RightWidth - 20, Mathf.CeilToInt((float)TileSetsData.Tiles.Length / 3) * (buttonSize + Offset)));
 
         for (int i = 0; i < TileSetsData.Tiles.Length; i++) {
             Sprite sprite = TileSetsData.Tiles[i].GetSpriteForRotation(Rotation);
@@ -280,8 +326,17 @@ public class LevelEditor : EditorWindow {
         }
 
         GUI.EndScrollView();
+
     }
 
 
+    private void DrawBuildingEdit(float posX, float posY) {
+        //TODO
+
+    }
+
+    private void DrawTrackEdit(float posX, float posY) {
+
+    }
 
 }
