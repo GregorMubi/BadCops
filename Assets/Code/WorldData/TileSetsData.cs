@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityScript.Lang;
+﻿using UnityEngine;
 
 public class TileSetsData : ScriptableObject {
     public TilePrefabController EmptyTile;

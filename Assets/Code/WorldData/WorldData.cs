@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.OleDb;
 using UnityEngine;
-using UnityScript.Lang;
 
 public class WorldData : ScriptableObject {
 
@@ -12,6 +9,7 @@ public class WorldData : ScriptableObject {
     [SerializeField] public int Columns = 0;
     [SerializeField] private List<TilePrefabController> TilePrefabs;
     [SerializeField] private List<int> Rotations;
+    [SerializeField] public TrackData TrackData = null;
 
     public void SetTile(int column, int row, TileData tile) {
         TilePrefabs[row * Columns + column] = tile.TilePrefab;

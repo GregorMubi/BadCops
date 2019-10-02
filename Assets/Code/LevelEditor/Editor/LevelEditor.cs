@@ -20,16 +20,22 @@ public class LevelEditor : EditorWindow {
 
     // local parameters
     private bool IsRightClick = false;
+    private bool IsLeftClick = false;
     private int Rotation = 0;
     private Vector2 ScrollPos = Vector2.zero;
     private Vector2 PrevMousePosition = Vector2.zero;
     private Vector2 DrawTileOffset = new Vector2(67, 33.5f);
     private Vector2 StartDrawWorldPosition = Vector2.zero;
     private WorldData WorldData = null;
+    private EditType SelectedEdit = EditType.Tiles;
+
+    // edit tiles parameters
     private TileSetsData TileSetsData = null;
     private TilePrefabController SelectedTile = null;
     private List<List<Vector2>> TileCenterPositions = new List<List<Vector2>>();
-    private EditType SelectedEdit = EditType.Tiles;
+
+    // edit track parameters
+    private int SelectedKeyframeIndex = -1;
 
     private enum EditType {
         Tiles = 0,
@@ -132,6 +138,7 @@ public class LevelEditor : EditorWindow {
         HandleTouch();
         GUI.BeginGroup(new Rect(LeftWidth, 0, position.width - LeftWidth - RightWidth, position.height));
 
+        // draw tiles
         TileCenterPositions.Clear();
         float minBorder = 200;
         Vector2 worldSize = new Vector2(WorldData.Columns * 0.5f * DrawTileOffset.x + WorldData.Rows * 0.5f * DrawTileOffset.x, WorldData.Columns * 0.5f * DrawTileOffset.y + WorldData.Rows * 0.5f * DrawTileOffset.y);
@@ -152,9 +159,32 @@ public class LevelEditor : EditorWindow {
 
                 Vector2 centerPos = tileDrawPos + DrawTileOffset + Vector2.right * LeftWidth;
                 tileCenterRow.Add(centerPos);
-                //Debug.Log("tile " + i + "/" + j + " pos: " + centerPos.x + "/" + centerPos.y);
             }
             TileCenterPositions.Add(tileCenterRow);
+        }
+
+        //draw track edit if selected
+        if (SelectedEdit == EditType.Track) {
+            float keySize = 20;
+            for (int i = 0; i < WorldData.TrackData.Keyframes.Count; i++) {
+                TrackKeyframeData keyframe1 = WorldData.TrackData.Keyframes[i];
+                Vector2 pos = keyframe1.Position + StartDrawWorldPosition - new Vector2(LeftWidth, 0);
+                Color startColor = GUI.color;
+
+                if (i > 0) {
+                    TrackKeyframeData keyframe0 = WorldData.TrackData.Keyframes[i - 1];
+                    Vector2 prevPos = keyframe0.Position + StartDrawWorldPosition - new Vector2(LeftWidth, 0);
+                    Vector3 p1 = new Vector3(prevPos.x, prevPos.y, 0);
+                    Vector3 p2 = new Vector3(pos.x, pos.y, 0);
+                    Vector3 t1 = p1 - (new Vector3(Mathf.Sin(keyframe0.Rotation * Mathf.Deg2Rad), Mathf.Cos(keyframe0.Rotation * Mathf.Deg2Rad), 0)).normalized * keyframe0.RotationPower;
+                    Vector3 t2 = p2 + (new Vector3(Mathf.Sin(keyframe1.Rotation * Mathf.Deg2Rad), Mathf.Cos(keyframe1.Rotation * Mathf.Deg2Rad), 0)).normalized * keyframe1.RotationPower;
+                    Handles.DrawBezier(p1, p2, t1, t2, Color.blue, null, 3);
+                }
+
+                GUI.color = i == SelectedKeyframeIndex ? Color.green : Color.red;
+                GUI.Box(new Rect(pos.x - keySize * 0.5f, pos.y - keySize * 0.5f, keySize, keySize), "");
+                GUI.color = startColor;
+            }
         }
 
         GUI.EndGroup();
@@ -173,6 +203,20 @@ public class LevelEditor : EditorWindow {
             PrevMousePosition = GUIUtility.GUIToScreenPoint(e.mousePosition);
         }
 
+        if (e.type == EventType.MouseUp && e.button == 0) {
+            IsLeftClick = false;
+        } else if (e.type == EventType.MouseDown && e.button == 0) {
+            IsLeftClick = true;
+            PrevMousePosition = GUIUtility.GUIToScreenPoint(e.mousePosition);
+        }
+
+        // stop clicking if mouse exits window
+        if (e.type == EventType.MouseLeaveWindow) {
+            IsRightClick = false;
+            IsLeftClick = false;
+        }
+
+        // handle move map
         if (IsRightClick) {
             Vector2 mousePosition = GUIUtility.GUIToScreenPoint(e.mousePosition);
             Vector2 mouseDelta = mousePosition - PrevMousePosition;
@@ -181,6 +225,7 @@ public class LevelEditor : EditorWindow {
             Repaint();
         }
 
+        // handle rotate map
         if (e.type == EventType.KeyDown && e.keyCode == KeyCode.R) {
             if (e.shift) {
                 WorldData.Rotate();
@@ -190,33 +235,86 @@ public class LevelEditor : EditorWindow {
             Repaint();
         }
 
+
         //dont process click if you click outside main window
         if (e.mousePosition.x < LeftWidth || e.mousePosition.y < 0 || e.mousePosition.x > position.width - RightWidth || e.mousePosition.y > position.height) {
+            IsRightClick = false;
+            IsLeftClick = false;
             return;
         }
 
-        if (e.type == EventType.MouseDown && e.button == 0) {
-            if (SelectedTile != null) {
-                Vector2 mousePosition = e.mousePosition;
-                //Debug.Log("mouse pos: " + mousePosition.x + "/" + mousePosition.y);
-                int closestX = 0;
-                int closestY = 0;
-                float min_dist = (mousePosition - TileCenterPositions[0][0]).magnitude;
-                for (int i = 0; i < TileCenterPositions.Count; i++) {
-                    for (int j = 0; j < TileCenterPositions[i].Count; j++) {
-                        float dist = (mousePosition - TileCenterPositions[i][j]).magnitude;
-                        if (dist < min_dist) {
-                            min_dist = dist;
-                            closestX = j;
-                            closestY = i;
+        // handle edit tyles
+        if (SelectedEdit == EditType.Tiles) {
+            if (e.type == EventType.MouseDown && e.button == 0) {
+                if (SelectedTile != null) {
+                    Vector2 mousePosition = e.mousePosition;
+                    int closestX = 0;
+                    int closestY = 0;
+                    float minDist = (mousePosition - TileCenterPositions[0][0]).magnitude;
+                    for (int i = 0; i < TileCenterPositions.Count; i++) {
+                        for (int j = 0; j < TileCenterPositions[i].Count; j++) {
+                            float dist = (mousePosition - TileCenterPositions[i][j]).magnitude;
+                            if (dist < minDist) {
+                                minDist = dist;
+                                closestX = j;
+                                closestY = i;
+                            }
                         }
                     }
+                    if (minDist < DrawTileOffset.magnitude) {
+                        TileData tile = new TileData(SelectedTile, Rotation);
+                        WorldData.SetTile(closestX, closestY, tile);
+                        Repaint();
+                    }
                 }
-                if (min_dist < DrawTileOffset.magnitude) {
-                    TileData tile = new TileData(SelectedTile, Rotation);
-                    WorldData.SetTile(closestX, closestY, tile);
-                    Repaint();
+            }
+        }
+
+        // handle edit track
+        if (SelectedEdit == EditType.Track) {
+            if (e.type == EventType.MouseDown && e.button == 0) {
+                Vector2 mousePosition = e.mousePosition;
+                int keyFrameIndex = -1;
+                if (WorldData.TrackData == null) {
+                    WorldData.TrackData = new TrackData();
                 }
+
+                if (WorldData.TrackData.Keyframes.Count > 0) {
+                    int closestIndex = 0;
+                    float minDist = (mousePosition - StartDrawWorldPosition - WorldData.TrackData.Keyframes[0].Position).magnitude;
+                    for (int i = 1; i < WorldData.TrackData.Keyframes.Count; i++) {
+                        float dist = (mousePosition - StartDrawWorldPosition - WorldData.TrackData.Keyframes[i].Position).magnitude;
+                        if (dist < minDist) {
+                            minDist = dist;
+                            closestIndex = i;
+                        }
+                    }
+
+                    if (minDist < 30) {
+                        keyFrameIndex = closestIndex;
+                    }
+                }
+
+                if (keyFrameIndex < 0) {
+                    WorldData.TrackData.Keyframes.Add(new TrackKeyframeData(mousePosition - StartDrawWorldPosition, 0, 50));
+                    SelectedKeyframeIndex = WorldData.TrackData.Keyframes.Count - 1;
+                } else {
+                    SelectedKeyframeIndex = keyFrameIndex;
+                }
+                Repaint();
+            }
+
+            if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Escape) {
+                SelectedKeyframeIndex = -1;
+                Repaint();
+            }
+
+            if (IsLeftClick && SelectedKeyframeIndex >= 0) {
+                Vector2 mousePosition = GUIUtility.GUIToScreenPoint(e.mousePosition);
+                Vector2 mouseDelta = mousePosition - PrevMousePosition;
+                WorldData.TrackData.Keyframes[SelectedKeyframeIndex].Position += mouseDelta;
+                PrevMousePosition = mousePosition;
+                Repaint();
             }
         }
     }
@@ -336,7 +434,58 @@ public class LevelEditor : EditorWindow {
     }
 
     private void DrawTrackEdit(float posX, float posY) {
+        if (WorldData == null) {
+            EditorGUI.LabelField(new Rect(posX, posY, RightWidth, LineHeight), "Select or create world first!");
+            return;
+        }
 
+        if (SelectedKeyframeIndex >= WorldData.TrackData.Keyframes.Count) {
+            SelectedKeyframeIndex = -1;
+        }
+
+        if (SelectedKeyframeIndex < 0) {
+            EditorGUI.LabelField(new Rect(posX, posY, RightWidth, LineHeight), "Select or add a keyframe!");
+            return;
+        }
+
+        float tagWidth = 20;
+        float intFieldWidth = (((float)RightWidth - Offset) / 2) - tagWidth - Offset;
+        float buttonWidth = (float)(RightWidth - Offset) / 2 - Offset;
+        TrackKeyframeData keyframe = WorldData.TrackData.Keyframes[SelectedKeyframeIndex];
+
+        posY += LineHeight;
+        if (GUI.Button(new Rect(posX, posY, buttonWidth, LineHeight), "DELETE")) {
+            WorldData.TrackData.Keyframes.Remove(keyframe);
+            SelectedKeyframeIndex = -1;
+            return;
+        }
+
+        EditorGUI.BeginDisabledGroup(SelectedKeyframeIndex == 0);
+        if (GUI.Button(new Rect(posX + buttonWidth + Offset, posY, buttonWidth, LineHeight), "INSERT NEW KEY")) {
+            TrackKeyframeData newKey;
+            TrackKeyframeData prevKey = WorldData.TrackData.Keyframes[SelectedKeyframeIndex - 1];
+            newKey = new TrackKeyframeData((prevKey.Position + keyframe.Position) * 0.5f, (prevKey.Rotation + keyframe.Rotation) * 0.5f, (prevKey.RotationPower + keyframe.RotationPower) * 0.5f);
+            WorldData.TrackData.Keyframes.Insert(SelectedKeyframeIndex, newKey);
+        }
+        EditorGUI.EndDisabledGroup();
+
+        posY += 2 * LineHeight;
+
+        EditorGUI.LabelField(new Rect(posX, posY, RightWidth, LineHeight), "Position");
+        posY += LineHeight;
+        EditorGUI.LabelField(new Rect(posX, posY, tagWidth, LineHeight), "X:");
+        keyframe.Position.x = EditorGUI.FloatField(new Rect(posX + tagWidth, posY, intFieldWidth, LineHeight), keyframe.Position.x);
+        EditorGUI.LabelField(new Rect(posX + tagWidth + intFieldWidth + Offset, posY, tagWidth, LineHeight), "Y:");
+        keyframe.Position.y = EditorGUI.FloatField(new Rect(posX + 2 * tagWidth + intFieldWidth + Offset, posY, intFieldWidth, LineHeight), keyframe.Position.y);
+        posY += LineHeight + Offset;
+
+        EditorGUI.LabelField(new Rect(posX, posY, RightWidth, LineHeight), "Rotation");
+        posY += LineHeight;
+        keyframe.Rotation = EditorGUI.Slider(new Rect(posX, posY, RightWidth - 2 * Offset, LineHeight), keyframe.Rotation, 0, 360);
+        posY += LineHeight;
+        EditorGUI.LabelField(new Rect(posX, posY, RightWidth, LineHeight), "Power");
+        posY += LineHeight;
+        keyframe.RotationPower = EditorGUI.Slider(new Rect(posX, posY, RightWidth - 2 * Offset, LineHeight), keyframe.RotationPower, 1, 200);
     }
 
 }
