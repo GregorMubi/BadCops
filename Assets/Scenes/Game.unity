@@ -252,7 +252,6 @@ GameObject:
   m_Component:
   - component: {fileID: 434441796}
   - component: {fileID: 434441795}
-  - component: {fileID: 434441794}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -260,14 +259,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &434441794
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 434441793}
-  m_Enabled: 1
 --- !u!20 &434441795
 Camera:
   m_ObjectHideFlags: 0
@@ -550,6 +541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2013885255}
   - component: {fileID: 2013885256}
+  - component: {fileID: 2013885257}
   m_Layer: 0
   m_Name: WorldLoader
   m_TagString: Untagged
@@ -584,5 +576,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f79d2333c8bbbc14fae2dd1b602816b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WorldData: {fileID: 11400000, guid: 6ba6a3fa6dad4574eb82d6edd157349c, type: 2}
+  WorldData: {fileID: 11400000, guid: a42ad60418e6da545adb18567cfee5ac, type: 2}
   PrefabParent: {fileID: 1955050813}
+  TrackMoveController: {fileID: 2013885257}
+--- !u!114 &2013885257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013885254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f33b1e074757d04185f661f6b605388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToMove: {fileID: 359573650}
+  ObjectToRotate: {fileID: 22471579}

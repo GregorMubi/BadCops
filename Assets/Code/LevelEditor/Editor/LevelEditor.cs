@@ -58,7 +58,9 @@ public class LevelEditor : EditorWindow {
         DrawLeftSide();
         GUI.Box(new Rect(LeftWidth, 0, LineWidth, position.height), "");
         DrawMiddle();
-        DrawAddRemoveButtons();
+        if (SelectedEdit == EditType.Tiles) {
+            DrawAddRemoveButtons();
+        }
         GUI.Box(new Rect(position.width - RightWidth, 0, LineWidth, position.height), "");
         DrawRightSide();
     }
@@ -273,7 +275,7 @@ public class LevelEditor : EditorWindow {
         // handle edit track
         if (SelectedEdit == EditType.Track) {
             if (e.type == EventType.MouseDown && e.button == 0) {
-                Vector2 mousePosition = e.mousePosition;
+                Vector2 mousePosition = e.mousePosition - StartDrawWorldPosition;
                 int keyFrameIndex = -1;
                 if (WorldData.TrackData == null) {
                     WorldData.TrackData = new TrackData();
@@ -281,9 +283,9 @@ public class LevelEditor : EditorWindow {
 
                 if (WorldData.TrackData.Keyframes.Count > 0) {
                     int closestIndex = 0;
-                    float minDist = (mousePosition - StartDrawWorldPosition - WorldData.TrackData.Keyframes[0].Position).magnitude;
+                    float minDist = (mousePosition - WorldData.TrackData.Keyframes[0].Position).magnitude;
                     for (int i = 1; i < WorldData.TrackData.Keyframes.Count; i++) {
-                        float dist = (mousePosition - StartDrawWorldPosition - WorldData.TrackData.Keyframes[i].Position).magnitude;
+                        float dist = (mousePosition - WorldData.TrackData.Keyframes[i].Position).magnitude;
                         if (dist < minDist) {
                             minDist = dist;
                             closestIndex = i;
@@ -296,7 +298,7 @@ public class LevelEditor : EditorWindow {
                 }
 
                 if (keyFrameIndex < 0) {
-                    WorldData.TrackData.Keyframes.Add(new TrackKeyframeData(mousePosition - StartDrawWorldPosition, 0, 50));
+                    WorldData.TrackData.Keyframes.Add(new TrackKeyframeData(mousePosition, 0, 50, 0));
                     SelectedKeyframeIndex = WorldData.TrackData.Keyframes.Count - 1;
                 } else {
                     SelectedKeyframeIndex = keyFrameIndex;
@@ -434,17 +436,29 @@ public class LevelEditor : EditorWindow {
     }
 
     private void DrawTrackEdit(float posX, float posY) {
+
+        GUI.Box(new Rect(posX, posY + 5, RightWidth - 2 * Offset, 1), "");
+
+        posY += LineHeight;
         if (WorldData == null) {
-            EditorGUI.LabelField(new Rect(posX, posY, RightWidth, LineHeight), "Select or create world first!");
+            EditorGUI.LabelField(new Rect(posX + 20, posY, RightWidth, LineHeight), "Select or create world first!");
             return;
         }
+
+        if (GUI.Button(new Rect(posX, posY, RightWidth - 2 * Offset, LineHeight), "SYNC rotation to carRotation")) {
+            for (int i = 0; i < WorldData.TrackData.Keyframes.Count; i++) {
+                WorldData.TrackData.Keyframes[i].CarRotation = WorldData.TrackData.Keyframes[i].Rotation;
+            }
+        }
+        posY += LineHeight;
 
         if (SelectedKeyframeIndex >= WorldData.TrackData.Keyframes.Count) {
             SelectedKeyframeIndex = -1;
         }
 
         if (SelectedKeyframeIndex < 0) {
-            EditorGUI.LabelField(new Rect(posX, posY, RightWidth, LineHeight), "Select or add a keyframe!");
+            posY += LineHeight;
+            EditorGUI.LabelField(new Rect(posX + 20, posY, RightWidth, LineHeight), "Select or add a keyframe!");
             return;
         }
 
@@ -453,7 +467,7 @@ public class LevelEditor : EditorWindow {
         float buttonWidth = (float)(RightWidth - Offset) / 2 - Offset;
         TrackKeyframeData keyframe = WorldData.TrackData.Keyframes[SelectedKeyframeIndex];
 
-        posY += LineHeight;
+        posY += Offset;
         if (GUI.Button(new Rect(posX, posY, buttonWidth, LineHeight), "DELETE")) {
             WorldData.TrackData.Keyframes.Remove(keyframe);
             SelectedKeyframeIndex = -1;
@@ -464,7 +478,7 @@ public class LevelEditor : EditorWindow {
         if (GUI.Button(new Rect(posX + buttonWidth + Offset, posY, buttonWidth, LineHeight), "INSERT NEW KEY")) {
             TrackKeyframeData newKey;
             TrackKeyframeData prevKey = WorldData.TrackData.Keyframes[SelectedKeyframeIndex - 1];
-            newKey = new TrackKeyframeData((prevKey.Position + keyframe.Position) * 0.5f, (prevKey.Rotation + keyframe.Rotation) * 0.5f, (prevKey.RotationPower + keyframe.RotationPower) * 0.5f);
+            newKey = new TrackKeyframeData((prevKey.Position + keyframe.Position) * 0.5f, (prevKey.Rotation + keyframe.Rotation) * 0.5f, (prevKey.RotationPower + keyframe.RotationPower) * 0.5f, (prevKey.Rotation + keyframe.Rotation) * 0.5f);
             WorldData.TrackData.Keyframes.Insert(SelectedKeyframeIndex, newKey);
         }
         EditorGUI.EndDisabledGroup();
@@ -477,15 +491,19 @@ public class LevelEditor : EditorWindow {
         keyframe.Position.x = EditorGUI.FloatField(new Rect(posX + tagWidth, posY, intFieldWidth, LineHeight), keyframe.Position.x);
         EditorGUI.LabelField(new Rect(posX + tagWidth + intFieldWidth + Offset, posY, tagWidth, LineHeight), "Y:");
         keyframe.Position.y = EditorGUI.FloatField(new Rect(posX + 2 * tagWidth + intFieldWidth + Offset, posY, intFieldWidth, LineHeight), keyframe.Position.y);
-        posY += LineHeight + Offset;
+        posY += 2 * LineHeight + Offset;
 
         EditorGUI.LabelField(new Rect(posX, posY, RightWidth, LineHeight), "Rotation");
         posY += LineHeight;
         keyframe.Rotation = EditorGUI.Slider(new Rect(posX, posY, RightWidth - 2 * Offset, LineHeight), keyframe.Rotation, 0, 360);
-        posY += LineHeight;
+        posY += 2 * LineHeight;
         EditorGUI.LabelField(new Rect(posX, posY, RightWidth, LineHeight), "Power");
         posY += LineHeight;
         keyframe.RotationPower = EditorGUI.Slider(new Rect(posX, posY, RightWidth - 2 * Offset, LineHeight), keyframe.RotationPower, 1, 200);
+        posY += 2 * LineHeight;
+        EditorGUI.LabelField(new Rect(posX, posY, RightWidth, LineHeight), "CarRotation");
+        posY += LineHeight;
+        keyframe.CarRotation = EditorGUI.Slider(new Rect(posX, posY, RightWidth - 2 * Offset, LineHeight), keyframe.CarRotation, 0, 360);
     }
 
 }

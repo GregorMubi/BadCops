@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldLoaderController : MonoBehaviour {
+
     [SerializeField] private WorldData WorldData = null;
     [SerializeField] private Transform PrefabParent = null;
+    [SerializeField] private TrackMoveController TrackMoveController = null;
 
     private Vector3 TileOffset = new Vector3(0.67f, -0.335f, 0);
-
 
     void Start() {
         if (WorldData == null) {
@@ -29,6 +30,8 @@ public class WorldLoaderController : MonoBehaviour {
                 tileController.SetRotation(tileData[i][j].Rotation);
             }
         }
+
+        TrackMoveController.SetTrack(WorldData.TrackData);
     }
 
     void Update() {
