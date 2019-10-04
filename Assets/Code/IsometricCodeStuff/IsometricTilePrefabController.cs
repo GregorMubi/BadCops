@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class TilePrefabController : MonoBehaviour {
+﻿using UnityEngine;
+public class IsometricTilePrefabController : MonoBehaviour {
 
     [SerializeField] private SpriteRenderer SpriteRenderer = null;
 

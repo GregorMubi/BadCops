@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrackMoveController : MonoBehaviour {
+public class IsometricTrackMoveController : MonoBehaviour {
 
     [SerializeField] private Transform ObjectToMove = null;
     [SerializeField] private Transform ObjectToRotate = null;
@@ -11,11 +11,11 @@ public class TrackMoveController : MonoBehaviour {
     private int KeyframeIndex = 0;
     private float TrackProgress = 0;
     private Vector3 PrevPosition = Vector3.zero;
-    private TrackData TrackData = null;
+    private IsometricTrackData TrackData = null;
 
     private float MovementSpeed = 1f;
 
-    public void SetTrack(TrackData trackData) {
+    public void SetTrack(IsometricTrackData trackData) {
         TrackData = trackData;
         StartMoving();
 
@@ -40,8 +40,8 @@ public class TrackMoveController : MonoBehaviour {
                 }
             }
 
-            TrackKeyframeData keyframe0 = TrackData.Keyframes[KeyframeIndex];
-            TrackKeyframeData keyframe1 = TrackData.Keyframes[KeyframeIndex + 1];
+            IsometricTrackKeyframeData keyframe0 = TrackData.Keyframes[KeyframeIndex];
+            IsometricTrackKeyframeData keyframe1 = TrackData.Keyframes[KeyframeIndex + 1];
             Vector3 p1 = keyframe0.Position;
             Vector3 p2 = keyframe1.Position;
             Vector3 t1 =

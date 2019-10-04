@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
-public class LevelEditor : EditorWindow {
+public class IsometricLevelEditor : EditorWindow {
 
     // const parameters
     private const String WorldDataPath = "Assets/Resources/Data/Worlds/";
@@ -21,12 +20,12 @@ public class LevelEditor : EditorWindow {
     private Vector2 PrevMousePosition = Vector2.zero;
     private Vector2 DrawTileOffset = new Vector2(67, 33.5f);
     private Vector2 StartDrawWorldPosition = Vector2.zero;
-    private WorldData WorldData = null;
+    private IsometricWorldData WorldData = null;
     private EditType SelectedEdit = EditType.Tiles;
 
     // edit tiles parameters
-    private TileSetsData TileSetsData = null;
-    private TilePrefabController SelectedTile = null;
+    private IsometricTileSetsData TileSetsData = null;
+    private IsometricTilePrefabController SelectedTile = null;
     private List<List<Vector2>> TileCenterPositions = new List<List<Vector2>>();
 
     // edit track parameters
@@ -40,14 +39,14 @@ public class LevelEditor : EditorWindow {
 
     [MenuItem("Cool guy menu/Open Level Editor")]
     static void Init() {
-        LevelEditor window = (LevelEditor)EditorWindow.GetWindow(typeof(LevelEditor));
+        IsometricLevelEditor window = (IsometricLevelEditor)EditorWindow.GetWindow(typeof(IsometricLevelEditor));
         window.minSize = new Vector2(1000, 600);
         window.Show();
     }
 
     void OnGUI() {
         if (TileSetsData == null) {
-            TileSetsData = AssetDatabase.LoadAssetAtPath<TileSetsData>("Assets/Resources/Data/TileData/TileDataSet.asset");
+            TileSetsData = AssetDatabase.LoadAssetAtPath<IsometricTileSetsData>("Assets/Resources/Data/TileData/TileDataSet.asset");
         }
 
         DrawLeftSide();
@@ -71,7 +70,7 @@ public class LevelEditor : EditorWindow {
         }
         y += LineHeight + Offset;
 
-        WorldData = (WorldData)EditorGUI.ObjectField(new Rect(Offset, y, 180, LineHeight), WorldData, typeof(WorldData), false);
+        WorldData = (IsometricWorldData)EditorGUI.ObjectField(new Rect(Offset, y, 180, LineHeight), WorldData, typeof(IsometricWorldData), false);
         y += LineHeight + Offset;
 
         int numberOfButtons = 2;
@@ -108,12 +107,12 @@ public class LevelEditor : EditorWindow {
     }
 
     private void CreateNewWorld(String name) {
-        WorldData = new WorldData();
+        WorldData = new IsometricWorldData();
         WorldData.WorldName = name;
-        TilePrefabController initialBlock = TileSetsData.EmptyTile;
-        List<TileData> line = new List<TileData>();
-        List<List<TileData>> row = new List<List<TileData>>();
-        TileData tile = new TileData(initialBlock, 0);
+        IsometricTilePrefabController initialBlock = TileSetsData.EmptyTile;
+        List<IsometricTileData> line = new List<IsometricTileData>();
+        List<List<IsometricTileData>> row = new List<List<IsometricTileData>>();
+        IsometricTileData tile = new IsometricTileData(initialBlock, 0);
         line.Add(tile);
         row.Add((line));
         WorldData.SetTileData(row);
@@ -142,7 +141,7 @@ public class LevelEditor : EditorWindow {
         float posx = Mathf.Clamp(StartDrawWorldPosition.x, -worldSize.x, position.width - RightWidth - LeftWidth - minBorder + worldSize.x);
         float posy = Mathf.Clamp(StartDrawWorldPosition.y, -worldSize.y, position.height - DrawTileOffset.y * 4 + worldSize.y);
         StartDrawWorldPosition = new Vector2(posx, posy);
-        List<List<TileData>> tileData = WorldData.GetTileData();
+        List<List<IsometricTileData>> tileData = WorldData.GetTileData();
         for (int i = 0; i < tileData.Count; i++) {
             List<Vector2> tileCenterRow = new List<Vector2>();
             Vector2 drawPos = StartDrawWorldPosition + new Vector2(-DrawTileOffset.x, DrawTileOffset.y) * i;
@@ -164,12 +163,12 @@ public class LevelEditor : EditorWindow {
         if (SelectedEdit == EditType.Track) {
             float keySize = 20;
             for (int i = 0; i < WorldData.TrackData.Keyframes.Count; i++) {
-                TrackKeyframeData keyframe1 = WorldData.TrackData.Keyframes[i];
+                IsometricTrackKeyframeData keyframe1 = WorldData.TrackData.Keyframes[i];
                 Vector2 pos = keyframe1.Position + StartDrawWorldPosition - new Vector2(LeftWidth, 0);
                 Color startColor = GUI.color;
 
                 if (i > 0) {
-                    TrackKeyframeData keyframe0 = WorldData.TrackData.Keyframes[i - 1];
+                    IsometricTrackKeyframeData keyframe0 = WorldData.TrackData.Keyframes[i - 1];
                     Vector2 prevPos = keyframe0.Position + StartDrawWorldPosition - new Vector2(LeftWidth, 0);
                     Vector3 p1 = new Vector3(prevPos.x, prevPos.y, 0);
                     Vector3 p2 = new Vector3(pos.x, pos.y, 0);
@@ -259,7 +258,7 @@ public class LevelEditor : EditorWindow {
                         }
                     }
                     if (minDist < DrawTileOffset.magnitude) {
-                        TileData tile = new TileData(SelectedTile, Rotation);
+                        IsometricTileData tile = new IsometricTileData(SelectedTile, Rotation);
                         WorldData.SetTile(closestX, closestY, tile);
                         Repaint();
                     }
@@ -273,7 +272,7 @@ public class LevelEditor : EditorWindow {
                 Vector2 mousePosition = e.mousePosition - StartDrawWorldPosition;
                 int keyFrameIndex = -1;
                 if (WorldData.TrackData == null) {
-                    WorldData.TrackData = new TrackData();
+                    WorldData.TrackData = new IsometricTrackData();
                 }
 
                 if (WorldData.TrackData.Keyframes.Count > 0) {
@@ -293,7 +292,7 @@ public class LevelEditor : EditorWindow {
                 }
 
                 if (keyFrameIndex < 0) {
-                    WorldData.TrackData.Keyframes.Add(new TrackKeyframeData(mousePosition, 0, 50, 0));
+                    WorldData.TrackData.Keyframes.Add(new IsometricTrackKeyframeData(mousePosition, 0, 50, 0));
                     SelectedKeyframeIndex = WorldData.TrackData.Keyframes.Count - 1;
                 } else {
                     SelectedKeyframeIndex = keyFrameIndex;
@@ -320,7 +319,7 @@ public class LevelEditor : EditorWindow {
         int buttonSize = 23;
 
         if (GUI.Button(new Rect(LeftWidth + Offset, Offset, buttonSize, buttonSize), "+")) {
-            TileData tile = new TileData(TileSetsData.EmptyTile, 0);
+            IsometricTileData tile = new IsometricTileData(TileSetsData.EmptyTile, 0);
             WorldData.InsertWest(tile);
             StartDrawWorldPosition -= DrawTileOffset;
         }
@@ -330,7 +329,7 @@ public class LevelEditor : EditorWindow {
         }
 
         if (GUI.Button(new Rect(position.width - RightWidth - Offset * 2 - buttonSize * 2, Offset, buttonSize, buttonSize), "+")) {
-            TileData tile = new TileData(TileSetsData.EmptyTile, 0);
+            IsometricTileData tile = new IsometricTileData(TileSetsData.EmptyTile, 0);
             WorldData.InsertNorth(tile);
             StartDrawWorldPosition += new Vector2(DrawTileOffset.x, -DrawTileOffset.y);
         }
@@ -340,7 +339,7 @@ public class LevelEditor : EditorWindow {
         }
 
         if (GUI.Button(new Rect(LeftWidth + Offset, position.height - buttonSize - Offset, buttonSize, buttonSize), "+")) {
-            TileData tile = new TileData(TileSetsData.EmptyTile, 0);
+            IsometricTileData tile = new IsometricTileData(TileSetsData.EmptyTile, 0);
             WorldData.InsertSouth(tile);
         }
         if (GUI.Button(new Rect(LeftWidth + Offset + buttonSize + Offset, position.height - buttonSize - Offset, buttonSize, buttonSize), "-")) {
@@ -348,7 +347,7 @@ public class LevelEditor : EditorWindow {
         }
 
         if (GUI.Button(new Rect(position.width - RightWidth - Offset * 2 - buttonSize * 2, position.height - buttonSize - Offset, buttonSize, buttonSize), "+")) {
-            TileData tile = new TileData(TileSetsData.EmptyTile, 0);
+            IsometricTileData tile = new IsometricTileData(TileSetsData.EmptyTile, 0);
             WorldData.InsertEast(tile);
         }
         if (GUI.Button(new Rect(position.width - RightWidth - Offset - buttonSize, position.height - buttonSize - Offset, buttonSize, buttonSize), "-")) {
@@ -460,7 +459,7 @@ public class LevelEditor : EditorWindow {
         float tagWidth = 20;
         float intFieldWidth = (((float)RightWidth - Offset) / 2) - tagWidth - Offset;
         float buttonWidth = (float)(RightWidth - Offset) / 2 - Offset;
-        TrackKeyframeData keyframe = WorldData.TrackData.Keyframes[SelectedKeyframeIndex];
+        IsometricTrackKeyframeData keyframe = WorldData.TrackData.Keyframes[SelectedKeyframeIndex];
 
         posY += Offset;
         if (GUI.Button(new Rect(posX, posY, buttonWidth, LineHeight), "DELETE")) {
@@ -471,9 +470,9 @@ public class LevelEditor : EditorWindow {
 
         EditorGUI.BeginDisabledGroup(SelectedKeyframeIndex == 0);
         if (GUI.Button(new Rect(posX + buttonWidth + Offset, posY, buttonWidth, LineHeight), "INSERT NEW KEY")) {
-            TrackKeyframeData newKey;
-            TrackKeyframeData prevKey = WorldData.TrackData.Keyframes[SelectedKeyframeIndex - 1];
-            newKey = new TrackKeyframeData((prevKey.Position + keyframe.Position) * 0.5f, (prevKey.Rotation + keyframe.Rotation) * 0.5f, (prevKey.RotationPower + keyframe.RotationPower) * 0.5f, (prevKey.Rotation + keyframe.Rotation) * 0.5f);
+            IsometricTrackKeyframeData newKey;
+            IsometricTrackKeyframeData prevKey = WorldData.TrackData.Keyframes[SelectedKeyframeIndex - 1];
+            newKey = new IsometricTrackKeyframeData((prevKey.Position + keyframe.Position) * 0.5f, (prevKey.Rotation + keyframe.Rotation) * 0.5f, (prevKey.RotationPower + keyframe.RotationPower) * 0.5f, (prevKey.Rotation + keyframe.Rotation) * 0.5f);
             WorldData.TrackData.Keyframes.Insert(SelectedKeyframeIndex, newKey);
         }
         EditorGUI.EndDisabledGroup();
