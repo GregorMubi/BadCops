@@ -1,12 +1,7 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using NUnit.Framework.Constraints;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class LevelEditor : EditorWindow {
 
@@ -43,7 +38,7 @@ public class LevelEditor : EditorWindow {
         Track = 2,
     }
 
-    [MenuItem("Level Editor/Open Editor")]
+    [MenuItem("Cool guy menu/Open Level Editor")]
     static void Init() {
         LevelEditor window = (LevelEditor)EditorWindow.GetWindow(typeof(LevelEditor));
         window.minSize = new Vector2(1000, 600);
