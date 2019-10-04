@@ -9,7 +9,7 @@ public class WeaponObjectDebug : MonoBehaviour
     {
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.F)) {
-            weaponController.FireWeapon();
+            weaponController.FireWeapon(Vector3.right);
         }
 
 #endif
