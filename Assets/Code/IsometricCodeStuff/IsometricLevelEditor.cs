@@ -46,7 +46,7 @@ public class IsometricLevelEditor : EditorWindow {
 
     void OnGUI() {
         if (TileSetsData == null) {
-            TileSetsData = AssetDatabase.LoadAssetAtPath<IsometricTileSetsData>("Assets/Resources/Data/TileData/TileDataSet.asset");
+            TileSetsData = AssetDatabase.LoadAssetAtPath<IsometricTileSetsData>("Assets/Resources/IsometricResources/TileDataSet.asset");
         }
 
         DrawLeftSide();
