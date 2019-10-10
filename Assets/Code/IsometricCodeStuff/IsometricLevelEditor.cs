@@ -5,7 +5,7 @@ using UnityEngine;
 public class IsometricLevelEditor : EditorWindow {
 
     // const parameters
-    private const String WorldDataPath = "Assets/Resources/Data/Worlds/";
+    private const String WorldDataPath = "Assets/Resources/IsometricResources/Worlds/";
     private const int LeftWidth = 200;
     private const int RightWidth = 340;
     private const int LineHeight = 20;
