@@ -10,10 +10,13 @@ public class EditorInittializer : MonoBehaviour {
 
     const string FirstScenePath = "Assets/Scenes/MainMenu.unity";
     private const string PreviousSceneKey = "EditorInittializer-PreviousSceneKey";
+    static HashSet<string> excludedScenes = new HashSet<string>();
 
     static EditorInittializer() {
         EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
         EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+
+        excludedScenes.Add("Assets/Scenes/LevelEditor.unity");
     }
 
     private static void OnPlayModeStateChanged(PlayModeStateChange playModeStateChange) {
@@ -27,7 +30,9 @@ public class EditorInittializer : MonoBehaviour {
                 return;
             }
 
-            EditorSceneManager.OpenScene(FirstScenePath);
+            if (!excludedScenes.Contains(EditorApplication.currentScene)) {
+                EditorSceneManager.OpenScene(FirstScenePath);
+            }
         }
 
         //change to the scene that was launched from
