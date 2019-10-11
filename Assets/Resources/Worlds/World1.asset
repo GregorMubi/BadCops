@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43cdda7046d07a346a5bac917cf65cce, type: 3}
   m_Name: World1
   m_EditorClassIdentifier: 
+  SpawnPosition: {x: 9, y: 0.8, z: 9}
+  SpawnRotation: 0
   Tiles:
   - Rotation: 0
     Position: {x: 0, y: 0, z: 0}
