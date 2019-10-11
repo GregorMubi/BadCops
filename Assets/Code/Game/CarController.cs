@@ -59,7 +59,6 @@ public class CarController : MonoBehaviour
                 break;
         }
         targetRotation = Quaternion.AngleAxis(angle, Vector3.up);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10 * smooth * Time.deltaTime);
 
     }
 
@@ -81,6 +80,7 @@ public class CarController : MonoBehaviour
     }
 
     private void Move() {
-        transform.localPosition += transform.forward * Speed/100;
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10 * smooth * Time.deltaTime);
+        transform.localPosition -= transform.forward * Speed/10;
     }
 }

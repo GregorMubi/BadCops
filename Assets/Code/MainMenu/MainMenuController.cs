@@ -12,6 +12,10 @@ public class MainMenuController : MonoBehaviour {
     {
         SceneManager.LoadScene("WeaponSandbox");
     }
+    public void TestCarMovement()
+    {
+        SceneManager.LoadScene("CarTest");
+    }
 
 
     public void Exit() {
