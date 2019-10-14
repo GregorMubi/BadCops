@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43cdda7046d07a346a5bac917cf65cce, type: 3}
-  m_Name: world1
+  m_Name: World1
   m_EditorClassIdentifier: 
   SpawnPosition: {x: 0, y: 0, z: 0}
   SpawnRotation: 0
