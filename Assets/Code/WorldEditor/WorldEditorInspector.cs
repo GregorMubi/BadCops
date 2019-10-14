@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 [CustomEditor((typeof(WorldEditor)))]
@@ -103,6 +104,10 @@ public class WorldEditorInspector : Editor {
                     break;
                 }
                 TileController tileController = WorldEditor.TileSetData.Tiles[iconIndex];
+                if (tileController.Icon == null) {
+                    LinkIconsToPrefabs();
+                }
+
                 if (GUILayout.Button(tileController.Icon, GUILayout.Width(iconSize), GUILayout.Height(iconSize))) {
                     if (selectedTile != null) {
                         TileController newTile = Instantiate(tileController);
@@ -127,6 +132,15 @@ public class WorldEditorInspector : Editor {
             EditorGUILayout.EndHorizontal();
         }
 
+    }
+
+    public static void LinkIconsToPrefabs() {
+        TileSetData tsd = AssetDatabase.LoadAssetAtPath<TileSetData>("Assets/Resources/Prefabs/tileSet.asset");
+        for (int i = 0; i < tsd.Tiles.Length; i++) {
+            string prefabName = tsd.Tiles[i].name;
+            string path = "Assets/Resources/Prefabs/TileIcons/" + prefabName + ".png";
+            tsd.Tiles[i].Icon = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+        }
     }
 
     private void CreateNewWorld(String name) {
