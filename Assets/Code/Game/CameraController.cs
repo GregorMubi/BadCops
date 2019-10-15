@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
-{
-    [SerializeField]
-    CarController carController;
+public class CameraController : MonoBehaviour {
 
-    Vector3 offset;
-    void Start()
-    {
-        offset = transform.localPosition;
+    [SerializeField] private GameObject ObjectToFollow = null;
+
+    Vector3 Offset = new Vector3(2.5f, 5, -5);
+    void Start() {
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        transform.localPosition = carController.transform.localPosition + offset;
+    void Update() {
+        transform.position = ObjectToFollow.transform.position + Offset;
+        transform.LookAt(ObjectToFollow.transform);
     }
 }
