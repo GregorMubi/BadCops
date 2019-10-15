@@ -6,22 +6,22 @@ public class WorldLoader : MonoBehaviour {
 
     [SerializeField] private WorldData WorldData = null;
     [SerializeField] private Transform TileParent = null;
-
-    //TODO move this to player/car controller
-    [SerializeField] private Transform PlayerPositionTransform = null;
-    [SerializeField] private Transform PlayerRotationTransform = null;
+    [SerializeField] private Transform PlayeTransform = null;
 
     private List<TileController> LoadedTiles = new List<TileController>();
 
     void Start() {
         LoadWorld(WorldData);
-
-        PlayerPositionTransform.position = WorldData.SpawnPosition;
-        PlayerRotationTransform.eulerAngles = new Vector3(0, WorldData.SpawnRotation, 0);
+        SetPlayerPosition();
     }
 
     void Update() {
 
+    }
+
+    public void SetPlayerPosition() {
+        PlayeTransform.position = WorldData.SpawnPosition;
+        PlayeTransform.eulerAngles = new Vector3(0, WorldData.SpawnRotation, 0);
     }
 
     public void LoadWorld(WorldData worldData) {

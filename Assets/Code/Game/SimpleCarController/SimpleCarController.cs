@@ -9,13 +9,18 @@ public class SimpleCarController : MonoBehaviour {
     [SerializeField] private List<SimpleAxleData> Axels = new List<SimpleAxleData>();
     [SerializeField] private float MaxMotorTorque = 400f;
     [SerializeField] private float MaxSteeringAngle = 30f;
+    [SerializeField] private float BreakForce = 1;
 
     private float CurrentBrakeTorque = 0f;
+
+    void Start() {
+        RigidBody.centerOfMass += new Vector3(0, -0.2f, 0);
+    }
 
     void Update() {
         // BRAKE
         if (Input.GetButton("Brake")) {
-            CurrentBrakeTorque = 100;
+            CurrentBrakeTorque = BreakForce;
         } else {
             CurrentBrakeTorque = 0f;
         }
