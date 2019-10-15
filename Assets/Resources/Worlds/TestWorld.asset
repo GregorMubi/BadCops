@@ -2747,3 +2747,455 @@ MonoBehaviour:
     Position: {x: -21, y: 1.1, z: 48}
     TilePrefab: {fileID: 2493429955278726613, guid: d54756bb09de6da4eba695d300e1571d,
       type: 3}
+  - Rotation: 180
+    Position: {x: -24, y: 0, z: -6}
+    TilePrefab: {fileID: 783943507099755788, guid: cffc64e5ee2508a4aa518ecef8b714d8,
+      type: 3}
+  - Rotation: 180
+    Position: {x: -27, y: 0, z: -6}
+    TilePrefab: {fileID: 8430094978114418767, guid: 7160400ac98b26e43babfe999003cf0f,
+      type: 3}
+  - Rotation: 180
+    Position: {x: -27, y: 0, z: -3}
+    TilePrefab: {fileID: 5489409085995045003, guid: a94bd2327afaa654c889075f76b17a4e,
+      type: 3}
+  - Rotation: 180
+    Position: {x: -24, y: 0, z: -3}
+    TilePrefab: {fileID: 1180422253886405, guid: 162658d1247a1e6429a2b8d215c5a673,
+      type: 3}
+  - Rotation: 270
+    Position: {x: -24, y: 0, z: 6}
+    TilePrefab: {fileID: 1180422253886405, guid: 162658d1247a1e6429a2b8d215c5a673,
+      type: 3}
+  - Rotation: 270
+    Position: {x: -24, y: 0, z: 9}
+    TilePrefab: {fileID: 5489409085995045003, guid: a94bd2327afaa654c889075f76b17a4e,
+      type: 3}
+  - Rotation: 270
+    Position: {x: -27, y: 0, z: 6}
+    TilePrefab: {fileID: 783943507099755788, guid: cffc64e5ee2508a4aa518ecef8b714d8,
+      type: 3}
+  - Rotation: 270
+    Position: {x: -27, y: 0, z: 9}
+    TilePrefab: {fileID: 8430094978114418767, guid: 7160400ac98b26e43babfe999003cf0f,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -27, y: 0, z: 3}
+    TilePrefab: {fileID: 8800143393811256227, guid: c255d811b373620449bee61da8b16fe2,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -27, y: 0, z: 0}
+    TilePrefab: {fileID: 8800143393811256227, guid: c255d811b373620449bee61da8b16fe2,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -24, y: 0, z: 3}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -24, y: 0, z: 0}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -24, y: 0, z: -12}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -27, y: 0, z: -12}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -24, y: 0, z: -9}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -27, y: 0, z: -9}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -24, y: 0, z: 36}
+    TilePrefab: {fileID: 5297689469431200690, guid: 3912c984b9e89944489464acbdb99cf5,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -24, y: 0, z: 39}
+    TilePrefab: {fileID: 4942855562935782796, guid: 3b3a76f30c497204cbdada6069a0bcdc,
+      type: 3}
+  - Rotation: 269.99997
+    Position: {x: -24, y: 0, z: 42}
+    TilePrefab: {fileID: 4272292935983960194, guid: 2f1e966680d7a3448aafbf106df2cb24,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -27, y: 0, z: 36}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0.000017075474
+    Position: {x: -30, y: 0, z: 33}
+    TilePrefab: {fileID: 4933942751579876880, guid: be22071366cfa54468683817d4afa4a2,
+      type: 3}
+  - Rotation: 270
+    Position: {x: -24, y: 0, z: 24}
+    TilePrefab: {fileID: 4933942751579876880, guid: be22071366cfa54468683817d4afa4a2,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -27, y: 0, z: 27}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -27, y: 0, z: 30}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -24, y: 0, z: 30}
+    TilePrefab: {fileID: 5297689469431200690, guid: 3912c984b9e89944489464acbdb99cf5,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -24, y: 0, z: 27}
+    TilePrefab: {fileID: 5297689469431200690, guid: 3912c984b9e89944489464acbdb99cf5,
+      type: 3}
+  - Rotation: 180
+    Position: {x: -27, y: 0, z: 33}
+    TilePrefab: {fileID: 5297689469431200690, guid: 3912c984b9e89944489464acbdb99cf5,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -24, y: 0, z: 33}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: -0.000030735853
+    Position: {x: -24, y: 1.1, z: 33}
+    TilePrefab: {fileID: 4272292935983960194, guid: 2f1e966680d7a3448aafbf106df2cb24,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 36}
+    TilePrefab: {fileID: 4237522937709175009, guid: d288e58418194b840a0f51427b6cd6e8,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 27}
+    TilePrefab: {fileID: 4237522937709175009, guid: d288e58418194b840a0f51427b6cd6e8,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 39}
+    TilePrefab: {fileID: 4237522937709175009, guid: d288e58418194b840a0f51427b6cd6e8,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -27, y: 0, z: 39}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 30}
+    TilePrefab: {fileID: 4237522937709175009, guid: d288e58418194b840a0f51427b6cd6e8,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 24}
+    TilePrefab: {fileID: 4589537138325629672, guid: 2eb87ad5a684f7745b5b07b80cade74d,
+      type: 3}
+  - Rotation: 270
+    Position: {x: -27, y: 0, z: 24}
+    TilePrefab: {fileID: 4237522937709175009, guid: d288e58418194b840a0f51427b6cd6e8,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: -12}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: -9}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: -6}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: -3}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 0}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 3}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 6}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 9}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 12}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -24, y: 0, z: 21}
+    TilePrefab: {fileID: 783943507099755788, guid: cffc64e5ee2508a4aa518ecef8b714d8,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -24, y: 0, z: 18}
+    TilePrefab: {fileID: 8430094978114418767, guid: 7160400ac98b26e43babfe999003cf0f,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -27, y: 0, z: 18}
+    TilePrefab: {fileID: 5489409085995045003, guid: a94bd2327afaa654c889075f76b17a4e,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -27, y: 0, z: 21}
+    TilePrefab: {fileID: 1180422253886405, guid: 162658d1247a1e6429a2b8d215c5a673,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 18}
+    TilePrefab: {fileID: 8800143393811256227, guid: c255d811b373620449bee61da8b16fe2,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -24, y: 0, z: 15}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -24, y: 0, z: 12}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -27, y: 0, z: 12}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -27, y: 0, z: 15}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 15}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 21}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -33, y: 0, z: 15}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -30, y: 0, z: 15}
+    TilePrefab: {fileID: 332091552010757501, guid: b42940d73a7726546851f7cdf8938aa4,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -24, y: 0, z: 45}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -27, y: 0, z: 45}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 45}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -33, y: 0, z: 45}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 42}
+    TilePrefab: {fileID: 8800143393811256227, guid: c255d811b373620449bee61da8b16fe2,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -27, y: 0, z: 42}
+    TilePrefab: {fileID: 8800143393811256227, guid: c255d811b373620449bee61da8b16fe2,
+      type: 3}
+  - Rotation: 270
+    Position: {x: -33, y: 0, z: 42}
+    TilePrefab: {fileID: 5489409085995045003, guid: a94bd2327afaa654c889075f76b17a4e,
+      type: 3}
+  - Rotation: 270
+    Position: {x: -33, y: 0, z: 39}
+    TilePrefab: {fileID: 1180422253886405, guid: 162658d1247a1e6429a2b8d215c5a673,
+      type: 3}
+  - Rotation: 270
+    Position: {x: -36, y: 0, z: 39}
+    TilePrefab: {fileID: 783943507099755788, guid: cffc64e5ee2508a4aa518ecef8b714d8,
+      type: 3}
+  - Rotation: 270
+    Position: {x: -36, y: 0, z: 42}
+    TilePrefab: {fileID: 8430094978114418767, guid: 7160400ac98b26e43babfe999003cf0f,
+      type: 3}
+  - Rotation: 180
+    Position: {x: -33, y: 0, z: 18}
+    TilePrefab: {fileID: 783943507099755788, guid: cffc64e5ee2508a4aa518ecef8b714d8,
+      type: 3}
+  - Rotation: 180
+    Position: {x: -36, y: 0, z: 18}
+    TilePrefab: {fileID: 8430094978114418767, guid: 7160400ac98b26e43babfe999003cf0f,
+      type: 3}
+  - Rotation: 180
+    Position: {x: -36, y: 0, z: 21}
+    TilePrefab: {fileID: 5489409085995045003, guid: a94bd2327afaa654c889075f76b17a4e,
+      type: 3}
+  - Rotation: 180
+    Position: {x: -33, y: 0, z: 21}
+    TilePrefab: {fileID: 1180422253886405, guid: 162658d1247a1e6429a2b8d215c5a673,
+      type: 3}
+  - Rotation: 179.99998
+    Position: {x: -36, y: 0, z: 33}
+    TilePrefab: {fileID: 4272292935983960194, guid: 2f1e966680d7a3448aafbf106df2cb24,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -33, y: 0, z: 33}
+    TilePrefab: {fileID: 8800143393811256227, guid: c255d811b373620449bee61da8b16fe2,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -36, y: 0, z: 36}
+    TilePrefab: {fileID: 8800143393811256227, guid: c255d811b373620449bee61da8b16fe2,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -36, y: 0, z: 27}
+    TilePrefab: {fileID: 8800143393811256227, guid: c255d811b373620449bee61da8b16fe2,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -36, y: 0, z: 24}
+    TilePrefab: {fileID: 8800143393811256227, guid: c255d811b373620449bee61da8b16fe2,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -36, y: 0, z: 30}
+    TilePrefab: {fileID: 8800143393811256227, guid: c255d811b373620449bee61da8b16fe2,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -33, y: 0, z: 24}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -33, y: 0, z: 27}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -33, y: 0, z: 30}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -33, y: 0, z: 36}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -36, y: 0, z: 15}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -39, y: 0, z: 15}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -42, y: 0, z: 15}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -42, y: 0, z: 18}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -42, y: 0, z: 21}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -42, y: 0, z: 24}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -42, y: 0, z: 27}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -42, y: 0, z: 30}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -42, y: 0, z: 33}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -24, y: 0, z: 48}
+    TilePrefab: {fileID: 8526078246912615176, guid: 849d52c1c0baabd488060ac67ae44279,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -27, y: 0, z: 48}
+    TilePrefab: {fileID: 8526078246912615176, guid: 849d52c1c0baabd488060ac67ae44279,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -30, y: 0, z: 48}
+    TilePrefab: {fileID: 8526078246912615176, guid: 849d52c1c0baabd488060ac67ae44279,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -33, y: 0, z: 48}
+    TilePrefab: {fileID: 8526078246912615176, guid: 849d52c1c0baabd488060ac67ae44279,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -36, y: 0, z: 45}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -36, y: 0, z: 48}
+    TilePrefab: {fileID: 8526078246912615176, guid: 849d52c1c0baabd488060ac67ae44279,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -42, y: 0, z: 36}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -42, y: 0, z: 39}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -42, y: 0, z: 42}
+    TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -39, y: 0, z: 48}
+    TilePrefab: {fileID: 8526078246912615176, guid: 849d52c1c0baabd488060ac67ae44279,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -42, y: 0, z: 48}
+    TilePrefab: {fileID: 8526078246912615176, guid: 849d52c1c0baabd488060ac67ae44279,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -39, y: 0, z: 45}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -39, y: 0, z: 42}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -42, y: 0, z: 45}
+    TilePrefab: {fileID: 8526078246912615176, guid: 849d52c1c0baabd488060ac67ae44279,
+      type: 3}
+  - Rotation: 270
+    Position: {x: -39, y: 0, z: 39}
+    TilePrefab: {fileID: 2071675027488000753, guid: 01176729e922e294c9b38ec02d13d82a,
+      type: 3}
+  - Rotation: 90
+    Position: {x: -39, y: 0, z: 36}
+    TilePrefab: {fileID: 2071675027488000753, guid: 01176729e922e294c9b38ec02d13d82a,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -39, y: 0, z: 33}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -39, y: 0, z: 18}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -39, y: 0, z: 30}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -39, y: 0, z: 27}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -39, y: 0, z: 21}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
+  - Rotation: 0
+    Position: {x: -39, y: 0, z: 24}
+    TilePrefab: {fileID: 7439437497652250349, guid: dbc914f9fd9cc774d9a7e1ac3056f099,
+      type: 3}
