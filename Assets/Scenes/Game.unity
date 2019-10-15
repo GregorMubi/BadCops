@@ -347,8 +347,9 @@ MonoBehaviour:
   Axels:
   - {fileID: 706974098}
   - {fileID: 1736292637}
-  MaxMotorTorque: 200
+  MaxMotorTorque: 30
   MaxSteeringAngle: 30
+  BreakForce: 1
 --- !u!54 &359573652
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -357,7 +358,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 359573649}
   serializedVersion: 2
-  m_Mass: 1500
+  m_Mass: 150
   m_Drag: 0.3
   m_AngularDrag: 0.3
   m_UseGravity: 1

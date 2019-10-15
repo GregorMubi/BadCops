@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43cdda7046d07a346a5bac917cf65cce, type: 3}
+  m_Name: testWorld2
+  m_EditorClassIdentifier: 
+  SpawnPosition: {x: 0, y: 0, z: 0}
+  SpawnRotation: 0
+  Tiles:
+  - Rotation: 0
+    Position: {x: 0, y: 0, z: 0}
+    TilePrefab: {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457,
+      type: 3}
