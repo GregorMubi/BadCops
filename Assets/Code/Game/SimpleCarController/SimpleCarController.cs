@@ -17,20 +17,11 @@ public class SimpleCarController : MonoBehaviour {
     }
 
     void Update() {
-        // JUMP
-        if (Input.GetButtonDown("Jump")) {
-            RigidBody.AddForce(RigidBody.centerOfMass + new Vector3(0f, 100, 0f), ForceMode.Impulse);
-        }
-
-        // BOOST
-        if (Input.GetButton("Boost")) {
-            RigidBody.AddForce(transform.forward * 1000, ForceMode.Impulse);
-        }
     }
 
     void FixedUpdate() {
         // INPUT
-        float motor = MaxMotorTorque * Input.GetAxis("Accelerator");
+        float motor = MaxMotorTorque * Input.GetAxis("Vertical");
         float steering = MaxSteeringAngle * Input.GetAxis("Horizontal");
         double angle = AngleBetweenVectors(RigidBody.velocity, RigidBody.transform.forward);
         bool isMovingForward = angle < 90 && angle > -90;
