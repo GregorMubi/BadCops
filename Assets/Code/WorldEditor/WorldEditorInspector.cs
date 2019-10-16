@@ -58,6 +58,10 @@ public class WorldEditorInspector : Editor {
             return;
         }
 
+        if (WorldEditor.TileSetData.ShowTileInEditor == null || WorldEditor.TileSetData.ShowTileInEditor.Length != WorldEditor.TileSetData.Tiles.Length) {
+            WorldEditor.TileSetData.ShowTileInEditor = new bool[WorldEditor.TileSetData.Tiles.Length];
+        }
+
         GameObject selection = null;
         try {
             selection = (GameObject)Selection.activeObject; ;
@@ -72,8 +76,16 @@ public class WorldEditorInspector : Editor {
                 }
             }
         }
-
         GUILayout.Space(10f);
+        WorldEditor.ShowMode = EditorGUILayout.Toggle("Show Mode:", WorldEditor.ShowMode);
+        if (WorldEditor.ShowMode) {
+            if (GUILayout.Button("Set all ON")) {
+                for (int i = 0; i < WorldEditor.TileSetData.ShowTileInEditor.Length; i++) {
+                    WorldEditor.TileSetData.ShowTileInEditor[i] = true;
+                }
+            }
+        }
+
         GUILayout.Label("Tile functions:");
         GUILayout.BeginHorizontal();
         EditorGUI.BeginDisabledGroup(selectedTile == null);
@@ -99,7 +111,8 @@ public class WorldEditorInspector : Editor {
         int iconIndex = 0;
         while (iconIndex < WorldEditor.TileSetData.Tiles.Length) {
             EditorGUILayout.BeginHorizontal();
-            for (int i = 0; i < iconsPerRow; i++) {
+            int drawnButtons = 0;
+            while (drawnButtons < iconsPerRow) {
                 if (iconIndex >= WorldEditor.TileSetData.Tiles.Length) {
                     break;
                 }
@@ -108,24 +121,34 @@ public class WorldEditorInspector : Editor {
                     LinkIconsToPrefabs();
                 }
 
-                if (GUILayout.Button(tileController.Icon, GUILayout.Width(iconSize), GUILayout.Height(iconSize))) {
-                    if (selectedTile != null) {
-                        TileController newTile = Instantiate(tileController);
-                        newTile.transform.SetParent(WorldEditor.transform);
-                        newTile.transform.position = selectedTile.transform.position;
-                        int tileIndex = LoadedTiles.IndexOf(selectedTile);
-                        LoadedTiles[tileIndex] = newTile;
-                        DestroyImmediate(selectedTile.gameObject);
-                        Selection.activeObject = newTile;
-                    } else {
-                        TileController newTile = Instantiate(tileController);
-                        newTile.transform.SetParent(WorldEditor.transform);
-                        newTile.transform.position = WorldEditor.LastSelectedPosition;
-                        LoadedTiles.Add(newTile);
-                        Selection.activeObject = newTile;
+                if (WorldEditor.ShowMode || WorldEditor.TileSetData.ShowTileInEditor[iconIndex]) {
+                    if (!WorldEditor.TileSetData.ShowTileInEditor[iconIndex]) {
+                        GUI.color = Color.red;
                     }
-                    Repaint();
-
+                    if (GUILayout.Button(tileController.Icon, GUILayout.Width(iconSize), GUILayout.Height(iconSize))) {
+                        if (WorldEditor.ShowMode) {
+                            WorldEditor.TileSetData.ShowTileInEditor[iconIndex] = !WorldEditor.TileSetData.ShowTileInEditor[iconIndex];
+                        } else {
+                            if (selectedTile != null) {
+                                TileController newTile = Instantiate(tileController);
+                                newTile.transform.SetParent(WorldEditor.transform);
+                                newTile.transform.position = selectedTile.transform.position;
+                                int tileIndex = LoadedTiles.IndexOf(selectedTile);
+                                LoadedTiles[tileIndex] = newTile;
+                                DestroyImmediate(selectedTile.gameObject);
+                                Selection.activeObject = newTile;
+                            } else {
+                                TileController newTile = Instantiate(tileController);
+                                newTile.transform.SetParent(WorldEditor.transform);
+                                newTile.transform.position = WorldEditor.LastSelectedPosition;
+                                LoadedTiles.Add(newTile);
+                                Selection.activeObject = newTile;
+                            }
+                        }
+                        Repaint();
+                    }
+                    drawnButtons++;
+                    GUI.color = startColor;
                 }
                 iconIndex++;
             }
