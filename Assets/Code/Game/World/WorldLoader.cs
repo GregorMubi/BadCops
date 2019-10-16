@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class WorldLoader : MonoBehaviour {
 
-    [SerializeField] private WorldData WorldData = null;
     [SerializeField] private Transform TileParent = null;
-    [SerializeField] private Transform PlayeTransform = null;
+    [SerializeField] private Rigidbody PlayerRigidBody = null;
+    private WorldData WorldData = null;
 
     private List<TileController> LoadedTiles = new List<TileController>();
 
     void Start() {
+        WorldData = LevelManager.Instance.GetWorld();
         LoadWorld(WorldData);
         SetPlayerPosition();
     }
@@ -20,11 +21,13 @@ public class WorldLoader : MonoBehaviour {
     }
 
     public void SetPlayerPosition() {
-        PlayeTransform.position = WorldData.SpawnPosition;
-        PlayeTransform.eulerAngles = new Vector3(0, WorldData.SpawnRotation, 0);
+        PlayerRigidBody.transform.position = WorldData.SpawnPosition;
+        PlayerRigidBody.transform.eulerAngles = new Vector3(0, WorldData.SpawnRotation, 0);
+        PlayerRigidBody.velocity = Vector3.zero;
+        PlayerRigidBody.angularVelocity = Vector3.zero;
     }
 
-    public void LoadWorld(WorldData worldData) {
+    private void LoadWorld(WorldData worldData) {
         foreach (TileData tile in worldData.Tiles) {
             TileController tileController = Instantiate(tile.TilePrefab);
             tileController.transform.SetParent(TileParent);
@@ -32,5 +35,20 @@ public class WorldLoader : MonoBehaviour {
             tileController.transform.position = tile.Position;
             LoadedTiles.Add(tileController);
         }
+    }
+
+    private void UnloadWorld() {
+        foreach (TileController tile in LoadedTiles) {
+            Destroy(tile.gameObject);
+        }
+        LoadedTiles.Clear();
+    }
+
+    public void LevelCompleted() {
+        UnloadWorld();
+        LevelManager.Instance.NextLevel();
+        WorldData = LevelManager.Instance.GetWorld();
+        LoadWorld(WorldData);
+        SetPlayerPosition();
     }
 }
