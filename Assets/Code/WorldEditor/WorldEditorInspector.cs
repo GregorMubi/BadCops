@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 [CustomEditor((typeof(WorldEditor)))]
 public class WorldEditorInspector : Editor {
 
+    private enum EditType {
+        World = 0,
+        Buildings = 1,
+        AI = 2,
+    }
+
     private const String WorldDataPath = "Assets/Resources/Worlds/";
     private WorldEditor WorldEditor;
     private List<TileController> LoadedTiles = new List<TileController>();
+    private EditType CurrentEditType = EditType.World;
+    private List<GameObject> HumanSpanerGameObjects = new List<GameObject>();
+    private int CurrentHumanSpawnerIndex = -1;
 
     public override void OnInspectorGUI() {
         if (WorldEditor == null) {
@@ -18,10 +26,13 @@ public class WorldEditorInspector : Editor {
                 return;
             }
         }
+
         GUILayout.Space(10f);
 
-        WorldEditor.TileSetData = (TileSetData)EditorGUILayout.ObjectField(WorldEditor.TileSetData, typeof(TileSetData), false);
-        WorldEditor.WorldData = (WorldData)EditorGUILayout.ObjectField(WorldEditor.WorldData, typeof(WorldData), false);
+        WorldEditor.TileSetData =
+            (TileSetData)EditorGUILayout.ObjectField(WorldEditor.TileSetData, typeof(TileSetData), false);
+        WorldEditor.WorldData =
+            (WorldData)EditorGUILayout.ObjectField(WorldEditor.WorldData, typeof(WorldData), false);
 
         GUILayout.Space(10f);
         GUILayout.Label("World data functions:");
@@ -36,10 +47,12 @@ public class WorldEditorInspector : Editor {
         if (WorldEditor.WorldData != null && LoadedTiles.Count <= 0) {
             GUI.color = Color.green;
         }
+
         EditorGUI.BeginDisabledGroup(WorldEditor.WorldData == null);
         if (GUILayout.Button("LOAD")) {
             LoadWorld();
         }
+
         GUI.color = startColor;
 
         EditorGUI.EndDisabledGroup();
@@ -48,9 +61,11 @@ public class WorldEditorInspector : Editor {
             SaveWorld();
             UnloadWorld();
         }
+
         if (GUILayout.Button("SAVE")) {
             SaveWorld();
         }
+
         EditorGUI.EndDisabledGroup();
         GUILayout.EndHorizontal();
 
@@ -58,15 +73,53 @@ public class WorldEditorInspector : Editor {
             return;
         }
 
-        if (WorldEditor.TileSetData.ShowTileInEditor == null || WorldEditor.TileSetData.ShowTileInEditor.Length != WorldEditor.TileSetData.Tiles.Length) {
+        if (WorldEditor.TileSetData.ShowTileInEditor == null || WorldEditor.TileSetData.ShowTileInEditor.Length !=
+            WorldEditor.TileSetData.Tiles.Length) {
             WorldEditor.TileSetData.ShowTileInEditor = new bool[WorldEditor.TileSetData.Tiles.Length];
         }
 
+        GUILayout.Space(5f);
+        GUILayout.Label("Select edit type:");
+        GUILayout.BeginHorizontal();
+        foreach (EditType type in Enum.GetValues(typeof(EditType))) {
+            if (type == CurrentEditType) {
+                GUI.color = Color.green;
+            }
+            if (GUILayout.Button(type.ToString())) {
+                CurrentEditType = type;
+                if (CurrentHumanSpawnerIndex < HumanSpanerGameObjects.Count && CurrentHumanSpawnerIndex >= 0) {
+                    if (type == EditType.AI) {
+                        HumanSpanerGameObjects[CurrentHumanSpawnerIndex].SetActive(true);
+                    } else {
+                        HumanSpanerGameObjects[CurrentHumanSpawnerIndex].SetActive(false);
+                    }
+                }
+            }
+            GUI.color = startColor;
+        }
+        GUILayout.EndHorizontal();
+
+        switch (CurrentEditType) {
+            case EditType.World:
+                DrawWorldEdit();
+                break;
+            case EditType.Buildings:
+                DrawBuildingsEdit();
+                break;
+            case EditType.AI:
+                DrawAIEdit();
+                break;
+        }
+    }
+
+    private void DrawWorldEdit() {
         GameObject selection = null;
         try {
-            selection = (GameObject)Selection.activeObject; ;
+            selection = (GameObject)Selection.activeObject;
+            ;
         } catch {
         }
+
         TileController selectedTile = null;
         if (selection != null) {
             selectedTile = selection.GetComponent<TileController>();
@@ -76,12 +129,15 @@ public class WorldEditorInspector : Editor {
                 }
             }
         }
+
         GUILayout.Space(10f);
         WorldEditor.ShowMode = EditorGUILayout.Toggle("Show Mode:", WorldEditor.ShowMode);
         if (WorldEditor.ShowMode) {
             if (GUILayout.Button("Set all ON")) {
                 for (int i = 0; i < WorldEditor.TileSetData.ShowTileInEditor.Length; i++) {
                     WorldEditor.TileSetData.ShowTileInEditor[i] = true;
+                    EditorUtility.SetDirty(WorldEditor.TileSetData);
+                    AssetDatabase.SaveAssets();
                 }
             }
         }
@@ -121,6 +177,7 @@ public class WorldEditorInspector : Editor {
                     LinkIconsToPrefabs();
                 }
 
+                Color startColor = GUI.color;
                 if (WorldEditor.ShowMode || WorldEditor.TileSetData.ShowTileInEditor[iconIndex]) {
                     if (!WorldEditor.TileSetData.ShowTileInEditor[iconIndex]) {
                         GUI.color = Color.red;
@@ -128,6 +185,8 @@ public class WorldEditorInspector : Editor {
                     if (GUILayout.Button(tileController.Icon, GUILayout.Width(iconSize), GUILayout.Height(iconSize))) {
                         if (WorldEditor.ShowMode) {
                             WorldEditor.TileSetData.ShowTileInEditor[iconIndex] = !WorldEditor.TileSetData.ShowTileInEditor[iconIndex];
+                            EditorUtility.SetDirty(WorldEditor.TileSetData);
+                            AssetDatabase.SaveAssets();
                         } else {
                             if (selectedTile != null) {
                                 TileController newTile = Instantiate(tileController);
@@ -154,7 +213,74 @@ public class WorldEditorInspector : Editor {
             }
             EditorGUILayout.EndHorizontal();
         }
+    }
 
+    private void DrawBuildingsEdit() {
+        GUILayout.Space(5f);
+        GUILayout.Label("Work in progress...");
+    }
+
+    private void DrawAIEdit() {
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("NEW")) {
+            if (CurrentHumanSpawnerIndex < HumanSpanerGameObjects.Count && CurrentHumanSpawnerIndex >= 0) {
+                HumanSpanerGameObjects[CurrentHumanSpawnerIndex].SetActive(false);
+            }
+            GameObject locator = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            locator.transform.SetParent(WorldEditor.transform);
+            locator.transform.localScale = Vector3.one * 0.5f;
+            locator.transform.position = Vector3.up;
+            HumanSpanerGameObjects.Add(locator);
+            WorldEditor.WorldData.HumanSpawnerDatas.Add(new HumanSpawnerData());
+            CurrentHumanSpawnerIndex = HumanSpanerGameObjects.Count - 1;
+            Repaint();
+        }
+
+        EditorGUI.BeginDisabledGroup(CurrentHumanSpawnerIndex < 0 || CurrentHumanSpawnerIndex >= HumanSpanerGameObjects.Count);
+        if (GUILayout.Button("DELETE")) {
+            HumanSpanerGameObjects.Remove(HumanSpanerGameObjects[CurrentHumanSpawnerIndex]);
+            WorldEditor.WorldData.HumanSpawnerDatas.RemoveAt(CurrentHumanSpawnerIndex);
+            DestroyImmediate(HumanSpanerGameObjects[CurrentHumanSpawnerIndex]);
+            Repaint();
+        }
+        EditorGUI.EndDisabledGroup();
+        GUILayout.EndHorizontal();
+
+        if (WorldEditor.WorldData.HumanSpawnerDatas.Count == 0) {
+            return;
+        }
+
+        if (CurrentHumanSpawnerIndex >= HumanSpanerGameObjects.Count || CurrentHumanSpawnerIndex < 0) {
+            CurrentHumanSpawnerIndex = 0;
+        }
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Spawners " + (CurrentHumanSpawnerIndex + 1) + "/" + WorldEditor.WorldData.HumanSpawnerDatas.Count);
+        if (GUILayout.Button("<")) {
+            HumanSpanerGameObjects[CurrentHumanSpawnerIndex].SetActive(false);
+            CurrentHumanSpawnerIndex -= 1;
+            if (CurrentHumanSpawnerIndex < 0) {
+                CurrentHumanSpawnerIndex = WorldEditor.WorldData.HumanSpawnerDatas.Count - 1;
+            }
+            HumanSpanerGameObjects[CurrentHumanSpawnerIndex].SetActive(true);
+            Repaint();
+        }
+        if (GUILayout.Button(">")) {
+            HumanSpanerGameObjects[CurrentHumanSpawnerIndex].SetActive(false);
+            CurrentHumanSpawnerIndex = (CurrentHumanSpawnerIndex + 1) % WorldEditor.WorldData.HumanSpawnerDatas.Count;
+            HumanSpanerGameObjects[CurrentHumanSpawnerIndex].SetActive(true);
+            Repaint();
+        }
+        GUILayout.EndHorizontal();
+
+        HumanSpawnerData data = WorldEditor.WorldData.HumanSpawnerDatas[CurrentHumanSpawnerIndex];
+        EditorGUI.BeginDisabledGroup(true);
+        data.Position = EditorGUILayout.Vector3Field("Position:", data.Position);
+        EditorGUI.EndDisabledGroup();
+        data.SpawnRadius = EditorGUILayout.FloatField("Radius:", data.SpawnRadius);
+        data.SpawnCooldown = EditorGUILayout.FloatField("Cooldown:", data.SpawnCooldown);
+        data.MaxNumberOfHumans = EditorGUILayout.IntField("MaxNumberOfHumans:", data.MaxNumberOfHumans);
+        data.MaxDistanceFromSpawn = EditorGUILayout.FloatField("MaxDistanceFromSpawn:", data.MaxDistanceFromSpawn);
     }
 
     public static void LinkIconsToPrefabs() {
@@ -177,19 +303,26 @@ public class WorldEditorInspector : Editor {
     }
 
     private void SaveWorld() {
-        if (LoadedTiles.Count == 0) {
-            return;
-        }
-
-        if (WorldEditor != null && WorldEditor.WorldData != null) {
-            WorldEditor.WorldData.Tiles.Clear();
-            for (int i = 0; i < LoadedTiles.Count; i++) {
-                WorldEditor.WorldData.Tiles.Add(new TileData(GetPrefab(LoadedTiles[i].name), LoadedTiles[i].transform.position, LoadedTiles[i].transform.eulerAngles.y));
+        if (LoadedTiles.Count > 0) {
+            if (WorldEditor != null && WorldEditor.WorldData != null) {
+                WorldEditor.WorldData.Tiles.Clear();
+                for (int i = 0; i < LoadedTiles.Count; i++) {
+                    WorldEditor.WorldData.Tiles.Add(new TileData(GetPrefab(LoadedTiles[i].name), LoadedTiles[i].transform.position, LoadedTiles[i].transform.eulerAngles.y));
+                }
             }
-
-            EditorUtility.SetDirty(WorldEditor.WorldData);
-            AssetDatabase.SaveAssets();
         }
+
+        if (HumanSpanerGameObjects.Count > 0) {
+            if (WorldEditor != null && WorldEditor.WorldData != null) {
+                for (int i = 0; i < HumanSpanerGameObjects.Count; i++) {
+                    if (WorldEditor.WorldData.HumanSpawnerDatas.Count > i) {
+                        WorldEditor.WorldData.HumanSpawnerDatas[i].Position = HumanSpanerGameObjects[i].transform.position;
+                    }
+                }
+            }
+        }
+        EditorUtility.SetDirty(WorldEditor.WorldData);
+        AssetDatabase.SaveAssets();
     }
 
     private TileController GetPrefab(string name) {
@@ -218,6 +351,14 @@ public class WorldEditorInspector : Editor {
             LoadedTiles.Add(tileController);
         }
 
+        foreach (HumanSpawnerData data in WorldEditor.WorldData.HumanSpawnerDatas) {
+            GameObject locator = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            locator.transform.SetParent(WorldEditor.transform);
+            locator.transform.localScale = Vector3.one * 0.5f;
+            locator.transform.position = data.Position;
+            locator.SetActive(false);
+            HumanSpanerGameObjects.Add(locator);
+        }
     }
 
     private void UnloadWorld() {
@@ -229,6 +370,11 @@ public class WorldEditorInspector : Editor {
             DestroyImmediate(tile.gameObject);
         }
         LoadedTiles.Clear();
+
+        foreach (GameObject spawnerGameObject in HumanSpanerGameObjects) {
+            DestroyImmediate(spawnerGameObject);
+        }
+        HumanSpanerGameObjects.Clear();
 
         List<GameObject> demons = new List<GameObject>();
         for (int i = 0; i < WorldEditor.transform.childCount; i++) {

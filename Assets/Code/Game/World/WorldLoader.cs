@@ -5,10 +5,12 @@ using UnityEngine;
 public class WorldLoader : MonoBehaviour {
 
     [SerializeField] private Transform TileParent = null;
+    [SerializeField] private Transform HumanSpawnerParent = null;
     [SerializeField] private Rigidbody PlayerRigidBody = null;
-    private WorldData WorldData = null;
 
+    private WorldData WorldData = null;
     private List<TileController> LoadedTiles = new List<TileController>();
+    private List<HumanSpawner> HumanSpawners = new List<HumanSpawner>();
 
     void Start() {
         WorldData = LevelManager.Instance.GetWorld();
@@ -35,6 +37,14 @@ public class WorldLoader : MonoBehaviour {
             tileController.transform.position = tile.Position;
             LoadedTiles.Add(tileController);
         }
+
+        HumanSpawner prefab = LevelManager.Instance.GetHumanSpawnerPrefab();
+        foreach (HumanSpawnerData data in worldData.HumanSpawnerDatas) {
+            HumanSpawner humanSpawner = Instantiate(prefab);
+            humanSpawner.transform.SetParent(HumanSpawnerParent);
+            humanSpawner.Init(data);
+            HumanSpawners.Add(humanSpawner);
+        }
     }
 
     private void UnloadWorld() {
@@ -42,6 +52,12 @@ public class WorldLoader : MonoBehaviour {
             Destroy(tile.gameObject);
         }
         LoadedTiles.Clear();
+
+        foreach (HumanSpawner spawner in HumanSpawners) {
+            spawner.DestroyHumans();
+            Destroy(spawner);
+        }
+        HumanSpawners.Clear();
     }
 
     public void LevelCompleted() {

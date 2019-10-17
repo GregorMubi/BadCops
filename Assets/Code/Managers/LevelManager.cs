@@ -24,6 +24,10 @@ public class LevelManager {
         return LevelData.Worlds[Level];
     }
 
+    public HumanSpawner GetHumanSpawnerPrefab() {
+        return LevelData.HumanSpawnerPrefab;
+    }
+
     public void ResetLevel() {
         Level = 0;
     }

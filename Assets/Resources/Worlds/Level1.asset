@@ -727,3 +727,19 @@ MonoBehaviour:
     Position: {x: 42, y: 0, z: 18}
     TilePrefab: {fileID: 6335265919026394339, guid: ff732b5b0e5051b41ac8c4ccd3431d35,
       type: 3}
+  HumanSpawnerDatas:
+  - MaxNumberOfHumans: 2
+    SpawnRadius: 2
+    SpawnCooldown: 2
+    MaxDistanceFromSpawn: 2
+    Position: {x: 10.07, y: 1, z: 3.12}
+  - MaxNumberOfHumans: 10
+    SpawnRadius: 5
+    SpawnCooldown: 5
+    MaxDistanceFromSpawn: 5
+    Position: {x: 32.35, y: 1, z: -7.53}
+  - MaxNumberOfHumans: 3
+    SpawnRadius: 3
+    SpawnCooldown: 3
+    MaxDistanceFromSpawn: 3
+    Position: {x: 31.79, y: 1, z: 10.14}
