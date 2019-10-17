@@ -46,7 +46,7 @@ public class HumanSpawner : MonoBehaviour {
         offset *= Random.Range(0, Data.SpawnRadius);
         Vector3 spawnPosition = transform.position + offset;
 
-        if ((SimpleCarController.GetPosition() - spawnPosition).magnitude < 7.0f) {
+        if ((PlayerInputController.GetPlayerCarPosition() - spawnPosition).magnitude < 7.0f) {
             return;
         }
 

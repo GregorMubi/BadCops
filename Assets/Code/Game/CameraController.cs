@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-    [SerializeField] private GameObject ObjectToFollow = null;
+    private GameObject ObjectToFollow = null;
 
     Vector3 Offset = new Vector3(2.5f, 5, -5);
-    void Start() {
+
+    public void Init(GameObject objectToFollow) {
+        ObjectToFollow = objectToFollow;
     }
 
     // Update is called once per frame
     void Update() {
-        transform.position = ObjectToFollow.transform.position + Offset;
-        transform.LookAt(ObjectToFollow.transform);
+        if (ObjectToFollow != null) {
+            transform.position = ObjectToFollow.transform.position + Offset;
+            transform.LookAt(ObjectToFollow.transform);
+        }
     }
 }

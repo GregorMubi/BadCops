@@ -5,30 +5,25 @@ using System.Collections.Generic;
 public class SimpleCarController : MonoBehaviour {
 
     [SerializeField] private Rigidbody RigidBody = null;
-    [Header("Settings")]
     [SerializeField] private List<SimpleAxleData> Axels = new List<SimpleAxleData>();
     [SerializeField] private float MaxMotorTorque = 400f;
     [SerializeField] private float MaxSteeringAngle = 30f;
     [SerializeField] private float BreakForce = 1;
 
-    private static SimpleCarController Instance = null;
-
-    public static Vector3 GetPosition() {
-        return Instance.transform.position;
-    }
-
     void Start() {
-        Instance = this;
         RigidBody.centerOfMass += new Vector3(0, -0.2f, 0);
     }
 
-    void Update() {
+    public void SetTransform(Vector3 position, float rotation) {
+        RigidBody.transform.position = position;
+        RigidBody.transform.eulerAngles = new Vector3(0, rotation, 0);
+        RigidBody.velocity = Vector3.zero;
+        RigidBody.angularVelocity = Vector3.zero;
     }
 
-    void FixedUpdate() {
-        // INPUT
-        float motor = MaxMotorTorque * Input.GetAxis("Vertical");
-        float steering = MaxSteeringAngle * Input.GetAxis("Horizontal");
+    public void UpdateInput(float motor, float steering) {
+        motor *= MaxMotorTorque;
+        steering *= MaxSteeringAngle;
         double angle = AngleBetweenVectors(RigidBody.velocity, RigidBody.transform.forward);
         bool isMovingForward = angle < 90 && angle > -90;
 
@@ -85,15 +80,10 @@ public class SimpleCarController : MonoBehaviour {
         }
     }
 
-    // FINDS THE VISUAL WHEEL, CORRECTLY APPLIES THE TRANSFORM
     public void ApplyLocalPositionToVisuals(WheelCollider collider, Transform wheelTransform) {
-        // GET POS/ROT
         Vector3 position;
         Quaternion rotation;
-
         collider.GetWorldPose(out position, out rotation);
-
-        // APPLY POS/ROT
         wheelTransform.position = position;
         wheelTransform.rotation = rotation;
     }

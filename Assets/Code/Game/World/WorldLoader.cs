@@ -5,27 +5,31 @@ public class WorldLoader : MonoBehaviour {
 
     [SerializeField] private Transform TileParent = null;
     [SerializeField] private Transform HumanSpawnerParent = null;
-    [SerializeField] private Rigidbody PlayerRigidBody = null;
+    [SerializeField] private PlayerInputController PlayerInputController = null;
+    [SerializeField] private CameraController CameraController = null;
 
     private WorldData WorldData = null;
     private List<TileController> LoadedTiles = new List<TileController>();
     private List<HumanSpawner> HumanSpawners = new List<HumanSpawner>();
+    private int LoadCarIndex = 6;
 
     void Start() {
+        //order here is important
         WorldData = LevelManager.Instance.GetWorld();
+        SetupPlayer();
         LoadWorld(WorldData);
-        SetPlayerPosition();
+    }
+    private void SetupPlayer() {
+        List<SimpleCarController> cars = LevelManager.Instance.GetCarsList();
+        SimpleCarController car = Instantiate(cars[LoadCarIndex]);
+        car.transform.SetParent(PlayerInputController.transform);
+        PlayerInputController.Init(car);
+        SetPlayerPoistion();
+        CameraController.Init(car.gameObject);
     }
 
-    void Update() {
-
-    }
-
-    public void SetPlayerPosition() {
-        PlayerRigidBody.transform.position = WorldData.SpawnPosition;
-        PlayerRigidBody.transform.eulerAngles = new Vector3(0, WorldData.SpawnRotation, 0);
-        PlayerRigidBody.velocity = Vector3.zero;
-        PlayerRigidBody.angularVelocity = Vector3.zero;
+    public void SetPlayerPoistion() {
+        PlayerInputController.GetCarController().SetTransform(WorldData.SpawnPosition, WorldData.SpawnRotation);
     }
 
     private void LoadWorld(WorldData worldData) {
@@ -64,6 +68,12 @@ public class WorldLoader : MonoBehaviour {
         LevelManager.Instance.NextLevel();
         WorldData = LevelManager.Instance.GetWorld();
         LoadWorld(WorldData);
-        SetPlayerPosition();
+        SetPlayerPoistion();
+    }
+
+    public void LoadNextCar() {
+        Destroy(PlayerInputController.GetCarController().gameObject);
+        LoadCarIndex = (LoadCarIndex + 1) % LevelManager.Instance.GetCarsList().Count;
+        SetupPlayer();
     }
 }
