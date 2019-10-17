@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldLoader : MonoBehaviour {
@@ -55,7 +54,7 @@ public class WorldLoader : MonoBehaviour {
 
         foreach (HumanSpawner spawner in HumanSpawners) {
             spawner.DestroyHumans();
-            Destroy(spawner);
+            Destroy(spawner.gameObject);
         }
         HumanSpawners.Clear();
     }

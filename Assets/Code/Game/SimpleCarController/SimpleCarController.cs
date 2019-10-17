@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class SimpleCarController : MonoBehaviour {
@@ -12,7 +11,14 @@ public class SimpleCarController : MonoBehaviour {
     [SerializeField] private float MaxSteeringAngle = 30f;
     [SerializeField] private float BreakForce = 1;
 
+    private static SimpleCarController Instance = null;
+
+    public static Vector3 GetPosition() {
+        return Instance.transform.position;
+    }
+
     void Start() {
+        Instance = this;
         RigidBody.centerOfMass += new Vector3(0, -0.2f, 0);
     }
 

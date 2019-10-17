@@ -14,11 +14,15 @@ public class HumanSpawner : MonoBehaviour {
 
         transform.position = data.Position;
         Timer = Data.SpawnCooldown;
+
+        for (int i = 0; i < data.MaxNumberOfHumans; i++) {
+            SpawnHuman();
+        }
     }
 
     public void DestroyHumans() {
         foreach (HumanController human in SpawnedHumans) {
-            Destroy(human);
+            Destroy(human.gameObject);
         }
         SpawnedHumans.Clear();
     }
@@ -37,14 +41,26 @@ public class HumanSpawner : MonoBehaviour {
         if (SpawnedHumans.Count >= Data.MaxNumberOfHumans) {
             return;
         }
-        HumanController newHuman = Instantiate(HumanPrefab);
-        newHuman.Init(Data.MaxDistanceFromSpawn);
-        newHuman.transform.SetParent(transform);
         Vector3 offset = new Vector3(Random.Range(-1.0f, 1.0f), 0, Random.Range(-1.0f, 1.0f));
         offset.Normalize();
         offset *= Random.Range(0, Data.SpawnRadius);
-        newHuman.transform.position = transform.position + offset;
-        newHuman.transform.position = new Vector3(newHuman.transform.position.x, 0.9f, newHuman.transform.position.z);
+        Vector3 spawnPosition = transform.position + offset;
+
+        if ((SimpleCarController.GetPosition() - spawnPosition).magnitude < 7.0f) {
+            return;
+        }
+
+        HumanController newHuman = Instantiate(HumanPrefab);
+        newHuman.Init(Data.MaxDistanceFromSpawn, OnHumanDeath);
+        newHuman.transform.SetParent(transform);
+
+        newHuman.transform.position = spawnPosition;
+        newHuman.transform.position = new Vector3(newHuman.transform.position.x, 1.02f, newHuman.transform.position.z);
         SpawnedHumans.Add(newHuman);
+    }
+
+    public void OnHumanDeath(HumanController controller) {
+        SpawnedHumans.Remove(controller);
+        Destroy(controller.gameObject);
     }
 }
