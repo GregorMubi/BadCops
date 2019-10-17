@@ -28,7 +28,7 @@ public class WeaponController : MonoBehaviour
     private void Fire(Vector3 dir) {
         //TODO(Rok Kos): Use polling
         ProjectileContoller projectile = Instantiate(weaponData.projectile, transform.position, Quaternion.identity, transform);
-        projectile.Init(dir, 10);
+        projectile.Init(dir, weaponData.speed, weaponData.explosion);
         projectile.name = weaponData.weaponName + "_projectile_" + projectileCount;
         projectileCount++;
     }

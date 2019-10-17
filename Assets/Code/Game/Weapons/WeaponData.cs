@@ -7,7 +7,9 @@ class WeaponData : ScriptableObject
     public int rateOfFire = 5;
     public float damage = 100;
     public float range = 10;
+    public float speed = 100;
     public ProjectileContoller projectile;
+    public ExplosionController explosion;
 
     public void RandomValues() {
         rateOfFire = Random.Range(1, 100);

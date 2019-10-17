@@ -7,7 +7,8 @@ public class WeaponEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        WeaponData weaponData = (WeaponData)target;
+        DrawDefaultInspector();
+        /*WeaponData weaponData = (WeaponData)target;
 
         GUIStyle style = new GUIStyle(GUI.skin.textField);
         //style.fontSize = 30;
@@ -19,12 +20,13 @@ public class WeaponEditor : Editor
         weaponData.range = EditorGUILayout.FloatField("Range", weaponData.range);
 
         weaponData.projectile = (ProjectileContoller)EditorGUILayout.ObjectField(weaponData.projectile, typeof(ProjectileContoller), false);
+        weaponData.explosion = (ExplosionController)EditorGUILayout.ObjectField(weaponData.explosion, typeof(ExplosionController), false);
 
         if (GUILayout.Button("Random values"))
         {
             weaponData.RandomValues();
         }
-
+        */
 
     }
 }
