@@ -36,6 +36,10 @@ public class LevelManager {
         return LevelData.HumanSpawnerPrefab;
     }
 
+    public CarAIController GetCarAiControllerPrefab() {
+        return LevelData.CarAIControllerPrefab;
+    }
+
     public void ResetLevel() {
         Level = 0;
     }

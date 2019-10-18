@@ -165,9 +165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd923c468476ff42954a4135516a8eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WorldData: {fileID: 11400000, guid: 9ee908af6bdd1cb4c9ad69116f359203, type: 2}
+  WorldData: {fileID: 11400000, guid: c357b8279f7a3d14992e91207424799d, type: 2}
   TileSetData: {fileID: 11400000, guid: 9ee92889e760a434696e125bfe491241, type: 2}
-  LastSelectedPosition: {x: 32.25, y: 1, z: -7.6}
+  LastSelectedPosition: {x: 30.14, y: 1, z: -10.03}
   ShowMode: 0
 --- !u!114 &539137569
 MonoBehaviour:

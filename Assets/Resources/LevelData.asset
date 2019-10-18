@@ -18,3 +18,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9ee908af6bdd1cb4c9ad69116f359203, type: 2}
   HumanSpawnerPrefab: {fileID: 4513712997548367629, guid: 7d0373210b87c184b9532441d957f29e,
     type: 3}
+  CarAIControllerPrefab: {fileID: 1580981667011286988, guid: 1fd013fb7edd99c44b6b993dbaf64198,
+    type: 3}

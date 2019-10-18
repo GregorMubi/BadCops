@@ -6,8 +6,11 @@ public class WorldData : ScriptableObject {
     public float SpawnRotation = 0f;
     public List<TileData> Tiles;
     public List<HumanSpawnerData> HumanSpawnerDatas;
+    public List<CarAIData> CarAIDatas;
+
     public WorldData() {
         Tiles = new List<TileData>();
         HumanSpawnerDatas = new List<HumanSpawnerData>();
+        CarAIDatas = new List<CarAIData>();
     }
 }

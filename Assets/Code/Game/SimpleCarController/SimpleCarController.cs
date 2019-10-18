@@ -14,6 +14,10 @@ public class SimpleCarController : MonoBehaviour {
         RigidBody.centerOfMass += new Vector3(0, -0.2f, 0);
     }
 
+    public float GetMaxSteeringAngle() {
+        return MaxSteeringAngle;
+    }
+
     public void SetTransform(Vector3 position, float rotation) {
         RigidBody.transform.position = position;
         RigidBody.transform.eulerAngles = new Vector3(0, rotation, 0);
@@ -24,7 +28,7 @@ public class SimpleCarController : MonoBehaviour {
     public void UpdateInput(float motor, float steering) {
         motor *= MaxMotorTorque;
         steering *= MaxSteeringAngle;
-        double angle = AngleBetweenVectors(RigidBody.velocity, RigidBody.transform.forward);
+        double angle = StaticGameHelper.AngleBetweenVectors(RigidBody.velocity, RigidBody.transform.forward);
         bool isMovingForward = angle < 90 && angle > -90;
 
         foreach (SimpleAxleData axle in Axels) {
@@ -87,11 +91,4 @@ public class SimpleCarController : MonoBehaviour {
         wheelTransform.position = position;
         wheelTransform.rotation = rotation;
     }
-
-    private double AngleBetweenVectors(Vector3 v1, Vector3 v2) {
-        double sin = v1.x * v2.z - v2.x * v1.z;
-        double cos = v1.x * v2.x + v1.z * v2.z;
-        return Math.Atan2(sin, cos) * Mathf.Rad2Deg;
-    }
-
 }
