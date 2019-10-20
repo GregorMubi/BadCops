@@ -16,14 +16,14 @@ public class WeaponController : MonoBehaviour
 
             switch (weaponData.weaponSpreadType) {
                 case WeaponSpreadType.Bullet: {
-                        Fire(dir);
+                        Fire(dir, Vector3.zero);
                         break;
                 }
                 case WeaponSpreadType.Hydra:
                 {
                     for (int i = 0; i < weaponData.numberOfBulletsPerShot; ++i)
                     {
-                        Fire(dir + Vector3.up * 0.1f * i);
+                        Fire(dir + Vector3.up * 0.1f * i, Vector3.zero);
                     }
                     break;
                 }
@@ -44,7 +44,7 @@ public class WeaponController : MonoBehaviour
                             float yOffset = Mathf.Sin(angle) * radius;
 
                             // TODO(Rok Kos): Figure out in which direction is vector turned
-                            Fire(dir + new Vector3(xOffset, yOffset, -yOffset));
+                            Fire(dir, new Vector3(xOffset, 0, yOffset));
                             i++;
                         }
                         
@@ -67,11 +67,12 @@ public class WeaponController : MonoBehaviour
         coolDown -= Time.deltaTime;
     }
 
-    private void Fire(Vector3 dir) {
+    private void Fire(Vector3 dir, Vector3 positionOffset) {
         //TODO(Rok Kos): Use polling
-        ProjectileContoller projectile = Instantiate(weaponData.projectile, transform.position, Quaternion.identity, transform);
+        ProjectileContoller projectile = Instantiate(weaponData.projectile, transform.position + positionOffset, Quaternion.identity, transform);
         projectile.Init(dir, weaponData.speed, weaponData.explosion);
         projectile.name = weaponData.weaponName + "_projectile_" + projectileCount;
         projectileCount++;
+        Destroy(projectile.gameObject, 10);
     }
 }
