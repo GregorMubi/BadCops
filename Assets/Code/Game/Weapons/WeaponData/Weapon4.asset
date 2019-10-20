@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d746ecfa022e124aacf72a403dac5e6, type: 3}
+  m_Name: Weapon4
+  m_EditorClassIdentifier: 
+  weaponName: Annihilator 3000
+  rateOfFire: 1
+  weaponSpreadType: 3
+  numberOfBulletsPerShot: 1
+  damage: 100
+  range: 10
+  speed: 2
+  projectile: {fileID: 4789323561337087399, guid: 7add7f3122306214e8ecdd30738cd707,
+    type: 3}
+  explosion: {fileID: 7729817905871592741, guid: 00bbb481c10492542aff8c055155e611,
+    type: 3}

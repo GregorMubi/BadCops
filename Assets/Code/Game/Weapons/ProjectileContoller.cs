@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ProjectileType { kNormal, kHomingMissle, kLast};
+
 public class ProjectileContoller : MonoBehaviour
 {
     [SerializeField] Rigidbody rigidbody;
@@ -11,14 +13,21 @@ public class ProjectileContoller : MonoBehaviour
 
     ExplosionController explosionControllerPrefab = null;
 
+    private ProjectileType type = ProjectileType.kNormal;
+    private Transform hommingTarget = null;
     public void Init(Vector3 _movementDir, float _speed, ExplosionController _explosionControllerPrefab)
     {
         movementDir = _movementDir;
         speed = _speed;
         rigidbody.velocity = _movementDir * _speed;
         explosionControllerPrefab = _explosionControllerPrefab;
-
-
+    }
+    public void Init(Vector3 _movementDir, float _speed, ExplosionController _explosionControllerPrefab, ProjectileType _type, Transform _hommingTarget)
+    {
+        Init(_movementDir, _speed, _explosionControllerPrefab);
+        type = _type;
+        hommingTarget = _hommingTarget;
+        rigidbody.isKinematic = true;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -33,6 +42,13 @@ public class ProjectileContoller : MonoBehaviour
             Destroy(this.gameObject);
 
 
+        }
+    }
+
+    private void Update()
+    {
+        if (type == ProjectileType.kHomingMissle) {
+            transform.position = Vector3.Lerp(transform.position, hommingTarget.position, Time.deltaTime);
         }
     }
 }

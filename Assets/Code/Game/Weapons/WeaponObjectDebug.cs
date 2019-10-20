@@ -5,6 +5,7 @@ using UnityEngine;
 public class WeaponObjectDebug : MonoBehaviour
 {
     [SerializeField] WeaponController weaponController;
+    [SerializeField] Transform debugHommingTarget;
     private void Update()
     {
 #if UNITY_EDITOR
@@ -30,7 +31,7 @@ public class WeaponObjectDebug : MonoBehaviour
             Debug.LogFormat("<color=green>WeaponObjectDebug::</color> <color=red>Mouse Pos: {0:0.00} {1:0.00} {2:0.00}</color>", mousePos.x, mousePos.y, mousePos.z);
             Debug.LogFormat("<color=green>WeaponObjectDebug::</color> <color=red>World point: {0:0.00} {1:0.00} {2:0.00}</color>", hitPos.x, hitPos.y, hitPos.z);
             Debug.LogFormat("<color=green>WeaponObjectDebug::</color> <color=red>Direction of projectile: {0:0.00} {1:0.00} {2:0.00}</color>", dir.x, dir.y, dir.z);
-            weaponController.FireWeapon(dir);
+            weaponController.FireWeapon(dir, debugHommingTarget);
         }
 #endif
 

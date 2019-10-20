@@ -9,9 +9,9 @@ public class WeaponController : MonoBehaviour
     private float coolDown = 0.0f;
     private uint projectileCount = 0;
 
-
+     
     private const float kGoldenRationInversed = 0.618033f; // this is: 1 / golden ratio 
-    public void FireWeapon(Vector3 dir) {
+    public void FireWeapon(Vector3 dir, Transform hommingTarget = null) {
         if (coolDown <= 0.0f) {
             Debug.Log("<color=green>WeaponController::</color> <color=red>Fire</color>");
             coolDown = weaponData.rateOfFire;
@@ -31,24 +31,28 @@ public class WeaponController : MonoBehaviour
                 }
 
                 case WeaponSpreadType.Shotgun:
-                    {
+                {
 
-                        int numPoints = weaponData.numberOfBulletsPerShot;
-                        float power = 0.5f;
-                        float turnFraction = kGoldenRationInversed;
+                    int numPoints = weaponData.numberOfBulletsPerShot;
+                    float power = 0.5f;
+                    float turnFraction = kGoldenRationInversed;
 
-                        for (int i = 0; i < numPoints; ++i) {
-                            float distance = Mathf.Pow(i / (numPoints - 1.0f), power);
-                            float angle = 2 * Mathf.PI * turnFraction * i;                            
-                            float xOffset = Mathf.Cos(angle) * distance;
-                            float yOffset = Mathf.Sin(angle) * distance;
-                            Fire(dir, new Vector3(xOffset, 0, yOffset));
-                        }
-
-                        
-                        
-                        break;
+                    for (int i = 0; i < numPoints; ++i) {
+                        float distance = Mathf.Pow(i / (numPoints - 1.0f), power);
+                        float angle = 2 * Mathf.PI * turnFraction * i;                            
+                        float xOffset = Mathf.Cos(angle) * distance;
+                        float yOffset = Mathf.Sin(angle) * distance;
+                        Fire(dir, new Vector3(xOffset, 0, yOffset));
                     }
+       
+                    break;
+                }
+
+                case WeaponSpreadType.HommingMissle:
+                {
+                    Fire(dir, Vector3.zero, hommingTarget);
+                    break;
+                }
 
                 default:
                     Debug.Log("<color=green>WeaponController::</color> <color=red>Not Implemented Spread type</color>");
@@ -66,10 +70,17 @@ public class WeaponController : MonoBehaviour
         coolDown -= Time.deltaTime;
     }
 
-    private void Fire(Vector3 dir, Vector3 positionOffset) {
+    private void Fire(Vector3 dir, Vector3 positionOffset, Transform hommingTarget = null) {
         //TODO(Rok Kos): Use polling
         ProjectileContoller projectile = Instantiate(weaponData.projectile, transform.position + positionOffset, Quaternion.identity, transform);
-        projectile.Init(dir, weaponData.speed, weaponData.explosion);
+
+        if (hommingTarget == null) {
+            projectile.Init(dir, weaponData.speed, weaponData.explosion);
+        } else {
+            projectile.Init(dir, weaponData.speed, weaponData.explosion, ProjectileType.kHomingMissle, hommingTarget);
+        }
+        
+
         projectile.name = weaponData.weaponName + "_projectile_" + projectileCount;
         projectileCount++;
         Destroy(projectile.gameObject, 10);
