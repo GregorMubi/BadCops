@@ -9,6 +9,8 @@ public class WeaponController : MonoBehaviour
     private float coolDown = 0.0f;
     private uint projectileCount = 0;
 
+
+    private const float kGoldenRationInversed = 0.618033f; // this is: 1 / golden ratio 
     public void FireWeapon(Vector3 dir) {
         if (coolDown <= 0.0f) {
             Debug.Log("<color=green>WeaponController::</color> <color=red>Fire</color>");
@@ -30,23 +32,20 @@ public class WeaponController : MonoBehaviour
 
                 case WeaponSpreadType.Shotgun:
                     {
-                        int i = 1;
-                        float radius = 1.5f;
-                        int partition = 7;
-                        while (i <= weaponData.numberOfBulletsPerShot) {
-                            if (i % partition == 0) {
-                                radius *= 2;
-                            }
 
-                            float angle = 360 / ((i % partition) + 1);
-                            angle *= Mathf.Deg2Rad;
-                            float xOffset = Mathf.Cos(angle) * radius;
-                            float yOffset = Mathf.Sin(angle) * radius;
+                        int numPoints = weaponData.numberOfBulletsPerShot;
+                        float power = 0.5f;
+                        float turnFraction = kGoldenRationInversed;
 
-                            // TODO(Rok Kos): Figure out in which direction is vector turned
+                        for (int i = 0; i < numPoints; ++i) {
+                            float distance = Mathf.Pow(i / (numPoints - 1.0f), power);
+                            float angle = 2 * Mathf.PI * turnFraction * i;                            
+                            float xOffset = Mathf.Cos(angle) * distance;
+                            float yOffset = Mathf.Sin(angle) * distance;
                             Fire(dir, new Vector3(xOffset, 0, yOffset));
-                            i++;
                         }
+
+                        
                         
                         break;
                     }
