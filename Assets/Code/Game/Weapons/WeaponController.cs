@@ -13,7 +13,24 @@ public class WeaponController : MonoBehaviour
         if (coolDown <= 0.0f) {
             Debug.Log("<color=green>WeaponController::</color> <color=red>Fire</color>");
             coolDown = weaponData.rateOfFire;
-            Fire(dir);
+
+            switch (weaponData.weaponSpreadType) {
+                case WeaponSpreadType.Bullet: {
+                        Fire(dir);
+                        break;
+                }
+                case WeaponSpreadType.Hydra:
+                {
+                    for (int i = 0; i < weaponData.numberOfBulletsPerShot; ++i)
+                    {
+                        Fire(dir + Vector3.up * 0.1f * i);
+                    }
+                    break;
+                }
+
+
+            }
+            
         }
         else {
             Debug.Log("<color=green>WeaponController::</color> <color=red>Weapon on cooldown</color>");
