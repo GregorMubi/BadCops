@@ -28,7 +28,32 @@ public class WeaponController : MonoBehaviour
                     break;
                 }
 
+                case WeaponSpreadType.Shotgun:
+                    {
+                        int i = 1;
+                        float radius = 1.5f;
+                        int partition = 7;
+                        while (i <= weaponData.numberOfBulletsPerShot) {
+                            if (i % partition == 0) {
+                                radius *= 2;
+                            }
 
+                            float angle = 360 / ((i % partition) + 1);
+                            angle *= Mathf.Deg2Rad;
+                            float xOffset = Mathf.Cos(angle) * radius;
+                            float yOffset = Mathf.Sin(angle) * radius;
+
+                            // TODO(Rok Kos): Figure out in which direction is vector turned
+                            Fire(dir + new Vector3(xOffset, yOffset, -yOffset));
+                            i++;
+                        }
+                        
+                        break;
+                    }
+
+                default:
+                    Debug.Log("<color=green>WeaponController::</color> <color=red>Not Implemented Spread type</color>");
+                    break;
             }
             
         }
