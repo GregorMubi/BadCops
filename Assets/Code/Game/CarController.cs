@@ -6,9 +6,20 @@ public class CarController : MonoBehaviour
 {
     [SerializeField]
     private float Speed = 10f;
+    [SerializeField]
+    private MovementType movementType = MovementType.AxisLocked;
 
     private Quaternion targetRotation;
     public float smooth = 1f;
+
+    private float currentSpeed = 0.0f;
+    private float acceleration = 1.0f;
+    private float turnSpeed = 1.0f;
+
+    private enum MovementType {
+        AxisLocked,
+        Continuous,
+    }
 
     private enum CarDirection
     {
@@ -18,6 +29,15 @@ public class CarController : MonoBehaviour
         Right,
     }
 
+    public void ToggleCarMovementType() {
+        if (movementType == MovementType.AxisLocked)
+        {
+            movementType = MovementType.Continuous;
+        }
+        else {
+            movementType = MovementType.AxisLocked;
+        }
+    }
 
     public void Update()
     {
@@ -37,50 +57,51 @@ public class CarController : MonoBehaviour
         {
             OnButtonPressed(KeyCode.DownArrow);
         }
-
-        Move();
-
     }
 
-    private void Turn(CarDirection direction) {
-        float angle = 0;
-        switch (direction) {
-            case CarDirection.Up:
-                angle = 180;
-                break;
-            case CarDirection.Down:
-                angle = 0;
-                break;
-            case CarDirection.Left:
-                angle = 90;
-                break;
-            case CarDirection.Right:
-                angle = -90;
-                break;
+    private void OnButtonPressed(KeyCode keyCode)
+    {
+        if (movementType == MovementType.AxisLocked)
+        {
+            float angle = 0;
+            switch (keyCode)
+            {
+                case KeyCode.LeftArrow:
+                    angle = 90;
+                    break;
+                case KeyCode.RightArrow:
+                    angle = -90;
+                    break;
+                case KeyCode.UpArrow:
+                    angle = 180;
+                    break;
+                case KeyCode.DownArrow:
+                    angle = 0;
+                    break;
+            }
+            targetRotation = Quaternion.AngleAxis(angle, Vector3.up);
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10 * smooth * Time.deltaTime);
+            transform.localPosition -= transform.forward * Speed / 10;
         }
-        targetRotation = Quaternion.AngleAxis(angle, Vector3.up);
-
-    }
-
-    private void OnButtonPressed(KeyCode keyCode) {
-        switch (keyCode) {
-            case KeyCode.LeftArrow:
-                Turn(CarDirection.Left);
-                break;
-            case KeyCode.RightArrow:
-                Turn(CarDirection.Right);
-                break;
-            case KeyCode.UpArrow:
-                Turn(CarDirection.Up);
-                break;
-            case KeyCode.DownArrow:
-                Turn(CarDirection.Down);
-                break;
-                }
-    }
-
-    private void Move() {
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10 * smooth * Time.deltaTime);
-        transform.localPosition -= transform.forward * Speed/10;
+        else if (movementType == MovementType.Continuous)
+        {
+            switch (keyCode)
+            {
+                case KeyCode.LeftArrow:
+                    transform.Rotate(Vector3.up, 1 * turnSpeed);
+                    break;
+                case KeyCode.RightArrow:
+                    transform.Rotate(Vector3.up, -1 * turnSpeed);
+                    break;
+                case KeyCode.UpArrow:
+                    currentSpeed = Mathf.SmoothStep(currentSpeed, Speed, acceleration);
+                    break;
+                case KeyCode.DownArrow:
+                    currentSpeed = Mathf.SmoothStep(currentSpeed, 0, -acceleration);
+                    break;
+            }
+            transform.localPosition -= transform.forward * Speed / 10;
+        }
     }
 }
