@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 
-enum WeaponSpreadType { Bullet, Hydra, Shotgun, HommingMissle, kLast };
+public enum WeaponSpreadType { Bullet, Hydra, Shotgun, HommingMissle, kLast };
 
 
 [CreateAssetMenu(fileName = "WeaponData", menuName = "Weapons/WeaponData", order = 1)]
-class WeaponData : ScriptableObject
-{
+public class WeaponData : ScriptableObject {
     public string weaponName = "Annihilator 3000";
     public int rateOfFire = 5;
     public WeaponSpreadType weaponSpreadType = WeaponSpreadType.Bullet;
-    [Range(1,1000)]
+    [Range(1, 1000)]
     public int numberOfBulletsPerShot = 1;
     public float damage = 100;
     public float range = 10;

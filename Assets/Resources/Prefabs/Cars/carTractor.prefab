@@ -322,6 +322,7 @@ Transform:
   - {fileID: 7049080504150360337}
   - {fileID: 201227165689658500}
   - {fileID: 201227165720145953}
+  - {fileID: 8443826544725347688}
   m_Father: {fileID: 1036371615488243774}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -678,6 +679,7 @@ GameObject:
   - component: {fileID: 1036371615488243774}
   - component: {fileID: 4051752741116021291}
   - component: {fileID: 4051752741116021292}
+  - component: {fileID: 2088243165877261533}
   m_Layer: 0
   m_Name: carTractor
   m_TagString: Untagged
@@ -719,6 +721,8 @@ MonoBehaviour:
   MaxMotorTorque: 25
   MaxSteeringAngle: 30
   BreakForce: 1
+  WeaponGameObject: {fileID: 4533931388689254896}
+  WeaponController: {fileID: 2088243165877261533}
 --- !u!54 &4051752741116021292
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -735,6 +739,48 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2088243165877261533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4051752741116021293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26a8f09e339f24e489a50048814d1328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &4533931388689254896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8443826544725347688}
+  m_Layer: 0
+  m_Name: Weapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8443826544725347688
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4533931388689254896}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 5.88, z: 5.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 201227166578717240}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4964090416515678615
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,8 @@ public class SimpleCarController : MonoBehaviour {
     [SerializeField] private float MaxMotorTorque = 400f;
     [SerializeField] private float MaxSteeringAngle = 30f;
     [SerializeField] private float BreakForce = 1;
+    [SerializeField] private GameObject WeaponGameObject = null;
+    [SerializeField] private WeaponController WeaponController = null;
 
     void Start() {
         RigidBody.centerOfMass += new Vector3(0, -0.2f, 0);
@@ -16,6 +18,19 @@ public class SimpleCarController : MonoBehaviour {
 
     public float GetMaxSteeringAngle() {
         return MaxSteeringAngle;
+    }
+
+    public void Shoot() {
+        if (WeaponController != null) {
+            WeaponController.FireWeapon(transform.forward);
+        }
+    }
+
+    public void EquipWeaon(int weaponIndex) {
+        if (WeaponController != null) {
+            WeaponData weaponData = LevelManager.Instance.GetWeaponDatas().WeaponDatas[weaponIndex];
+            WeaponController.Init(weaponData, WeaponGameObject);
+        }
     }
 
     public void SetTransform(Vector3 position, float rotation) {

@@ -421,6 +421,36 @@ WheelCollider:
     m_AsymptoteValue: 200
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!1 &3301669311079551544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 402050729460012208}
+  m_Layer: 0
+  m_Name: Weapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &402050729460012208
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3301669311079551544}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 3.14, z: 7.57}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7717051155882125328}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4434925547265357781
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,6 +554,7 @@ GameObject:
   - component: {fileID: 700546017397292929}
   - component: {fileID: 5405891158814174288}
   - component: {fileID: 1520357833890825099}
+  - component: {fileID: -3360576605665764065}
   m_Layer: 0
   m_Name: carAmbulance
   m_TagString: Untagged
@@ -565,6 +596,8 @@ MonoBehaviour:
   MaxMotorTorque: 25
   MaxSteeringAngle: 30
   BreakForce: 1
+  WeaponGameObject: {fileID: 3301669311079551544}
+  WeaponController: {fileID: -3360576605665764065}
 --- !u!54 &1520357833890825099
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -581,6 +614,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-3360576605665764065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4603680735391468946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26a8f09e339f24e489a50048814d1328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4840361884168275730
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,6 +973,7 @@ Transform:
   - {fileID: 6738502983987460401}
   - {fileID: 8588794369281933223}
   - {fileID: 3359358478918631368}
+  - {fileID: 402050729460012208}
   m_Father: {fileID: 700546017397292929}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

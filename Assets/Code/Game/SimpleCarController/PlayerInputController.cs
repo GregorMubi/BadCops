@@ -28,6 +28,13 @@ public class PlayerInputController : MonoBehaviour {
     public void Init(SimpleCarController carController) {
         CarController = carController;
         CarController.tag = "Player";
+        carController.EquipWeaon(0);
+    }
+
+    public void EquipRandomWeapon() {
+        List<WeaponData> weaponsDatas = LevelManager.Instance.GetWeaponDatas().WeaponDatas;
+        int random = Random.Range(0, weaponsDatas.Count);
+        CarController.EquipWeaon(random);
     }
 
     public void SetControllEnabled(bool enabled) {
@@ -39,6 +46,12 @@ public class PlayerInputController : MonoBehaviour {
             float motor = Input.GetAxis("Vertical");
             float steering = Input.GetAxis("Horizontal");
             CarController.UpdateInput(motor, steering);
+
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                CarController.Shoot();
+            }
         }
     }
+
+
 }

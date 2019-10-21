@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameUIController : MonoBehaviour
-{
+public class GameUIController : MonoBehaviour {
     [SerializeField]
     public Text KillCount;
     [SerializeField]
@@ -15,20 +14,17 @@ public class GameUIController : MonoBehaviour
 
     private float GameDuration;
 
-    public void Start()
-    {
+    public void Start() {
         GameDuration = 0f;
     }
 
-    public void Update()
-    {
+    public void Update() {
         KillCount.text = GameManager.Instance.KillCount.ToString();
         Life.text = GameManager.Instance.LifePercentage.ToString();
 
-        if (!GameManager.Instance.GamePaused)
-        {
+        if (!GameManager.Instance.GamePaused) {
             GameDuration += Time.deltaTime;
         }
-        Timer.text = GameDuration.ToString();
+        Timer.text = GameDuration.ToString("n2");
     }
 }

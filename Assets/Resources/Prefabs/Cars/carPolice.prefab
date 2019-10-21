@@ -190,6 +190,7 @@ GameObject:
   - component: {fileID: 3457659729325579588}
   - component: {fileID: 1848528552736665425}
   - component: {fileID: 1848528552736665424}
+  - component: {fileID: -2879319053872619828}
   m_Layer: 0
   m_Name: carPolice
   m_TagString: Untagged
@@ -231,6 +232,8 @@ MonoBehaviour:
   MaxMotorTorque: 25
   MaxSteeringAngle: 30
   BreakForce: 1
+  WeaponGameObject: {fileID: 3080733289792319130}
+  WeaponController: {fileID: -2879319053872619828}
 --- !u!54 &1848528552736665424
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -247,6 +250,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-2879319053872619828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848528552736665431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26a8f09e339f24e489a50048814d1328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2474784317299203902
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +707,7 @@ Transform:
   - {fileID: 6639647776989489696}
   - {fileID: 2474784318361569908}
   - {fileID: 2474784318462498366}
+  - {fileID: 4553756902643310368}
   m_Father: {fileID: 3457659729325579588}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -756,6 +772,36 @@ WheelCollider:
     m_AsymptoteValue: 200
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!1 &3080733289792319130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4553756902643310368}
+  m_Layer: 0
+  m_Name: Weapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4553756902643310368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3080733289792319130}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 2.99, z: 8.86}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2474784319262712077}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3792549270590415870
 GameObject:
   m_ObjectHideFlags: 0

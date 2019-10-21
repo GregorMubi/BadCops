@@ -6,10 +6,12 @@ public class LevelManager {
     private static LevelManager instance;
     private LevelData LevelData = null;
     private CarsData CarsData = null;
+    private WeaponsData WeaponsData = null;
     private int Level = 0;
 
     private const string LevelDataPath = "Assets/Resources/LevelData.asset";
     private const string CarsDataPath = "Assets/Resources/CarsData.asset";
+    private const string WeaponsDataPath = "Assets/Resources/WeaponsData.asset";
 
     public static LevelManager Instance {
         get {
@@ -22,6 +24,7 @@ public class LevelManager {
     public void Init() {
         LevelData = AssetDatabase.LoadAssetAtPath<LevelData>(LevelDataPath);
         CarsData = AssetDatabase.LoadAssetAtPath<CarsData>(CarsDataPath);
+        WeaponsData = AssetDatabase.LoadAssetAtPath<WeaponsData>(WeaponsDataPath);
     }
 
     public WorldData GetWorld() {
@@ -48,4 +51,7 @@ public class LevelManager {
         Level = (Level + 1) % LevelData.Worlds.Count;
     }
 
+    public WeaponsData GetWeaponDatas() {
+        return WeaponsData;
+    }
 }

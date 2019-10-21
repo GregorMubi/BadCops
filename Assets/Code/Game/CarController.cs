@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarController : MonoBehaviour
-{
+public class CarController : MonoBehaviour {
     [SerializeField]
     private float Speed = 10f;
     [SerializeField]
@@ -21,8 +20,7 @@ public class CarController : MonoBehaviour
         Continuous,
     }
 
-    private enum CarDirection
-    {
+    private enum CarDirection {
         Up,
         Down,
         Left,
@@ -30,42 +28,29 @@ public class CarController : MonoBehaviour
     }
 
     public void ToggleCarMovementType() {
-        if (movementType == MovementType.AxisLocked)
-        {
+        if (movementType == MovementType.AxisLocked) {
             movementType = MovementType.Continuous;
-        }
-        else {
+        } else {
             movementType = MovementType.AxisLocked;
         }
     }
 
-    public void Update()
-    {
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
+    public void Update() {
+        if (Input.GetKey(KeyCode.LeftArrow)) {
             OnButtonPressed(KeyCode.LeftArrow);
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
+        } else if (Input.GetKey(KeyCode.RightArrow)) {
             OnButtonPressed(KeyCode.RightArrow);
-        }
-        else if (Input.GetKey(KeyCode.UpArrow))
-        {
+        } else if (Input.GetKey(KeyCode.UpArrow)) {
             OnButtonPressed(KeyCode.UpArrow);
-        }
-        else if (Input.GetKey(KeyCode.DownArrow))
-        {
+        } else if (Input.GetKey(KeyCode.DownArrow)) {
             OnButtonPressed(KeyCode.DownArrow);
         }
     }
 
-    private void OnButtonPressed(KeyCode keyCode)
-    {
-        if (movementType == MovementType.AxisLocked)
-        {
+    private void OnButtonPressed(KeyCode keyCode) {
+        if (movementType == MovementType.AxisLocked) {
             float angle = 0;
-            switch (keyCode)
-            {
+            switch (keyCode) {
                 case KeyCode.LeftArrow:
                     angle = 90;
                     break;
@@ -83,11 +68,8 @@ public class CarController : MonoBehaviour
 
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10 * smooth * Time.deltaTime);
             transform.localPosition -= transform.forward * Speed / 10;
-        }
-        else if (movementType == MovementType.Continuous)
-        {
-            switch (keyCode)
-            {
+        } else if (movementType == MovementType.Continuous) {
+            switch (keyCode) {
                 case KeyCode.LeftArrow:
                     transform.Rotate(Vector3.up, 1 * turnSpeed);
                     break;
