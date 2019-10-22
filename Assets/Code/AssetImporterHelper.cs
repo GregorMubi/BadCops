@@ -22,9 +22,9 @@ public class AssetImporterHelper : MonoBehaviour {
         foreach (GameObject obj in objects) {
             for (int i = 0; i < obj.transform.childCount; i++) {
                 Transform child = obj.transform.GetChild(i);
-                child.position = new Vector3(1.5f, 0, 1.5f);
+                child.position = new Vector3(0.5f, 0, 0.5f);
             }
-            PrefabUtility.SaveAsPrefabAsset(obj, path + obj.name + ".prefab");
+            //PrefabUtility.SaveAsPrefabAsset(obj, path + obj.name + ".prefab");
         }
     }
 

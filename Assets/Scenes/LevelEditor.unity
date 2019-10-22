@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 539137569}
   - component: {fileID: 539137568}
   - component: {fileID: 539137570}
+  - component: {fileID: 539137571}
   m_Layer: 0
   m_Name: LevelEditor
   m_TagString: Untagged
@@ -167,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WorldData: {fileID: 11400000, guid: c357b8279f7a3d14992e91207424799d, type: 2}
   TileSetData: {fileID: 11400000, guid: 9ee92889e760a434696e125bfe491241, type: 2}
-  LastSelectedPosition: {x: 30.14, y: 1, z: -10.03}
+  LastSelectedPosition: {x: -0, y: 0, z: 0}
   ShowMode: 0
 --- !u!114 &539137569
 MonoBehaviour:
@@ -197,6 +198,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WorldEditor: {fileID: 539137568}
+--- !u!114 &539137571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539137566}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc2b17159ad339d4eae8c517dd59d637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DoIt: 0
+  objects: []
 --- !u!1 &665421313
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +256,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.5
+  orthographic size: 0.93
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -264,12 +279,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665421313}
-  m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: -1.35, y: 1.52, z: -1.37}
+  m_LocalRotation: {x: 0.23911762, y: -0.36964384, z: 0.09904576, w: 0.8923992}
+  m_LocalPosition: {x: 4.640001, y: 4.19, z: -4.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 30, y: 45, z: 0}
 --- !u!1 &1299840760
 GameObject:
@@ -360,5 +375,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}

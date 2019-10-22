@@ -8,21 +8,23 @@ public class LevelEditor : MonoBehaviour {
     public RenderTexture rt;
     public TileSetData TileSetData;
 
-    private static string Path = "Assets/Resources/Prefabs/TileIcons/";
+    private static string TileIconPath = "Assets/Resources/Prefabs/TileIcons/";
+    private static string BuildingIconPath = "Assets/Resources/Prefabs/BuildingIcons/";
 
     void Start() {
-        //CreateRenderTexturesOfTiles();
+        //CreateRenderTexturesOfTiles(TileSetData.Tiles, TileIconPath);
+        //CreateRenderTexturesOfTiles(TileSetData.BuildingTiles, BuildingIconPath);
     }
 
-    private void CreateRenderTexturesOfTiles() {
-        for (int i = 0; i < TileSetData.Tiles.Length; i++) {
-            TileController tileController = Instantiate<TileController>(TileSetData.Tiles[i]);
+    private void CreateRenderTexturesOfTiles(TileController[] tiles, string path) {
+        for (int i = 0; i < tiles.Length; i++) {
+            TileController tileController = Instantiate<TileController>(tiles[i]);
             Camera.Render();
             string prefabName = tileController.name;
             prefabName = prefabName.Replace("(Clone)", "");
-            string path = Path + prefabName + ".png";
-            SaveRtToFile(path);
-            TileSetData.Tiles[i].Icon = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            string saveToPath = path + prefabName + ".png";
+            SaveRtToFile(saveToPath);
+            tiles[i].Icon = AssetDatabase.LoadAssetAtPath<Texture2D>(saveToPath);
             DestroyImmediate(tileController.gameObject);
         }
     }

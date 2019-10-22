@@ -7,7 +7,7 @@ using UnityEngine.TextCore.LowLevel;
 [CustomEditor((typeof(WorldEditor)))]
 public class WorldEditorInspector : Editor {
 
-    private enum EditType {
+    public enum EditType {
         World = 0,
         Buildings = 1,
         HumanAI = 2,
@@ -119,7 +119,7 @@ public class WorldEditorInspector : Editor {
                 DrawWorldEdit();
                 break;
             case EditType.Buildings:
-                DrawBuildingsEdit();
+                DrawWorldEdit();
                 break;
             case EditType.HumanAI:
                 DrawHumanAIEdit();
@@ -148,14 +148,16 @@ public class WorldEditorInspector : Editor {
             }
         }
 
-        GUILayout.Space(10f);
-        WorldEditor.ShowMode = EditorGUILayout.Toggle("Show Mode:", WorldEditor.ShowMode);
-        if (WorldEditor.ShowMode) {
-            if (GUILayout.Button("Set all ON")) {
-                for (int i = 0; i < WorldEditor.TileSetData.ShowTileInEditor.Length; i++) {
-                    WorldEditor.TileSetData.ShowTileInEditor[i] = true;
-                    EditorUtility.SetDirty(WorldEditor.TileSetData);
-                    AssetDatabase.SaveAssets();
+        if (CurrentEditType == EditType.World) {
+            GUILayout.Space(10f);
+            WorldEditor.ShowMode = EditorGUILayout.Toggle("Show Mode:", WorldEditor.ShowMode);
+            if (WorldEditor.ShowMode) {
+                if (GUILayout.Button("Set all ON")) {
+                    for (int i = 0; i < WorldEditor.TileSetData.ShowTileInEditor.Length; i++) {
+                        WorldEditor.TileSetData.ShowTileInEditor[i] = true;
+                        EditorUtility.SetDirty(WorldEditor.TileSetData);
+                        AssetDatabase.SaveAssets();
+                    }
                 }
             }
         }
@@ -183,30 +185,40 @@ public class WorldEditorInspector : Editor {
         float iconSize = 100.0f;
         int iconsPerRow = Mathf.FloorToInt((Screen.width - 50) / iconSize);
         int iconIndex = 0;
-        while (iconIndex < WorldEditor.TileSetData.Tiles.Length) {
+
+        TileController[] tiles;
+        if (CurrentEditType == EditType.World) {
+            tiles = WorldEditor.TileSetData.Tiles;
+        } else if (CurrentEditType == EditType.Buildings) {
+            tiles = WorldEditor.TileSetData.BuildingTiles;
+        } else {
+            return;
+        }
+
+        while (iconIndex < tiles.Length) {
             EditorGUILayout.BeginHorizontal();
             int drawnButtons = 0;
             while (drawnButtons < iconsPerRow) {
-                if (iconIndex >= WorldEditor.TileSetData.Tiles.Length) {
+                if (iconIndex >= tiles.Length) {
                     break;
                 }
-                TileController tileController = WorldEditor.TileSetData.Tiles[iconIndex];
+                TileController tileController = tiles[iconIndex];
                 if (tileController.Icon == null) {
-                    LinkIconsToPrefabs();
+                    LinkIconsToPrefabs(CurrentEditType);
                 }
 
                 Color startColor = GUI.color;
-                if (WorldEditor.ShowMode || WorldEditor.TileSetData.ShowTileInEditor[iconIndex]) {
-                    if (!WorldEditor.TileSetData.ShowTileInEditor[iconIndex]) {
+                if (CurrentEditType == EditType.Buildings || WorldEditor.ShowMode || WorldEditor.TileSetData.ShowTileInEditor[iconIndex]) {
+                    if (CurrentEditType == EditType.World && !WorldEditor.TileSetData.ShowTileInEditor[iconIndex]) {
                         GUI.color = Color.red;
                     }
                     if (GUILayout.Button(tileController.Icon, GUILayout.Width(iconSize), GUILayout.Height(iconSize))) {
-                        if (WorldEditor.ShowMode) {
+                        if (CurrentEditType == EditType.World && WorldEditor.ShowMode) {
                             WorldEditor.TileSetData.ShowTileInEditor[iconIndex] = !WorldEditor.TileSetData.ShowTileInEditor[iconIndex];
                             EditorUtility.SetDirty(WorldEditor.TileSetData);
                             AssetDatabase.SaveAssets();
                         } else {
-                            if (selectedTile != null) {
+                            if (selectedTile != null && CurrentEditType == EditType.World) {
                                 TileController newTile = Instantiate(tileController);
                                 newTile.transform.SetParent(WorldEditor.transform);
                                 newTile.transform.position = selectedTile.transform.position;
@@ -406,18 +418,28 @@ public class WorldEditorInspector : Editor {
         data.WheelMultiplier = EditorGUILayout.FloatField("Steering multiplier:", data.WheelMultiplier);
     }
 
-    public static void LinkIconsToPrefabs() {
+    public static void LinkIconsToPrefabs(EditType editType) {
         TileSetData tsd = AssetDatabase.LoadAssetAtPath<TileSetData>("Assets/Resources/Data/tileSet.asset");
-        for (int i = 0; i < tsd.Tiles.Length; i++) {
-            string prefabName = tsd.Tiles[i].name;
-            string path = "Assets/Resources/Prefabs/TileIcons/" + prefabName + ".png";
-            tsd.Tiles[i].Icon = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+        if (editType == EditType.World) {
+            for (int i = 0; i < tsd.Tiles.Length; i++) {
+                string prefabName = tsd.Tiles[i].name;
+                string path = "Assets/Resources/Prefabs/TileIcons/" + prefabName + ".png";
+                tsd.Tiles[i].Icon = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            }
+        }
+
+        if (editType == EditType.Buildings) {
+            for (int i = 0; i < tsd.BuildingTiles.Length; i++) {
+                string prefabName = tsd.BuildingTiles[i].name;
+                string path = "Assets/Resources/Prefabs/BuildingIcons/" + prefabName + ".png";
+                tsd.BuildingTiles[i].Icon = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            }
         }
     }
 
     private void CreateNewWorld(String name) {
         WorldEditor.WorldData = new WorldData();
-        TileData initialBlock = new TileData(WorldEditor.TileSetData.EmptyTile);
+        TileData initialBlock = new TileData(WorldEditor.TileSetData.Tiles[1]);
         WorldEditor.WorldData.Tiles.Add(initialBlock);
 
         AssetDatabase.CreateAsset(WorldEditor.WorldData, WorldDataPath + name + ".asset");
@@ -466,6 +488,11 @@ public class WorldEditorInspector : Editor {
         for (int i = 0; i < WorldEditor.TileSetData.Tiles.Length; i++) {
             if (WorldEditor.TileSetData.Tiles[i].name == name) {
                 return WorldEditor.TileSetData.Tiles[i];
+            }
+        }
+        for (int i = 0; i < WorldEditor.TileSetData.BuildingTiles.Length; i++) {
+            if (WorldEditor.TileSetData.BuildingTiles[i].name == name) {
+                return WorldEditor.TileSetData.BuildingTiles[i];
             }
         }
         return null;
