@@ -55,7 +55,7 @@ public class HumanSpawner : MonoBehaviour {
         newHuman.transform.SetParent(transform);
 
         newHuman.transform.position = spawnPosition;
-        newHuman.transform.position = new Vector3(newHuman.transform.position.x, 1.02f, newHuman.transform.position.z);
+        newHuman.transform.position = new Vector3(newHuman.transform.position.x, 0.88f, newHuman.transform.position.z);
         SpawnedHumans.Add(newHuman);
     }
 
