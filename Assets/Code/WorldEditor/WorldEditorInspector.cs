@@ -407,7 +407,7 @@ public class WorldEditorInspector : Editor {
     }
 
     public static void LinkIconsToPrefabs() {
-        TileSetData tsd = AssetDatabase.LoadAssetAtPath<TileSetData>("Assets/Resources/Prefabs/tileSet.asset");
+        TileSetData tsd = AssetDatabase.LoadAssetAtPath<TileSetData>("Assets/Resources/Data/tileSet.asset");
         for (int i = 0; i < tsd.Tiles.Length; i++) {
             string prefabName = tsd.Tiles[i].name;
             string path = "Assets/Resources/Prefabs/TileIcons/" + prefabName + ".png";

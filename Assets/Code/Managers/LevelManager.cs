@@ -9,9 +9,9 @@ public class LevelManager {
     private WeaponsData WeaponsData = null;
     private int Level = 0;
 
-    private const string LevelDataPath = "Assets/Resources/LevelData.asset";
-    private const string CarsDataPath = "Assets/Resources/CarsData.asset";
-    private const string WeaponsDataPath = "Assets/Resources/WeaponsData.asset";
+    private const string LevelDataPath = "Assets/Resources/Data/LevelData.asset";
+    private const string CarsDataPath = "Assets/Resources/Data/CarsData.asset";
+    private const string WeaponsDataPath = "Assets/Resources/Data/WeaponsData.asset";
 
     public static LevelManager Instance {
         get {
