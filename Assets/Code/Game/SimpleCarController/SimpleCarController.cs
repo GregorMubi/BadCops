@@ -11,6 +11,7 @@ public class SimpleCarController : MonoBehaviour {
     [SerializeField] private float BreakForce = 1;
     [SerializeField] private GameObject WeaponGameObject = null;
     [SerializeField] private WeaponController WeaponController = null;
+    [SerializeField] private AudioSource AudioSource = null;
 
     void Start() {
         RigidBody.centerOfMass += new Vector3(0, -0.2f, 0);
@@ -26,6 +27,16 @@ public class SimpleCarController : MonoBehaviour {
         }
     }
 
+    public void EnableEngineSound(bool enable) {
+        if (AudioSource != null) {
+            if (enable && !AudioSource.isPlaying) {
+                AudioSource.Play(0);
+            } else if (!enable && AudioSource.isPlaying) {
+                AudioSource.Stop();
+            }
+        }
+    }
+
     public void EquipWeaon(int weaponIndex) {
         if (WeaponController != null) {
             WeaponData weaponData = LevelManager.Instance.GetWeaponDatas().WeaponDatas[weaponIndex];
@@ -38,6 +49,12 @@ public class SimpleCarController : MonoBehaviour {
         RigidBody.transform.eulerAngles = new Vector3(0, rotation, 0);
         RigidBody.velocity = Vector3.zero;
         RigidBody.angularVelocity = Vector3.zero;
+    }
+
+    void Update() {
+        if (AudioSource != null) {
+            AudioSource.pitch = RigidBody.velocity.magnitude * 0.5f - 0.5f;
+        }
     }
 
     public void UpdateInput(float motor, float steering) {
@@ -97,6 +114,7 @@ public class SimpleCarController : MonoBehaviour {
             ApplyLocalPositionToVisuals(axle.LeftWheel, axle.LeftWheelTransform);
             ApplyLocalPositionToVisuals(axle.RightWheel, axle.RightWheelTransform);
         }
+
     }
 
     public void ApplyLocalPositionToVisuals(WheelCollider collider, Transform wheelTransform) {
