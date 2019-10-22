@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour {
 
     private GameObject ObjectToFollow = null;
 
-    Vector3 Offset = new Vector3(2.5f, 5, -5);
+    Vector3 Offset = new Vector3(5f, 10f, -10f);
 
     public void Init(GameObject objectToFollow) {
         ObjectToFollow = objectToFollow;

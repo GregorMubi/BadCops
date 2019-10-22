@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor.Experimental.TerrainAPI;
 using UnityEngine;
 
 public class WorldLoader : MonoBehaviour {
@@ -8,6 +9,7 @@ public class WorldLoader : MonoBehaviour {
     [SerializeField] private Transform CarAIParent = null;
     [SerializeField] private PlayerInputController PlayerInputController = null;
     [SerializeField] private CameraController CameraController = null;
+    [SerializeField] private TileSetData TileSetData = null;
 
     private WorldData WorldData = null;
     private List<TileController> LoadedTiles = new List<TileController>();
@@ -42,6 +44,26 @@ public class WorldLoader : MonoBehaviour {
             tileController.transform.eulerAngles = new Vector3(0, tile.Rotation, 0);
             tileController.transform.position = tile.Position;
             LoadedTiles.Add(tileController);
+
+            bool canHaveBuilding = false;
+            foreach (TileController tileC in TileSetData.TilesThatCanHaveBuildingsOnThem) {
+                if (tile.TilePrefab.name == tileC.name) {
+                    canHaveBuilding = true;
+                    break;
+                }
+            }
+
+            if (canHaveBuilding) {
+                int chanceToSpawnHouse = 70;
+                if (chanceToSpawnHouse > Random.Range(0, 100)) {
+                    int randomInt = Random.Range(0, TileSetData.BuildingTiles.Length);
+                    bool rotate = Random.Range(0, 2) > 0;
+                    TileController buildingTileController = Instantiate(TileSetData.BuildingTiles[randomInt]);
+                    buildingTileController.transform.SetParent(tileController.transform);
+                    buildingTileController.transform.eulerAngles = new Vector3(0, rotate ? 90 : 0, 0);
+                    buildingTileController.transform.localPosition = new Vector3(-0.5f, 0.6f, -0.5f);
+                }
+            }
         }
 
         //LOAD HUMANS

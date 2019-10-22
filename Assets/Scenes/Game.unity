@@ -571,7 +571,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 40
+  far clip plane: 100
   field of view: 60
   orthographic: 1
   orthographic size: 3
@@ -598,7 +598,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 434441793}
   m_LocalRotation: {x: 0.25000006, y: -0.24999997, z: 0.066987306, w: 0.9330127}
-  m_LocalPosition: {x: 0.5, y: 1, z: -1}
+  m_LocalPosition: {x: 16.49, y: 19.46, z: -28.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1520536244}
@@ -1901,6 +1901,7 @@ MonoBehaviour:
   CarAIParent: {fileID: 551808302}
   PlayerInputController: {fileID: 2066256143}
   CameraController: {fileID: 434441794}
+  TileSetData: {fileID: 11400000, guid: 9ee92889e760a434696e125bfe491241, type: 2}
 --- !u!1 &2066256141
 GameObject:
   m_ObjectHideFlags: 0

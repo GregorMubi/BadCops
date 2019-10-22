@@ -9,9 +9,8 @@ public class WorldEditorInspector : Editor {
 
     public enum EditType {
         World = 0,
-        Buildings = 1,
-        HumanAI = 2,
-        CarAI = 3,
+        HumanAI = 1,
+        CarAI = 2,
     }
 
     private const String WorldDataPath = "Assets/Resources/Worlds/";
@@ -118,9 +117,6 @@ public class WorldEditorInspector : Editor {
             case EditType.World:
                 DrawWorldEdit();
                 break;
-            case EditType.Buildings:
-                DrawWorldEdit();
-                break;
             case EditType.HumanAI:
                 DrawHumanAIEdit();
                 break;
@@ -186,15 +182,7 @@ public class WorldEditorInspector : Editor {
         int iconsPerRow = Mathf.FloorToInt((Screen.width - 50) / iconSize);
         int iconIndex = 0;
 
-        TileController[] tiles;
-        if (CurrentEditType == EditType.World) {
-            tiles = WorldEditor.TileSetData.Tiles;
-        } else if (CurrentEditType == EditType.Buildings) {
-            tiles = WorldEditor.TileSetData.BuildingTiles;
-        } else {
-            return;
-        }
-
+        TileController[] tiles = WorldEditor.TileSetData.Tiles;
         while (iconIndex < tiles.Length) {
             EditorGUILayout.BeginHorizontal();
             int drawnButtons = 0;
@@ -204,21 +192,21 @@ public class WorldEditorInspector : Editor {
                 }
                 TileController tileController = tiles[iconIndex];
                 if (tileController.Icon == null) {
-                    LinkIconsToPrefabs(CurrentEditType);
+                    LinkIconsToPrefabs();
                 }
 
                 Color startColor = GUI.color;
-                if (CurrentEditType == EditType.Buildings || WorldEditor.ShowMode || WorldEditor.TileSetData.ShowTileInEditor[iconIndex]) {
-                    if (CurrentEditType == EditType.World && !WorldEditor.TileSetData.ShowTileInEditor[iconIndex]) {
+                if (WorldEditor.ShowMode || WorldEditor.TileSetData.ShowTileInEditor[iconIndex]) {
+                    if (!WorldEditor.TileSetData.ShowTileInEditor[iconIndex]) {
                         GUI.color = Color.red;
                     }
                     if (GUILayout.Button(tileController.Icon, GUILayout.Width(iconSize), GUILayout.Height(iconSize))) {
-                        if (CurrentEditType == EditType.World && WorldEditor.ShowMode) {
+                        if (WorldEditor.ShowMode) {
                             WorldEditor.TileSetData.ShowTileInEditor[iconIndex] = !WorldEditor.TileSetData.ShowTileInEditor[iconIndex];
                             EditorUtility.SetDirty(WorldEditor.TileSetData);
                             AssetDatabase.SaveAssets();
                         } else {
-                            if (selectedTile != null && CurrentEditType == EditType.World) {
+                            if (selectedTile != null) {
                                 TileController newTile = Instantiate(tileController);
                                 newTile.transform.SetParent(WorldEditor.transform);
                                 newTile.transform.position = selectedTile.transform.position;
@@ -418,22 +406,12 @@ public class WorldEditorInspector : Editor {
         data.WheelMultiplier = EditorGUILayout.FloatField("Steering multiplier:", data.WheelMultiplier);
     }
 
-    public static void LinkIconsToPrefabs(EditType editType) {
+    public static void LinkIconsToPrefabs() {
         TileSetData tsd = AssetDatabase.LoadAssetAtPath<TileSetData>("Assets/Resources/Data/tileSet.asset");
-        if (editType == EditType.World) {
-            for (int i = 0; i < tsd.Tiles.Length; i++) {
-                string prefabName = tsd.Tiles[i].name;
-                string path = "Assets/Resources/Prefabs/TileIcons/" + prefabName + ".png";
-                tsd.Tiles[i].Icon = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-            }
-        }
-
-        if (editType == EditType.Buildings) {
-            for (int i = 0; i < tsd.BuildingTiles.Length; i++) {
-                string prefabName = tsd.BuildingTiles[i].name;
-                string path = "Assets/Resources/Prefabs/BuildingIcons/" + prefabName + ".png";
-                tsd.BuildingTiles[i].Icon = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-            }
+        for (int i = 0; i < tsd.Tiles.Length; i++) {
+            string prefabName = tsd.Tiles[i].name;
+            string path = "Assets/Resources/Prefabs/TileIcons/" + prefabName + ".png";
+            tsd.Tiles[i].Icon = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
         }
     }
 
