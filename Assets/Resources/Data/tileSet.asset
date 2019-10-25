@@ -325,5 +325,6 @@ MonoBehaviour:
   - {fileID: 2247758257039793799, guid: ff664acb6f8f9004bbbce64231557125, type: 3}
   - {fileID: -5495366802543406574, guid: aac8800eddfb06e438f3e9ec7573d93c, type: 3}
   - {fileID: -8308144696390984828, guid: d9ed967fc1a20c143b286b37bf0dc2d7, type: 3}
+  - {fileID: 6129491152255627714, guid: 34a3e159c45516649a1e892d56356e86, type: 3}
   TilesThatCanHaveBuildingsOnThem:
   - {fileID: 582128211690690267, guid: eecb7e306f8850a48a01edc37c5df457, type: 3}

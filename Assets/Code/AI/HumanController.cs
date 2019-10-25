@@ -6,6 +6,7 @@ public class HumanController : MonoBehaviour {
 
     [SerializeField] private MeshRenderer BodyMeshRendere = null;
     [SerializeField] private Rigidbody RigidBody = null;
+    [SerializeField] private float BadAssScore = 1.0f;
 
     private float TurnTimer = 0.0f;
     private float MinTurnTime = 0.0f;
@@ -53,6 +54,7 @@ public class HumanController : MonoBehaviour {
         if (collision.gameObject.tag == "Player") {
             if (collision.relativeVelocity.magnitude > 2.5f) {
                 OnHumanDeath(this);
+                GameManager.Instance.AddBadAssPoints(BadAssScore);
             }
         }
     }

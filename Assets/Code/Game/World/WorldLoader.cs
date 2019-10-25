@@ -37,6 +37,8 @@ public class WorldLoader : MonoBehaviour {
     }
 
     private void LoadWorld(WorldData worldData) {
+        GameManager.Instance.SetGoalAtStart(worldData.BadAssGoal);
+
         //LOAD TILES
         foreach (TileData tile in worldData.Tiles) {
             TileController tileController = Instantiate(tile.TilePrefab);

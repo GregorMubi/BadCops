@@ -3250,3 +3250,4 @@ MonoBehaviour:
     MaxDistanceFromSpawn: 5
     Position: {x: 36.31, y: 1, z: -4.42}
   CarAIDatas: []
+  BadAssGoal: 30
