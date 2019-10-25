@@ -323,22 +323,6 @@ MonoBehaviour:
     Position: {x: 21, y: 0, z: -9}
     TilePrefab: {fileID: 8526078246912615176, guid: 849d52c1c0baabd488060ac67ae44279,
       type: 3}
-  - Rotation: 0
-    Position: {x: 19.34, y: 0.531, z: -6.32}
-    TilePrefab: {fileID: 5730095245490169784, guid: f525172b209da9b49a40be675e65152b,
-      type: 3}
-  - Rotation: 0
-    Position: {x: 15.72, y: 0.54, z: -4.79}
-    TilePrefab: {fileID: 4134335989632371294, guid: ea0100ad2da3bcb4980e6ba7608e1066,
-      type: 3}
-  - Rotation: 0
-    Position: {x: 14.38, y: 0.54, z: 4.56}
-    TilePrefab: {fileID: 4134335989632371294, guid: ea0100ad2da3bcb4980e6ba7608e1066,
-      type: 3}
-  - Rotation: 0
-    Position: {x: 17.41, y: 0.531, z: 2.06}
-    TilePrefab: {fileID: 5730095245490169784, guid: f525172b209da9b49a40be675e65152b,
-      type: 3}
   - Rotation: 180.00002
     Position: {x: 24, y: 0, z: 0}
     TilePrefab: {fileID: 2622566113425835096, guid: 3d31e5564569e4740a880fdb74df6ab5,
@@ -794,3 +778,4 @@ MonoBehaviour:
     - {x: 31.56, y: 1, z: -12.59}
     - {x: 35.3, y: 1, z: -11.05}
     - {x: 36.57, y: 1, z: -7.69}
+  BadAssGoal: 10

@@ -66,6 +66,25 @@ public class WorldLoader : MonoBehaviour {
                     buildingTileController.transform.localPosition = new Vector3(-0.5f, 0.6f, -0.5f);
                 }
             }
+
+            bool canHaveTrees = false;
+            foreach (TileController tileC in TileSetData.TilesThatCanHaveTreesOnThem) {
+                if (tile.TilePrefab.name == tileC.name) {
+                    canHaveTrees = true;
+                    break;
+                }
+            }
+
+            if (canHaveTrees) {
+                int chanceToSpawnTrees = 80;
+                if (chanceToSpawnTrees > Random.Range(0, 100)) {
+                    int randomInt = Random.Range(0, TileSetData.TreeTiles.Length);
+                    int rotate = Random.Range(0, 4);
+                    TileController treeTileController = Instantiate(TileSetData.TreeTiles[randomInt]);
+                    treeTileController.transform.SetParent(tileController.transform, false);
+                    treeTileController.transform.eulerAngles = new Vector3(0, 90 * rotate, 0);
+                }
+            }
         }
 
         //LOAD HUMANS
