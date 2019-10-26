@@ -77,7 +77,7 @@ public class WeaponController : MonoBehaviour {
             return;
         }
         //TODO(Rok Kos): Use polling
-        ProjectileContoller projectile = Instantiate(WeaponData.projectile, WeaponPositionGameObject.transform.position + positionOffset, Quaternion.identity, transform);
+        ProjectileContoller projectile = Instantiate(WeaponData.projectile, WeaponPositionGameObject.transform.position + positionOffset, Quaternion.identity, null);
 
         if (hommingTarget == null) {
             projectile.Init(dir, WeaponData.speed, WeaponData.explosion);
