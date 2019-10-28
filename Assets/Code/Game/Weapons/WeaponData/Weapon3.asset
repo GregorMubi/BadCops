@@ -16,7 +16,7 @@ MonoBehaviour:
   rateOfFire: 1
   weaponSpreadType: 2
   numberOfBulletsPerShot: 28
-  damage: 100
+  damage: 5
   range: 10
   speed: 50
   projectile: {fileID: 4789323561337087399, guid: 7add7f3122306214e8ecdd30738cd707,

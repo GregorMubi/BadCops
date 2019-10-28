@@ -7,6 +7,7 @@ public class HumanController : MonoBehaviour {
     [SerializeField] private MeshRenderer BodyMeshRendere = null;
     [SerializeField] private Rigidbody RigidBody = null;
     [SerializeField] private float BadAssScore = 1.0f;
+    [SerializeField] private int Health = 10;
 
     private float TurnTimer = 0.0f;
     private float MinTurnTime = 0.0f;
@@ -53,6 +54,13 @@ public class HumanController : MonoBehaviour {
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag == "Player") {
             if (collision.relativeVelocity.magnitude > 2.5f) {
+                OnHumanDeath(this);
+                GameManager.Instance.AddBadAssPoints(BadAssScore);
+            }
+        } else if (collision.gameObject.tag == "Projectile") {
+            ProjectileContoller projectileContoller = collision.gameObject.GetComponent<ProjectileContoller>();
+            Health -= projectileContoller.GetDamage();
+            if (Health <= 0) {
                 OnHumanDeath(this);
                 GameManager.Instance.AddBadAssPoints(BadAssScore);
             }

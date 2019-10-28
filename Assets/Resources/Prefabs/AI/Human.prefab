@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 2428532420352799950}
   m_Layer: 0
   m_Name: Human
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,6 +127,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BodyMeshRendere: {fileID: 5362855911551125422}
   RigidBody: {fileID: 2428532420352799950}
+  BadAssScore: 1
+  Health: 10
 --- !u!65 &3455594175247380305
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -54,5 +54,17 @@ public class PlayerInputController : MonoBehaviour {
         }
     }
 
+    private void Update() {
+#if UNITY_EDITOR        
+        DebugOptions();
+#endif
+    }
+
+    private void DebugOptions() {
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            EquipRandomWeapon();
+        }
+    }
+
 
 }

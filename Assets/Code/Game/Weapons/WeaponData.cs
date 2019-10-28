@@ -10,7 +10,7 @@ public class WeaponData : ScriptableObject {
     public WeaponSpreadType weaponSpreadType = WeaponSpreadType.Bullet;
     [Range(1, 1000)]
     public int numberOfBulletsPerShot = 1;
-    public float damage = 100;
+    public int damage = 100;
     public float range = 10;
     public float speed = 100;
     public ProjectileContoller projectile;
@@ -18,7 +18,7 @@ public class WeaponData : ScriptableObject {
 
     public void RandomValues() {
         rateOfFire = Random.Range(1, 100);
-        damage = Random.Range(1.0f, 100.0f);
+        damage = Random.Range(1, 100);
         range = Random.Range(1.0f, 100.0f);
     }
 }

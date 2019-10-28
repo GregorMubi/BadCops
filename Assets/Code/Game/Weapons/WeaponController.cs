@@ -80,9 +80,9 @@ public class WeaponController : MonoBehaviour {
         ProjectileContoller projectile = Instantiate(WeaponData.projectile, WeaponPositionGameObject.transform.position + positionOffset, Quaternion.identity, null);
 
         if (hommingTarget == null) {
-            projectile.Init(dir, WeaponData.speed, WeaponData.explosion);
+            projectile.Init(dir, WeaponData.speed, WeaponData.damage, WeaponData.explosion);
         } else {
-            projectile.Init(dir, WeaponData.speed, WeaponData.explosion, ProjectileType.kHomingMissle, hommingTarget);
+            projectile.Init(dir, WeaponData.speed, WeaponData.damage, WeaponData.explosion, ProjectileType.kHomingMissle, hommingTarget);
         }
 
 
