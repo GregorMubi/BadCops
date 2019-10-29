@@ -8,6 +8,7 @@ public class WorldData : ScriptableObject {
     public List<HumanSpawnerData> HumanSpawnerDatas;
     public List<CarAIData> CarAIDatas;
     public float BadAssGoal = 10.0f;
+    public string LevelName = "level_name";
     public WorldData() {
         Tiles = new List<TileData>();
         HumanSpawnerDatas = new List<HumanSpawnerData>();

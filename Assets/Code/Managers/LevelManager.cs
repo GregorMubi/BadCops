@@ -31,6 +31,10 @@ public class LevelManager {
         return LevelData.Worlds[Level];
     }
 
+    public int GetLevelNumber() {
+        return Level;
+    }
+
     public List<SimpleCarController> GetCarsList() {
         return CarsData.Cars;
     }

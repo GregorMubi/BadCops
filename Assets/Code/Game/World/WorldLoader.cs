@@ -10,6 +10,7 @@ public class WorldLoader : MonoBehaviour {
     [SerializeField] private PlayerInputController PlayerInputController = null;
     [SerializeField] private CameraController CameraController = null;
     [SerializeField] private TileSetData TileSetData = null;
+    [SerializeField] private GameStartUIController GameStartUIController = null;
 
     private WorldData WorldData = null;
     private List<TileController> LoadedTiles = new List<TileController>();
@@ -22,6 +23,10 @@ public class WorldLoader : MonoBehaviour {
         WorldData = LevelManager.Instance.GetWorld();
         SetupPlayer();
         LoadWorld(WorldData);
+
+        //play animation at start
+        PlayerInputController.SetControllEnabled(false);
+        GameStartUIController.Init(LevelManager.Instance.GetLevelNumber(), WorldData.LevelName);
     }
     private void SetupPlayer() {
         List<SimpleCarController> cars = LevelManager.Instance.GetCarsList();
@@ -30,6 +35,10 @@ public class WorldLoader : MonoBehaviour {
         PlayerInputController.Init(car);
         SetPlayerPoistion();
         CameraController.Init(car.gameObject);
+    }
+
+    public void OnGameStarted() {
+        PlayerInputController.SetControllEnabled(true);
     }
 
     public void SetPlayerPoistion() {

@@ -53,7 +53,7 @@ public class SimpleCarController : MonoBehaviour {
 
     void Update() {
         if (AudioSource != null) {
-            AudioSource.pitch = RigidBody.velocity.magnitude * 0.5f - 0.5f;
+            AudioSource.pitch = RigidBody.velocity.magnitude * 0.5f;
         }
     }
 

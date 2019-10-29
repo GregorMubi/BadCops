@@ -778,4 +778,5 @@ MonoBehaviour:
     - {x: 31.56, y: 1, z: -12.59}
     - {x: 35.3, y: 1, z: -11.05}
     - {x: 36.57, y: 1, z: -7.69}
-  BadAssGoal: 10
+  BadAssGoal: 100
+  LevelName: METELKOVA

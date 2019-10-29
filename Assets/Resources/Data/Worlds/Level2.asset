@@ -1020,4 +1020,5 @@ MonoBehaviour:
     - {x: -0.67, y: 1, z: -8.78}
     - {x: -5.48, y: 1, z: -8.78}
     - {x: -6.31, y: 1, z: -5.85}
-  BadAssGoal: 20
+  BadAssGoal: 150
+  LevelName: POKLUKA
