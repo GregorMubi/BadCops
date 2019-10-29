@@ -38,6 +38,7 @@ public class WorldLoader : MonoBehaviour {
     }
 
     public void OnGameStarted() {
+        GameController.Instance.SetEnabledInput(true);
         PlayerInputController.SetControllEnabled(true);
     }
 

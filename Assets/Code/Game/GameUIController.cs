@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameUIController : MonoBehaviour {
-    [SerializeField] private Text Timer = null;
-    [SerializeField] private Text Life = null;
     [SerializeField] private Slider BadAssSlider = null;
     [SerializeField] private AudioSource WinAudio = null;
 
@@ -17,15 +15,12 @@ public class GameUIController : MonoBehaviour {
     }
 
     public void Update() {
-        Life.text = GameManager.Instance.LifePercentage.ToString();
-
         GameManager.Instance.AddBadAssPoints(-0.001f);
         BadAssSlider.value = GameManager.Instance.GetBadAssSlider();
 
         if (!GameManager.Instance.IsPaused()) {
             GameDuration += Time.deltaTime;
         }
-        Timer.text = GameDuration.ToString("n2");
 
         CheckWinConditions();
     }
