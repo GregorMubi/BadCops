@@ -13,6 +13,8 @@ public class SimpleCarController : MonoBehaviour {
     [SerializeField] private WeaponController WeaponController = null;
     [SerializeField] private AudioSource AudioSource = null;
 
+    private bool Break = false;
+
     void Start() {
         RigidBody.centerOfMass += new Vector3(0, -0.2f, 0);
     }
@@ -69,7 +71,12 @@ public class SimpleCarController : MonoBehaviour {
                 axle.RightWheel.steerAngle = steering;
             }
 
-            if (isMovingForward) {
+            if (Break) {
+                axle.LeftWheel.brakeTorque = BreakForce;
+                axle.RightWheel.brakeTorque = BreakForce;
+                axle.LeftWheel.motorTorque = 0;
+                axle.RightWheel.motorTorque = 0;
+            } else if (isMovingForward) {
                 if (motor >= 0) {
                     if (axle.Motor) {
                         axle.LeftWheel.motorTorque = motor;
@@ -114,7 +121,10 @@ public class SimpleCarController : MonoBehaviour {
             ApplyLocalPositionToVisuals(axle.LeftWheel, axle.LeftWheelTransform);
             ApplyLocalPositionToVisuals(axle.RightWheel, axle.RightWheelTransform);
         }
+    }
 
+    public void ForceBreak() {
+        Break = true;
     }
 
     public void ApplyLocalPositionToVisuals(WheelCollider collider, Transform wheelTransform) {

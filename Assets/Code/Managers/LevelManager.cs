@@ -35,6 +35,10 @@ public class LevelManager {
         return Level;
     }
 
+    public bool IsLastLevel() {
+        return Level == LevelData.Worlds.Count - 1;
+    }
+
     public List<SimpleCarController> GetCarsList() {
         return CarsData.Cars;
     }

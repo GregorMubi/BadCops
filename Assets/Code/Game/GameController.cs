@@ -1,12 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Playables;
 
 public class GameController : MonoBehaviour {
 
+    [SerializeField] private PlayableDirector CompletedTimeline = null;
+
     public static GameController Instance;
+
     private bool InputEnabled = false;
+    private bool DidWin = false;
+    private bool GoToMainMenu = false;
 
     void Start() {
         Instance = this;
@@ -18,6 +22,7 @@ public class GameController : MonoBehaviour {
 
     public void Update() {
         UpdateInput();
+        CheckWinConditions();
     }
 
     private void UpdateInput() {
@@ -36,11 +41,34 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    public void OnLevelCompleted() {
-        //TODO
-    }
-
     public void OnLevelRestart() {
         SceneManager.LoadScene("Game");
+    }
+
+    private void CheckWinConditions() {
+        if (DidWin) {
+            return;
+        }
+        if (GameManager.Instance.GetBadAssSlider() >= 1.0f) {
+            DidWin = true;
+            SetEnabledInput(false);
+            PlayerInputController.Instance.SetControllEnabled(false);
+            PlayerInputController.Instance.GetCarController().ForceBreak();
+            CompletedTimeline.Play();
+
+            if (LevelManager.Instance.IsLastLevel()) {
+                GoToMainMenu = true;
+            } else {
+                LevelManager.Instance.NextLevel();
+            }
+        }
+    }
+
+    public void OnLoadNextLevel() {
+        if (GoToMainMenu) {
+            SceneManager.LoadScene("MainMenu");
+        } else {
+            SceneManager.LoadScene("Game");
+        }
     }
 }

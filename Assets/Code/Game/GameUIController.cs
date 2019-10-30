@@ -1,37 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameUIController : MonoBehaviour {
     [SerializeField] private Slider BadAssSlider = null;
-    [SerializeField] private AudioSource WinAudio = null;
 
-    private float GameDuration = 0.0f;
-    private bool DidWin = false;
+    [SerializeField] private List<AudioClip> LevelNumberAudioClips;
+    [SerializeField] private AudioSource AudioSource = null;
 
     public void Start() {
-        GameDuration = 0f;
     }
 
     public void Update() {
         GameManager.Instance.AddBadAssPoints(-0.001f);
         BadAssSlider.value = GameManager.Instance.GetBadAssSlider();
-
-        if (!GameManager.Instance.IsPaused()) {
-            GameDuration += Time.deltaTime;
-        }
-
-        CheckWinConditions();
     }
 
-    private void CheckWinConditions() {
-        if (DidWin) {
-            return;
-        }
-        if (GameManager.Instance.GetBadAssSlider() >= 1.0f) {
-            DidWin = true;
-            WinAudio.Play();
-        }
+    public void PlayLevelAudio() {
+        int currentLevel = LevelManager.Instance.GetLevelNumber();
+        AudioSource.clip = LevelNumberAudioClips[currentLevel];
+        AudioSource.Play();
     }
 }

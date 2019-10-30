@@ -7,7 +7,7 @@ public class PlayerInputController : MonoBehaviour {
     private SimpleCarController CarController = null;
     private bool ControlEnabled = true;
 
-    private static PlayerInputController Instance;
+    public static PlayerInputController Instance;
 
     public static Vector3 GetPlayerCarPosition() {
         if (Instance != null && Instance.CarController != null) {
@@ -51,6 +51,8 @@ public class PlayerInputController : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 CarController.Shoot();
             }
+        } else {
+            CarController.UpdateInput(0, 0);
         }
     }
 
