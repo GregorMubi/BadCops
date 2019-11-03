@@ -7,7 +7,8 @@ public enum ProjectileType { kNormal, kHomingMissle, kLast};
 public class ProjectileContoller : MonoBehaviour
 {
     [SerializeField] Rigidbody rigidbody;
-    
+    [SerializeField] BoxCollider boxCollider;
+
     private Vector3 movementDir = Vector3.zero;
     private float speed = 0.0f; 
     private int damage = 0;
@@ -30,6 +31,7 @@ public class ProjectileContoller : MonoBehaviour
         type = _type;
         hommingTarget = _hommingTarget;
         rigidbody.isKinematic = true;
+        boxCollider.isTrigger = true;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,10 +55,21 @@ public class ProjectileContoller : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "NPC") {
+            Debug.Log("<color=green>ProjectileContoller::</color> <color=red>Hit NPC</color>");
+            //TODO(Rok Kos): Use polling
+            ExplosionController explosionController = Instantiate(explosionControllerPrefab, transform.position, Quaternion.identity, null);
+            explosionController.PlayExplosion();
+            Destroy(this.gameObject);
+        }
+    }
+
     private void Update()
     {
         if (type == ProjectileType.kHomingMissle) {
-            transform.position = Vector3.Lerp(transform.position, hommingTarget.transform.position, Time.deltaTime);
+            transform.position += (hommingTarget.transform.position - transform.position).normalized * speed * Time.deltaTime;
+            //transform.position = Vector3.Lerp(transform.position, hommingTarget.transform.position, Time.deltaTime * 2);
             Debug.DrawLine(transform.position, hommingTarget.transform.position, Color.red, 1);
         }
     }

@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 3541272588262839092}
+  boxCollider: {fileID: 6059022099583392288}
 --- !u!54 &3541272588262839092
 Rigidbody:
   m_ObjectHideFlags: 0

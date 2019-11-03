@@ -66,4 +66,15 @@ public class HumanController : MonoBehaviour {
             }
         }
     }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "Projectile") {
+            ProjectileContoller projectileContoller = other.gameObject.GetComponent<ProjectileContoller>();
+            Health -= projectileContoller.GetDamage();
+            if (Health <= 0) {
+                OnHumanDeath(this);
+                GameManager.Instance.AddBadAssPoints(BadAssScore);
+            }
+        }
+    }
 }
