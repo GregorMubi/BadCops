@@ -14,7 +14,7 @@ public class WeaponController : MonoBehaviour {
     }
 
     private const float kGoldenRationInversed = 0.618033f; // this is: 1 / golden ratio 
-    public void FireWeapon(Vector3 dir, Transform hommingTarget = null) {
+    public void FireWeapon(Vector3 dir, GameObject hommingTarget = null) {
         if (WeaponData == null) {
             return;
         }
@@ -72,7 +72,7 @@ public class WeaponController : MonoBehaviour {
         coolDown -= Time.deltaTime;
     }
 
-    private void Fire(Vector3 dir, Vector3 positionOffset, Transform hommingTarget = null) {
+    private void Fire(Vector3 dir, Vector3 positionOffset, GameObject hommingTarget = null) {
         if (WeaponData == null) {
             return;
         }
@@ -89,5 +89,9 @@ public class WeaponController : MonoBehaviour {
         projectile.name = WeaponData.weaponName + "_projectile_" + projectileCount;
         projectileCount++;
         Destroy(projectile.gameObject, 10);
+    }
+
+    public WeaponSpreadType GetWeaponType() {
+        return WeaponData.weaponSpreadType;
     }
 }

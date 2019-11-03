@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponObjectDebug : MonoBehaviour
 {
     [SerializeField] WeaponController weaponController;
-    [SerializeField] Transform debugHommingTarget;
+    [SerializeField] GameObject debugHommingTarget;
     private void Update()
     {
 #if UNITY_EDITOR

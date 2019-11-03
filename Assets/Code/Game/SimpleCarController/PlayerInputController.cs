@@ -28,14 +28,15 @@ public class PlayerInputController : MonoBehaviour {
     public void Init(SimpleCarController carController) {
         CarController = carController;
         CarController.tag = "Player";
-        carController.EquipWeaon(0);
+        carController.EquipWeapon(LevelManager.Instance.GetWeaponDatas().WeaponDatas[3]);
         carController.EnableEngineSound(true);
     }
 
     public void EquipRandomWeapon() {
         List<WeaponData> weaponsDatas = LevelManager.Instance.GetWeaponDatas().WeaponDatas;
-        int random = Random.Range(0, weaponsDatas.Count);
-        CarController.EquipWeaon(random);
+        int weaponIndex = Random.Range(0, weaponsDatas.Count);
+        WeaponData weaponData = weaponsDatas[weaponIndex];
+        CarController.EquipWeapon(weaponData);
     }
 
     public void SetControllEnabled(bool enabled) {

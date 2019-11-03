@@ -27,6 +27,8 @@ public class WorldLoader : MonoBehaviour {
         //play animation at start
         PlayerInputController.SetControllEnabled(false);
         GameStartUIController.Init(LevelManager.Instance.GetLevelNumber(), WorldData.LevelName);
+
+        LevelManager.Instance.worldLoader = this;
     }
     private void SetupPlayer() {
         List<SimpleCarController> cars = LevelManager.Instance.GetCarsList();
@@ -149,5 +151,21 @@ public class WorldLoader : MonoBehaviour {
         Destroy(PlayerInputController.GetCarController().gameObject);
         LoadCarIndex = (LoadCarIndex + 1) % LevelManager.Instance.GetCarsList().Count;
         SetupPlayer();
+    }
+
+    public List<GameObject> GetAllNPC() {
+        List<GameObject> npcTransforms = new List<GameObject>();
+        
+        foreach (HumanSpawner spawner in HumanSpawners) {
+            foreach (HumanController spawnedHuman in spawner.GetHumanControllers()) {
+                npcTransforms.Add(spawnedHuman.gameObject);
+            }
+        }
+
+        foreach (CarAIController carAIController in CarAIControllers) {
+            npcTransforms.Add(carAIController.GetCarController().gameObject);
+        }
+
+        return npcTransforms;
     }
 }

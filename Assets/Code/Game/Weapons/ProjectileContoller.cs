@@ -15,7 +15,7 @@ public class ProjectileContoller : MonoBehaviour
     ExplosionController explosionControllerPrefab = null;
 
     private ProjectileType type = ProjectileType.kNormal;
-    private Transform hommingTarget = null;
+    private GameObject hommingTarget = null;
     public void Init(Vector3 _movementDir, float _speed, int _damage, ExplosionController _explosionControllerPrefab)
     {
         movementDir = _movementDir;
@@ -24,7 +24,7 @@ public class ProjectileContoller : MonoBehaviour
         explosionControllerPrefab = _explosionControllerPrefab;
         damage = _damage;
     }
-    public void Init(Vector3 _movementDir, float _speed, int _damage, ExplosionController _explosionControllerPrefab, ProjectileType _type, Transform _hommingTarget)
+    public void Init(Vector3 _movementDir, float _speed, int _damage, ExplosionController _explosionControllerPrefab, ProjectileType _type, GameObject _hommingTarget)
     {
         Init(_movementDir, _speed, _damage, _explosionControllerPrefab);
         type = _type;
@@ -56,7 +56,8 @@ public class ProjectileContoller : MonoBehaviour
     private void Update()
     {
         if (type == ProjectileType.kHomingMissle) {
-            transform.position = Vector3.Lerp(transform.position, hommingTarget.position, Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, hommingTarget.transform.position, Time.deltaTime);
+            Debug.DrawLine(transform.position, hommingTarget.transform.position, Color.red, 1);
         }
     }
 

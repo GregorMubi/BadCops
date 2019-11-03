@@ -55,4 +55,8 @@ public class CarAIController : MonoBehaviour {
         }
         CarController.UpdateInput(motor * Data.MotorMultiplier, steering * Data.WheelMultiplier);
     }
+
+    public SimpleCarController GetCarController() {
+        return CarController;
+    }
 }

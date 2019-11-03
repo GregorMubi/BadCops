@@ -13,6 +13,9 @@ public class LevelManager {
     private const string CarsDataPath = "Assets/Resources/Data/CarsData.asset";
     private const string WeaponsDataPath = "Assets/Resources/Data/WeaponsData.asset";
 
+    // TODO(Rok Kos): Hacky sync with Mubi how to do this
+    public WorldLoader worldLoader = null;
+
     public static LevelManager Instance {
         get {
             if (instance == null) {

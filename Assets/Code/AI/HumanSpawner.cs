@@ -63,4 +63,8 @@ public class HumanSpawner : MonoBehaviour {
         SpawnedHumans.Remove(controller);
         Destroy(controller.gameObject);
     }
+
+    public List<HumanController> GetHumanControllers() {
+        return SpawnedHumans;
+    }
 }

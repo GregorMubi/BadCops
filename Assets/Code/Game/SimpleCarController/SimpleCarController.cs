@@ -25,7 +25,13 @@ public class SimpleCarController : MonoBehaviour {
 
     public void Shoot() {
         if (WeaponController != null) {
-            WeaponController.FireWeapon(transform.forward);
+            GameObject hommingTarget = null;
+            if (WeaponController.GetWeaponType() == WeaponSpreadType.HommingMissle) {
+                List<GameObject> npcObjects = LevelManager.Instance.worldLoader.GetAllNPC();
+                hommingTarget = FindNearestNPC(npcObjects);
+            }
+
+            WeaponController.FireWeapon(transform.forward, hommingTarget);
         }
     }
 
@@ -39,9 +45,8 @@ public class SimpleCarController : MonoBehaviour {
         }
     }
 
-    public void EquipWeaon(int weaponIndex) {
+    public void EquipWeapon(WeaponData weaponData) {
         if (WeaponController != null) {
-            WeaponData weaponData = LevelManager.Instance.GetWeaponDatas().WeaponDatas[weaponIndex];
             WeaponController.Init(weaponData, WeaponGameObject);
         }
     }
@@ -133,5 +138,24 @@ public class SimpleCarController : MonoBehaviour {
         collider.GetWorldPose(out position, out rotation);
         wheelTransform.position = position;
         wheelTransform.rotation = rotation;
+    }
+
+    private GameObject FindNearestNPC(List<GameObject> npcObjects) {
+        if (npcObjects.Count == 0) {
+            return null;
+        }
+
+        float minDistance = float.MaxValue;
+        GameObject nearest = npcObjects[0];
+
+        foreach (GameObject g in npcObjects) {
+            float currDistance = Vector3.Distance(transform.position, g.transform.position);
+            if (currDistance < minDistance) {
+                minDistance = currDistance;
+                nearest = g;
+            }
+        }
+
+        return nearest;
     }
 }
