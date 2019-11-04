@@ -52,6 +52,9 @@ public class PlayerInputController : MonoBehaviour {
             if (Input.GetKey(KeyCode.Space)) {
                 CarController.Shoot();
             }
+            if (Input.GetKeyUp(KeyCode.Space)) {
+                CarController.StopShooting();
+            }
         } else {
             CarController.UpdateInput(0, 0);
         }

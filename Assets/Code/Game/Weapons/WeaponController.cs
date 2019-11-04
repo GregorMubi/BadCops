@@ -60,10 +60,12 @@ public class WeaponController : MonoBehaviour {
                     }
 
                 case WeaponSpreadType.kLaser: {
-                    laserInstance = Instantiate(WeaponData.projectile, WeaponPositionGameObject.transform.position, Quaternion.identity, WeaponPositionGameObject.transform);
-                    laserInstance.transform.localScale = new Vector3(1, 1, 84.99f);
-                    laserInstance.transform.localRotation = Quaternion.Euler(0, 0, 0);
-                    laserInstance.Init(dir, WeaponData.speed, WeaponData.damage, WeaponData.explosion, ProjectileType.kLaser);
+                    if (laserInstance == null) {
+                        laserInstance = Instantiate(WeaponData.projectile, WeaponPositionGameObject.transform.position, Quaternion.identity, WeaponPositionGameObject.transform);
+                        laserInstance.transform.localScale = new Vector3(1, 1, 84.99f);
+                        laserInstance.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        laserInstance.Init(dir, WeaponData.speed, WeaponData.damage, WeaponData.explosion, ProjectileType.kLaser);
+                    }
                     break;
                 }
 
@@ -76,6 +78,14 @@ public class WeaponController : MonoBehaviour {
             Debug.Log("<color=green>WeaponController::</color> <color=red>Weapon on cooldown</color>");
         }
 
+    }
+
+    public void StopShooting() {
+        if (WeaponData.weaponSpreadType == WeaponSpreadType.kLaser && laserInstance != null) {
+            // TODO(Rok Kos): Maybe just disable it
+            Destroy(laserInstance.gameObject);
+            laserInstance = null;
+        }
     }
 
     private void Update() {

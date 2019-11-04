@@ -35,6 +35,11 @@ public class SimpleCarController : MonoBehaviour {
         }
     }
 
+    public void StopShooting() {
+        WeaponController.StopShooting();
+    }
+
+
     public void EnableEngineSound(bool enable) {
         if (AudioSource != null) {
             if (enable && !AudioSource.isPlaying) {
