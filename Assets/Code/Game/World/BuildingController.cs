@@ -18,4 +18,13 @@ public class BuildingController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "Projectile" && !isBurning) {
+            GameObject smoke = Instantiate(vfxSmokePrefab, parentSmoke);
+            smoke.transform.localPosition = Vector3.zero;
+            Destroy(smoke, 10f);
+            isBurning = true;
+        }
+    }
+
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum WeaponSpreadType { Bullet, Hydra, Shotgun, HommingMissle, kLast };
+public enum WeaponSpreadType { Bullet, Hydra, Shotgun, HommingMissle, kLaser, kLast };
 
 
 [CreateAssetMenu(fileName = "WeaponData", menuName = "Weapons/WeaponData", order = 1)]

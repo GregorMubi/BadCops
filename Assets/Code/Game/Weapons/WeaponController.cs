@@ -7,10 +7,12 @@ public class WeaponController : MonoBehaviour {
     private float coolDown = 0.0f;
     private uint projectileCount = 0;
     private GameObject WeaponPositionGameObject;
+    private ProjectileContoller laserInstance = null;
 
     public void Init(WeaponData weaponData, GameObject weaponPositionObject) {
         WeaponData = weaponData;
         WeaponPositionGameObject = weaponPositionObject;
+        laserInstance = null;
     }
 
     private const float kGoldenRationInversed = 0.618033f; // this is: 1 / golden ratio 
@@ -19,9 +21,9 @@ public class WeaponController : MonoBehaviour {
             return;
         }
 
-        if (coolDown <= 0.0f) {
+        if (coolDown >= 1.0f / (float) WeaponData.rateOfFire) {
             Debug.Log("<color=green>WeaponController::</color> <color=red>Fire</color>");
-            coolDown = WeaponData.rateOfFire;
+            coolDown = 0;
 
             switch (WeaponData.weaponSpreadType) {
                 case WeaponSpreadType.Bullet: {
@@ -57,6 +59,14 @@ public class WeaponController : MonoBehaviour {
                         break;
                     }
 
+                case WeaponSpreadType.kLaser: {
+                    laserInstance = Instantiate(WeaponData.projectile, WeaponPositionGameObject.transform.position, Quaternion.identity, WeaponPositionGameObject.transform);
+                    laserInstance.transform.localScale = new Vector3(1, 1, 84.99f);
+                    laserInstance.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                    laserInstance.Init(dir, WeaponData.speed, WeaponData.damage, WeaponData.explosion, ProjectileType.kLaser);
+                    break;
+                }
+
                 default:
                     Debug.Log("<color=green>WeaponController::</color> <color=red>Not Implemented Spread type</color>");
                     break;
@@ -69,7 +79,7 @@ public class WeaponController : MonoBehaviour {
     }
 
     private void Update() {
-        coolDown -= Time.deltaTime;
+        coolDown += Time.deltaTime;
     }
 
     private void Fire(Vector3 dir, Vector3 positionOffset, GameObject hommingTarget = null) {
@@ -93,5 +103,11 @@ public class WeaponController : MonoBehaviour {
 
     public WeaponSpreadType GetWeaponType() {
         return WeaponData.weaponSpreadType;
+    }
+
+    private void OnDestroy() {
+        if (laserInstance != null) {
+            Destroy(laserInstance.gameObject);
+        }
     }
 }

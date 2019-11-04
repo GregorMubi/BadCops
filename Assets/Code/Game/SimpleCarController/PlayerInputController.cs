@@ -28,7 +28,7 @@ public class PlayerInputController : MonoBehaviour {
     public void Init(SimpleCarController carController) {
         CarController = carController;
         CarController.tag = "Player";
-        carController.EquipWeapon(LevelManager.Instance.GetWeaponDatas().WeaponDatas[3]);
+        carController.EquipWeapon(LevelManager.Instance.GetWeaponDatas().WeaponDatas[5]);
         carController.EnableEngineSound(true);
     }
 
@@ -49,7 +49,7 @@ public class PlayerInputController : MonoBehaviour {
             float steering = Input.GetAxis("Horizontal");
             CarController.UpdateInput(motor, steering);
 
-            if (Input.GetKeyDown(KeyCode.Space)) {
+            if (Input.GetKey(KeyCode.Space)) {
                 CarController.Shoot();
             }
         } else {
