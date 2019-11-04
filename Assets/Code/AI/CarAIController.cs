@@ -14,6 +14,7 @@ public class CarAIController : MonoBehaviour {
             SimpleCarController prefab = LevelManager.Instance.GetCarsList()[Data.CarIndex];
             CarController = Instantiate(prefab);
             CarController.transform.SetParent(transform);
+            CarController.Init(CarOwner.kAI);
             if (Data.Keys.Count > 1) {
                 Vector3 spawnLocation = Data.GetKey(0);
                 Vector3 targetVector = Data.GetKey(1) - Data.GetKey(0);

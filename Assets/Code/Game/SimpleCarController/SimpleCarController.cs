@@ -2,6 +2,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public enum CarOwner {kPlayer, kAI, kLast };
+
 public class SimpleCarController : MonoBehaviour {
 
     [SerializeField] private Rigidbody RigidBody = null;
@@ -14,6 +16,11 @@ public class SimpleCarController : MonoBehaviour {
     [SerializeField] private AudioSource AudioSource = null;
 
     private bool Break = false;
+    private CarOwner carOwner = CarOwner.kLast;
+
+    public void Init(CarOwner _carOwner) {
+        carOwner = _carOwner;
+    }
 
     void Start() {
         RigidBody.centerOfMass += new Vector3(0, -0.2f, 0);
@@ -162,5 +169,43 @@ public class SimpleCarController : MonoBehaviour {
         }
 
         return nearest;
+    }
+
+    void OnCollisionEnter(Collision collision) {
+        if (carOwner != CarOwner.kAI) {
+            // TODO(Rok Kos): Implement logic for losing life for player
+            return;
+        }
+        if (collision.gameObject.tag == "Projectile") {
+            RigidBody.AddForce(Vector3.up * 300, ForceMode.Impulse);
+            RigidBody.AddTorque(Vector3.right * 300, ForceMode.Impulse);
+            // TODO(Rok Kos): Do something similiar as for human spawners
+            //ProjectileContoller projectileContoller = collision.gameObject.GetComponent<ProjectileContoller>();
+            //Health -= projectileContoller.GetDamage();
+            //if (Health <= 0) {
+            //    OnHumanDeath(this);
+            //    GameManager.Instance.AddBadAssPoints(BadAssScore);
+            //}
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (carOwner != CarOwner.kAI) {
+            // TODO(Rok Kos): Implement logic for losing life for player
+            return;
+        }
+
+        if (other.tag == "Projectile") {
+            RigidBody.AddForce(Vector3.up * 300, ForceMode.Impulse);
+            RigidBody.AddTorque(Vector3.right * 300, ForceMode.Impulse);
+
+            // TODO(Rok Kos): Do something similiar as for human spawners
+            //ProjectileContoller projectileContoller = other.gameObject.GetComponent<ProjectileContoller>();
+            //Health -= projectileContoller.GetDamage();
+            //if (Health <= 0) {
+            //    OnHumanDeath(this);
+            //    GameManager.Instance.AddBadAssPoints(BadAssScore);
+            //}
+        }
     }
 }

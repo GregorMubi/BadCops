@@ -75,7 +75,7 @@ public class WeaponController : MonoBehaviour {
             }
 
         } else {
-            Debug.Log("<color=green>WeaponController::</color> <color=red>Weapon on cooldown</color>");
+            //Debug.Log("<color=green>WeaponController::</color> <color=red>Weapon on cooldown</color>");
         }
 
     }
