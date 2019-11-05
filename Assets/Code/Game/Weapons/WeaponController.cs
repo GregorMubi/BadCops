@@ -69,6 +69,13 @@ public class WeaponController : MonoBehaviour {
                     break;
                 }
 
+                case WeaponSpreadType.kDiagonal: {
+                    Fire(dir + transform.right, transform.right * 0.2f); 
+                    Fire(dir, Vector3.zero);
+                    Fire(dir -transform.right, -transform.right * 0.2f);
+                    break;
+                }
+
                 default:
                     Debug.Log("<color=green>WeaponController::</color> <color=red>Not Implemented Spread type</color>");
                     break;
