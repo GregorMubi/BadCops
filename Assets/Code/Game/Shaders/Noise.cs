@@ -15,7 +15,7 @@ public class Noise : MonoBehaviour
 
 
 
-    private void Update()
+    private void Start()
     {
         mat.SetTexture("_NoiseTex", GenerateNoise());
 
