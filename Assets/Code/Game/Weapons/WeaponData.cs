@@ -15,6 +15,7 @@ public class WeaponData : ScriptableObject {
     public float speed = 100;
     public ProjectileContoller projectile;
     public ExplosionController explosion;
+    public Sprite weaponIcon = null;
 
     public void RandomValues() {
         rateOfFire = Random.Range(1, 100);

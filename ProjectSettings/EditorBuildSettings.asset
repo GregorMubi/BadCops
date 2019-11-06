@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Dialogs/GameOver.unity
     guid: 8b6091d4b0f244058afc5cf05bc40a7a
+  - enabled: 1
+    path: Assets/Scenes/WeaponSelection.unity
+    guid: 6566c96ca1ead7343bb7021711ec08da
   m_configObjects: {}

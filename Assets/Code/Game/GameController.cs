@@ -66,9 +66,10 @@ public class GameController : MonoBehaviour {
 
     public void OnLoadNextLevel() {
         if (GoToMainMenu) {
+            LevelManager.Instance.ResetLevel();
             SceneManager.LoadScene("MainMenu");
         } else {
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("WeaponSelection");
         }
     }
 }

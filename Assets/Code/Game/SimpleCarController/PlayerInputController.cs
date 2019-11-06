@@ -28,7 +28,7 @@ public class PlayerInputController : MonoBehaviour {
     public void Init(SimpleCarController carController) {
         CarController = carController;
         CarController.tag = "Player";
-        carController.EquipWeapon(LevelManager.Instance.GetWeaponDatas().WeaponDatas[6]);
+        carController.EquipWeapon(LevelManager.Instance.GetEquipedWeapon());
         carController.EnableEngineSound(true);
     }
 

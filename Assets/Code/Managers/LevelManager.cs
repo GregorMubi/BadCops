@@ -8,6 +8,7 @@ public class LevelManager {
     private CarsData CarsData = null;
     private WeaponsData WeaponsData = null;
     private int Level = 0;
+    private int SelectedWeaponIndex = 0;
 
     private const string LevelDataPath = "Assets/Resources/Data/LevelData.asset";
     private const string CarsDataPath = "Assets/Resources/Data/CarsData.asset";
@@ -64,5 +65,13 @@ public class LevelManager {
 
     public WeaponsData GetWeaponDatas() {
         return WeaponsData;
+    }
+
+    public void SetWeaponIndex(int index) {
+        SelectedWeaponIndex = index;
+    }
+
+    public WeaponData GetEquipedWeapon() {
+        return WeaponsData.WeaponDatas[SelectedWeaponIndex];
     }
 }
