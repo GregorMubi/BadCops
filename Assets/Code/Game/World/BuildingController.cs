@@ -8,13 +8,16 @@ public class BuildingController : MonoBehaviour
     [SerializeField] private GameObject vfxSmokePrefab = null;
 
     private bool isBurning = false;
+    private float burningTimer = 0.0f;
+    private const float kTimeOfBurn = 10.0f;
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag == "Projectile" && !isBurning) {
             GameObject smoke = Instantiate(vfxSmokePrefab, parentSmoke);
             smoke.transform.localPosition = Vector3.zero;
-            Destroy(smoke, 10f);
+            Destroy(smoke, kTimeOfBurn);
             isBurning = true;
+            GameManager.Instance.AddBadAssPoints(3.0f);
         }
     }
 
@@ -22,8 +25,18 @@ public class BuildingController : MonoBehaviour
         if (other.tag == "Projectile" && !isBurning) {
             GameObject smoke = Instantiate(vfxSmokePrefab, parentSmoke);
             smoke.transform.localPosition = Vector3.zero;
-            Destroy(smoke, 10f);
+            Destroy(smoke, kTimeOfBurn);
             isBurning = true;
+            GameManager.Instance.AddBadAssPoints(3.0f);
+        }
+    }
+
+    private void Update() {
+        if (isBurning) {
+            burningTimer += Time.deltaTime;
+            if (burningTimer > kTimeOfBurn) {
+                isBurning = false;
+            }
         }
     }
 
