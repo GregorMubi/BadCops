@@ -2,7 +2,6 @@ Shader "Silhouete/Silhouete"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1,1,1,1)
     }
     SubShader
@@ -15,7 +14,8 @@ Shader "Silhouete/Silhouete"
                 Comp Equal
             }
 
-			ZTest GEqual  //to draw only behind walls
+			ZTest GEqual	  //to draw only behind walls
+			Blend SrcAlpha OneMinusSrcAlpha
 
             CGPROGRAM
             #pragma vertex vert
