@@ -8,7 +8,7 @@ public class BreakableObject : MonoBehaviour {
     [SerializeField] private float BadAssScore = 1.0f;
 
     void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.tag == "Player") {
+        if (collision.gameObject.tag != "NPC") {
             if (Rigidbody.isKinematic) {
                 Rigidbody.isKinematic = false;
                 GameManager.Instance.AddBadAssPoints(BadAssScore);
