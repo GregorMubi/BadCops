@@ -14,9 +14,11 @@ public class SimpleCarController : MonoBehaviour {
     [SerializeField] private GameObject WeaponGameObject = null;
     [SerializeField] private WeaponController WeaponController = null;
     [SerializeField] private AudioSource AudioSource = null;
+    [SerializeField] private AudioSource SireneSource = null;
 
     private bool Break = false;
     private CarOwner carOwner = CarOwner.kLast;
+    private bool IsSirenePlaying = false;
 
     public void Init(CarOwner _carOwner) {
         carOwner = _carOwner;
@@ -207,5 +209,19 @@ public class SimpleCarController : MonoBehaviour {
             //    GameManager.Instance.AddBadAssPoints(BadAssScore);
             //}
         }
+    }
+
+    public bool GetSirenePlaying() {
+        return IsSirenePlaying;
+    }
+
+    public void PlaySirene() {
+        SireneSource.Play();
+        IsSirenePlaying = true;
+    }
+
+    public void StopSirene() {
+        SireneSource.Stop();
+        IsSirenePlaying = false;
     }
 }

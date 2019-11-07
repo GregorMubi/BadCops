@@ -55,6 +55,12 @@ public class PlayerInputController : MonoBehaviour {
             if (Input.GetKeyUp(KeyCode.Space)) {
                 CarController.StopShooting();
             }
+
+            if (Input.GetKeyDown(KeyCode.B) && !CarController.GetSirenePlaying()) {
+                CarController.PlaySirene();
+            } else if(Input.GetKeyDown(KeyCode.B) && CarController.GetSirenePlaying()) {
+                CarController.StopSirene();
+            }
         } else {
             CarController.UpdateInput(0, 0);
         }
