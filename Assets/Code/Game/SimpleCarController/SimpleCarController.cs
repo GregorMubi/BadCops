@@ -32,8 +32,12 @@ public class SimpleCarController : MonoBehaviour {
 
     void Start() {
         RigidBody.centerOfMass += new Vector3(0, -0.2f, 0);
-        RedSireneLights.gameObject.SetActive(false);
-        BlueSireneLights.gameObject.SetActive(false);
+        if (RedSireneLights != null) {
+            RedSireneLights.gameObject.SetActive(false);
+        }
+        if (BlueSireneLights != null) {
+            BlueSireneLights.gameObject.SetActive(false);
+        }
     }
 
     public float GetMaxSteeringAngle() {

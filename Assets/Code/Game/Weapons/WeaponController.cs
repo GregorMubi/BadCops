@@ -8,11 +8,15 @@ public class WeaponController : MonoBehaviour {
     private uint projectileCount = 0;
     private GameObject WeaponPositionGameObject;
     private ProjectileContoller laserInstance = null;
+    private AudioSource audioSource = null;
 
     public void Init(WeaponData weaponData, GameObject weaponPositionObject) {
         WeaponData = weaponData;
         WeaponPositionGameObject = weaponPositionObject;
         laserInstance = null;
+        if (audioSource == null) {
+            audioSource = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+        }
     }
 
     private const float kGoldenRationInversed = 0.618033f; // this is: 1 / golden ratio 
@@ -79,6 +83,10 @@ public class WeaponController : MonoBehaviour {
                 default:
                     Debug.Log("<color=green>WeaponController::</color> <color=red>Not Implemented Spread type</color>");
                     break;
+            }
+                
+            if (audioSource != null && WeaponData.weaponSound != null && !audioSource.isPlaying) {
+                audioSource.PlayOneShot(WeaponData.weaponSound);
             }
 
         } else {

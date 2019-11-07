@@ -24,3 +24,4 @@ MonoBehaviour:
   explosion: {fileID: 7729817905871592741, guid: 00bbb481c10492542aff8c055155e611,
     type: 3}
   weaponIcon: {fileID: 21300000, guid: 96114fceb4bd46d448401c6ba0fe54d7, type: 3}
+  weaponSound: {fileID: 8300000, guid: 62353d9bb5347244e944be1a3d69c684, type: 3}
