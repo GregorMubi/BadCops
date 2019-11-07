@@ -69,7 +69,7 @@ public class ProjectileContoller : MonoBehaviour
 
     private void Update()
     {
-        if (type == ProjectileType.kHomingMissle) {
+        if (type == ProjectileType.kHomingMissle && transform != null && hommingTarget.transform != null) {
             transform.position += (hommingTarget.transform.position - transform.position).normalized * speed * Time.deltaTime;
             //transform.position = Vector3.Lerp(transform.position, hommingTarget.transform.position, Time.deltaTime * 2);
             Debug.DrawLine(transform.position, hommingTarget.transform.position, Color.red, 1);
