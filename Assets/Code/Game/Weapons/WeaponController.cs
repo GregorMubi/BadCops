@@ -62,7 +62,7 @@ public class WeaponController : MonoBehaviour {
                 case WeaponSpreadType.kLaser: {
                     if (laserInstance == null) {
                         laserInstance = Instantiate(WeaponData.projectile, WeaponPositionGameObject.transform.position, Quaternion.identity, WeaponPositionGameObject.transform);
-                        laserInstance.transform.localScale = new Vector3(1, 1, 84.99f);
+                        laserInstance.transform.localScale = new Vector3(1, 1, 131.9f);
                         laserInstance.transform.localRotation = Quaternion.Euler(0, 0, 0);
                         laserInstance.Init(dir, WeaponData.speed, WeaponData.damage, WeaponData.explosion, ProjectileType.kLaser);
                     }
