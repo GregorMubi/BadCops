@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
+
 
 public enum CarOwner {kPlayer, kAI, kLast };
 
@@ -15,10 +17,14 @@ public class SimpleCarController : MonoBehaviour {
     [SerializeField] private WeaponController WeaponController = null;
     [SerializeField] private AudioSource AudioSource = null;
     [SerializeField] private AudioSource SireneSource = null;
+    [SerializeField] private Light RedSireneLights = null;
+    [SerializeField] private Light BlueSireneLights = null;
+    [SerializeField] private float IntesityChange = 0.1f;
 
     private bool Break = false;
     private CarOwner carOwner = CarOwner.kLast;
     private bool IsSirenePlaying = false;
+    private bool IsRedBlinking = false;
 
     public void Init(CarOwner _carOwner) {
         carOwner = _carOwner;
@@ -26,6 +32,8 @@ public class SimpleCarController : MonoBehaviour {
 
     void Start() {
         RigidBody.centerOfMass += new Vector3(0, -0.2f, 0);
+        RedSireneLights.gameObject.SetActive(false);
+        BlueSireneLights.gameObject.SetActive(false);
     }
 
     public float GetMaxSteeringAngle() {
@@ -218,10 +226,36 @@ public class SimpleCarController : MonoBehaviour {
     public void PlaySirene() {
         SireneSource.Play();
         IsSirenePlaying = true;
+        RedSireneLights.gameObject.SetActive(true);
+        BlueSireneLights.gameObject.SetActive(true);
+        StartCoroutine("BlingSirene");
     }
 
     public void StopSirene() {
         SireneSource.Stop();
         IsSirenePlaying = false;
+        RedSireneLights.gameObject.SetActive(false);
+        BlueSireneLights.gameObject.SetActive(false);
+        StopCoroutine("BlingSirene");
+    }
+
+    private IEnumerator BlingSirene() {
+        while (true) {
+            if (IsRedBlinking) {
+                RedSireneLights.intensity += IntesityChange;
+                BlueSireneLights.intensity -= IntesityChange;
+                if (RedSireneLights.intensity > 2) {
+                    IsRedBlinking = false;
+                }
+            } else {
+                RedSireneLights.intensity -= IntesityChange;
+                BlueSireneLights.intensity += IntesityChange;
+                if (RedSireneLights.intensity <= 0) {
+                    IsRedBlinking = true;
+                }
+            }
+           
+            yield return null;
+        }
     }
 }
