@@ -64,6 +64,11 @@
                 
 				float2 originalUv = TRANSFORM_TEX(v.uv, _MainTex);
 
+				// Simple Moving
+				//o.uv = originalUv;
+				//o.uv.x += _Time.x * _LaserSpeed;
+
+				// Adding noise
 				o.uvNoise = originalUv + float2(_Time.x * _NoiseSpeed, 0);
 				float4 noiseTex = tex2Dlod(_NoiseTex, float4(o.uvNoise, 0, 0));
 				noiseTex = pow(noiseTex, _NoisePower);
@@ -76,10 +81,22 @@
 
 			fixed4 frag(v2f i) : SV_Target
 			{
+				// Vertex color
+				//return i.vertexColor;
+
+				// Adding texture
 				fixed4 texCol = tex2D(_MainTex, i.uv);
+				//return texCol * i.vertexColor;
+
+				// Mask
 				texCol.a *= tex2D(_MaskTex, i.uv).r;
+				//return texCol * i.vertexColor;
+
+				// Mathicg noise from vertex shader
 				texCol.a *= tex2D(_NoiseTex, i.uvNoise).r;
-				
+				//return texCol * i.vertexColor;
+
+				// Adding highlight
 				fixed4 mainCol = texCol * i.vertexColor * _HighlightColor;
                 return mainCol;
             }
