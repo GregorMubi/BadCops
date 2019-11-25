@@ -33,10 +33,10 @@ public class SimpleCarController : MonoBehaviour {
     void Start() {
         RigidBody.centerOfMass += new Vector3(0, -0.2f, 0);
         if (RedSireneLights != null) {
-            RedSireneLights.gameObject.SetActive(false);
+            RedSireneLights.gameObject.SetActive(true);
         }
         if (BlueSireneLights != null) {
-            BlueSireneLights.gameObject.SetActive(false);
+            BlueSireneLights.gameObject.SetActive(true);
         }
     }
 

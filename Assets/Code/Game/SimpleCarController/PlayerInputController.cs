@@ -30,6 +30,7 @@ public class PlayerInputController : MonoBehaviour {
         CarController.tag = "Player";
         carController.EquipWeapon(LevelManager.Instance.GetEquipedWeapon());
         carController.EnableEngineSound(true);
+        CarController.PlaySirene();
     }
 
     public void EquipRandomWeapon() {
