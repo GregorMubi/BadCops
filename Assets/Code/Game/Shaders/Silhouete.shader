@@ -10,7 +10,7 @@ Shader "Silhouete/Silhouete"
         {
 			Stencil 
             {
-                Ref 69
+                Ref 1
                 Comp Equal
             }
 
